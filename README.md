@@ -45,11 +45,11 @@ Daily Goals and Streaks
 |Week| Deliverables/Tasks |
 |--|--|
 | 1 | Meet team, set up development environment, explore ideas using similar apps |
-| 2 & 3 | *Front end:* plan pages, create wireframes & code initial screens, get familiar with Flutter widgets, and start designing the UI for the user profile and to-do list. *Back end:* Firebase, create the Firebase project, and set up Firebase Authentication. Set up Firestore for user data. Implement user authentication and creation of user profiles in Firebase. Allow users to add friends. (Week 3)|
-| 4 |*Front end:* 50% of app screens, *Back-end:* Implement the interactive to-do list in Firestore, including the ability for users to create, update, and delete tasks. Integrate with Front End|
-| 5 | *Front end:* complete 75% of screens, *Back end:* Implement the live feed feature in Firestore. Enable users to post completed tasks with pictures and allow users to comment on these posts,Implement push notifications using Firebase Cloud Messaging (FCM). Notifications should be sent when a task is due soon. Continue to integrate with frontend as needed | 
-| 6 & 7 | *Front end:* 100% of app screens, enhancing features/animations, *Back end:* Implement collaborative to-do lists in Firestore. Implement task categories in Firestore. Tasks should be categorizable |
-| 8 & 9 | Implement functionality for tracking how many to-do tasks were completed by the user each day, finish integration of Front End and Back End|
+| 2 & 3 | *Front end:* plan pages, create wireframes & code initial screens, get familiar with Flutter widgets, and start designing the UI for the user profile and cultural live feed. *Back end:* Firebase, create the Firebase project, and set up Firebase Authentication. Set up Firestore for user data. Implement user authentication and creation of user profiles in Firebase. Allow users to add friends. (Week 3)|
+| 4 |*Front end:* 50% of app screens, *Back-end:* Implement backend for Cultural Showcase Feed and Language Phrasebook. Integrate with Front End|
+| 5 | *Front end:* complete 75% of screens, *Back end:* Develop basic matchmaking algorithm and chat functionality. Continue to integrate with frontend as needed | 
+| 6 & 7 | *Front end:* 100% of app screens, enhancing features/animations, *Back end:* Sync Firestore data with language phrasebook depending on users preferences and who/what culture and language they are learning from  |
+| 8 & 9 | Setup Firebase Cloud Messaging, integrate with the frontend, finish integration of Front End and Back End|
 | 10 | Practice presentation, final touches|
 | 11 | Presentation Night!!|
 
@@ -109,8 +109,8 @@ Quick Read :)
 Kruthi Vancha  
 Vidur Nangia    
 Jack Le   
-Leila Igwegbe\
-Megan Chacko
+Leila Igwegbe
+
 
 
 Ridwan Amin - *Project Manager*  
