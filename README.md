@@ -1,5 +1,5 @@
 
-<p align="center"> <img src="https://media.giphy.com/media/RKApDdwsQ6jkwd6RNn/giphy.gif" /> </p>
+<p align="center"> <img src="https://media.giphy.com/media/9JgeSP0jlRAVBOG9FD/giphy.gif" /> </p>
 
 <h1 align="center"> CulturePot </h1>
 
