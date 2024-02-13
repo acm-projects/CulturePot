@@ -9,7 +9,7 @@
 ## MVP 💰
 
  -  User Account
-	 -   User authentication with username and password
+	 -   User authentication with username and password.
 	 -   Personalization - ex: profile photo, personal info, etc.
     -   Add Friends
     -    Allow users to include their native language, country of origin, cultural interests, traditional festivals, and favorite cultural practices to their profile
