@@ -92,7 +92,7 @@ Quick Read :)
 
 | Command | Description |
 | ------ | ------ |
-| **cd "Task-Mate"** | Change directories over to our repository |
+| **cd "CulturePot"** | Change directories over to our repository |
 | **git branch** | Lists branches for you |
 | **git branch "branch name"** | Makes new branch |
 | **git checkout "branch name"** | Switch to branch |
@@ -106,7 +106,7 @@ Quick Read :)
 | get commit hash then **git reset --hard 2f5451f** | Undo commit (not pushed) and *remove*  changes |
 
 ## Developers 👥
-Kruthi Vancha  lol
+Kruthi Vancha lol \
 Vidur Nangia    
 Jack Le   
 Leila Igwegbe
