@@ -92,7 +92,7 @@ Quick Read :)
 
 | Command | Description |
 | ------ | ------ |
-| **cd "Task-Mate"** | Change directories over to our repository |
+| **cd "CulturePot"** | Change directories over to our repository |
 | **git branch** | Lists branches for you |
 | **git branch "branch name"** | Makes new branch |
 | **git checkout "branch name"** | Switch to branch |
