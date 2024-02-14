@@ -106,7 +106,7 @@ Quick Read :)
 | get commit hash then **git reset --hard 2f5451f** | Undo commit (not pushed) and *remove*  changes |
 
 ## Developers 👥
-Kruthi Vancha  lol
+Kruthi Vancha
 Vidur Nangia    
 Jack Le   
 Leila Igwegbe
