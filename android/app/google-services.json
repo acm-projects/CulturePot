@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "174167442960",
+    "project_id": "culture-p",
+    "storage_bucket": "culture-p.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:174167442960:android:8971f3c6550c59282f2c95",
+        "android_client_info": {
+          "package_name": "com.example.culture_pot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
