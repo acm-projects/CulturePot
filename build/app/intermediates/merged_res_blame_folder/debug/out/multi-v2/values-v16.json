@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.culture_pot.app-mergeDebugResources-16:/values-v16/values-v16.xml",
+            "outputFile": "com.example.culture_pot.app-mergeDebugResources-18:/values-v16/values-v16.xml",
             "map": [
                 {
                     "source": "C:\\Users\\papij\\.gradle\\caches\\transforms-3\\cded83b008f9d29e1959bb7a5bc237d1\\transformed\\core-1.9.0\\res\\values-v16\\values-v16.xml",

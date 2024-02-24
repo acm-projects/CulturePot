@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.culture_pot.app-mergeDebugResources-16:/values-pt/values-pt.xml",
+            "outputFile": "com.example.culture_pot.app-mergeDebugResources-18:/values-pt/values-pt.xml",
             "map": [
                 {
                     "source": "C:\\Users\\papij\\.gradle\\caches\\transforms-3\\cded83b008f9d29e1959bb7a5bc237d1\\transformed\\core-1.9.0\\res\\values-pt\\values-pt.xml",
@@ -11,6 +11,23 @@
                         "startOffsets": "55",
                         "endColumns": "100",
                         "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "6",
+                        "startColumns": "4",
+                        "startOffsets": "487",
+                        "endColumns": "100",
+                        "endOffsets": "583"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\papij\\.gradle\\caches\\transforms-3\\e22b4f4bf24b15e7a89a8de5f5000a73\\transformed\\browser-1.4.0\\res\\values-pt\\values-pt.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,170,269,381",
+                        "endColumns": "114,98,111,105",
+                        "endOffsets": "165,264,376,482"
                     }
                 }
             ]
