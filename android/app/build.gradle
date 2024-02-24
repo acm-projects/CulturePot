@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.culture_pot"
+    namespace "com.example.Culture_pot"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
