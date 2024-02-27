@@ -5,30 +5,6 @@ import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import './utils.dart';
 
-/*
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: const FirebaseOptions(
-          apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
-          appId: '1:174167442960:android:8971f3c6550c59282f2c95',
-          messagingSenderId: '174167442960',
-          projectId: 'culture-p',
-        ))
-      : await Firebase.initializeApp();
-
-  runApp(MyApp());
-}
-
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(MyApp());
-}
-
-*/
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -303,12 +279,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  void openNoteBox() {
+    // showDialog(context: context, builder: (context) => AlertDialog());
+  }
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  signOut() async {
+    await auth.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => LoginPage()));
   }
 
   @override
@@ -319,6 +298,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Flutter Demo'),
       ),
+      //signout button
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          signOut();
+        },
+        child: Icon(Icons.logout_rounded),
+        backgroundColor: Colors.green,
+      ),
+      /*
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),*/
       body: Padding(
         padding: EdgeInsets.all(32),
         child: Column(
