@@ -6,18 +6,32 @@ import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import './utils.dart';
 import '../services/firestore.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: const FirebaseOptions(
-          apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
-          appId: '1:174167442960:android:8971f3c6550c59282f2c95',
-          messagingSenderId: '174167442960',
-          projectId: 'culture-p',
-        ))
-      : await Firebase.initializeApp();
+  if (Platform.isAndroid) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
+        appId: '1:174167442960:android:8971f3c6550c59282f2c95',
+        messagingSenderId: '174167442960',
+        projectId: 'culture-p',
+      ),
+    );
+  } else if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyAZpsW-SR-7PHxDp-oHgjXVEFnT0bkJOyo',
+        projectId: 'culture-p',
+        messagingSenderId: '174167442960',
+        appId: '1:174167442960:web:b7ff7d8f1310e71c2f2c95',
+      ),
+    );
+  } else {
+    // Handle other platforms if needed
+    await Firebase.initializeApp();
+  }
 
   runApp(MyApp());
 }
