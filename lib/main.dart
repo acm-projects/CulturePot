@@ -7,14 +7,15 @@ import './utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
-      appId: '1:174167442960:android:8971f3c6550c59282f2c95',
-      messagingSenderId: '174167442960',
-      projectId: 'culture-p',
-    ),
-  );
+  Platform.isAndroid
+      ? await Firebase.initializeApp(
+          options: const FirebaseOptions(
+          apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
+          appId: '1:174167442960:android:8971f3c6550c59282f2c95',
+          messagingSenderId: '174167442960',
+          projectId: 'culture-p',
+        ))
+      : await Firebase.initializeApp();
 
   runApp(MyApp());
 }
