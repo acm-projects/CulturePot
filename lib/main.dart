@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import './utils.dart';
+import '../services/firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -280,9 +281,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  void openNoteBox() {
-    // showDialog(context: context, builder: (context) => AlertDialog());
+  // text controller
+
+  final FirestoreService firestoreService = FirestoreService();
+  final TextEditingController textController = TextEditingController();
+
+  void openPostBox() {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: TextField(
+                controller: textController,
+              ),
+              actions: [
+                // button to save
+                ElevatedButton(
+                  onPressed: () {
+                    // add a new
+                    firestoreService.addPost(textController.text);
+
+                    // clear the text controller
+                    textController.clear();
+
+                    // close the box
+                    Navigator.pop(context);
+                  },
+                  child: Text("Add"),
+                )
+              ],
+            ));
   }
+
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   signOut() async {
@@ -297,21 +326,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Demo'),
+        title: Text('Posts'),
       ),
       //signout button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          signOut();
-        },
-        child: Icon(Icons.logout_rounded),
-        backgroundColor: Colors.green,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              signOut();
+            },
+            child: Icon(Icons.logout_rounded),
+            backgroundColor: Colors.green,
+          ),
+          SizedBox(height: 16), // Add some space between the buttons
+          FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add),
+          ),
+        ],
       ),
-      /*
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.add),
-      ),*/
+
       body: Padding(
         padding: EdgeInsets.all(32),
         child: Column(
