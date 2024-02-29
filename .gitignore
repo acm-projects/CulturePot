@@ -1,0 +1,18 @@
+#ignore all file in .dart_tool
+.dart_tool/
+build/
+.flutter-plugins-dependencies
+.flutter-plugins
+# Miscellaneous
+*.class
+#*.lock
+*.log
+*.pyc
+*.swp
+# Ignore Mac DS_Store files
+.DS_Store
+**/.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
