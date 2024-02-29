@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -286,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController textController = TextEditingController();
 
-  void openPostBox() {
+  void openPostBox({String? docID}) {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -298,7 +299,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ElevatedButton(
                   onPressed: () {
                     // add a new
-                    firestoreService.addPost(textController.text);
+                    if (docID == null) {
+                      firestoreService.addPost(textController.text);
+                    } else {
+                      firestoreService.updatePost(docID, textController.text);
+                    }
 
                     // clear the text controller
                     textController.clear();
@@ -342,12 +347,58 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           SizedBox(height: 16), // Add some space between the buttons
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: openPostBox,
             child: Icon(Icons.add),
           ),
         ],
       ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: firestoreService.getPostsStream(),
+        builder: (context, snapshot) {
+          // if we have data, get all the docs
+          if (snapshot.hasData) {
+            List postsList = snapshot.data!.docs;
 
+            // display as a list
+            return ListView.builder(
+                itemCount: postsList.length,
+                itemBuilder: (context, index) {
+                  // get each individual doc
+                  DocumentSnapshot document = postsList[index];
+                  String docID = document.id;
+
+                  // get node from each doc
+                  Map<String, dynamic> data =
+                      document.data() as Map<String, dynamic>;
+                  String postText = data['post'];
+
+                  // display as a list tile
+                  return ListTile(
+                      title: Text(postText),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // update button
+                          IconButton(
+                            onPressed: () => openPostBox(docID: docID),
+                            icon: const Icon(Icons.settings),
+                          ),
+
+                          IconButton(
+                            onPressed: () => firestoreService.deletePost(docID),
+                            icon: const Icon(Icons.delete),
+                          )
+                        ],
+                      ));
+                });
+          } else {
+            return const Text("No posts...");
+          }
+        },
+      ),
+
+      // this body displays the email that is signed in
+      /* 
       body: Padding(
         padding: EdgeInsets.all(32),
         child: Column(
@@ -364,7 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
-      ),
+      ), */
     );
   }
 }
