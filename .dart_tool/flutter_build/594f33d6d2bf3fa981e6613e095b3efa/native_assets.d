@@ -1,0 +1,1 @@
+ /Users/leilaigwegbe/CulturePot/.dart_tool/flutter_build/594f33d6d2bf3fa981e6613e095b3efa/native_assets.yaml: 
