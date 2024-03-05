@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "174167442960",
+    "firebase_url": "https://culture-p-default-rtdb.firebaseio.com",
     "project_id": "culture-p",
     "storage_bucket": "culture-p.appspot.com"
   },

@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
   // get collection of notes
   final CollectionReference posts =
       FirebaseFirestore.instance.collection("posts");
+
+      final CollectionReference users =
+      FirebaseFirestore.instance.collection("users");
 
   // CREATE: add a new post
   Future<void> addPost(String post) {
@@ -33,4 +37,24 @@ class FirestoreService {
   Future<void> deletePost(String docID) {
     return posts.doc(docID).delete();
   }
+
+
+Future<void> addUser(String email, String uid, {List<String> friends = const []}) async {
+  User? user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    Map<String, dynamic> userData = {
+      "email": email,
+      "uid":user.uid,
+      "friends": friends,
+    };
+    await users.doc(user.uid).set(userData);
+  } else {
+    // Handle the case where the user is not signed in
+    // You might throw an exception, return a future with an error, etc.
+    throw Exception("User is not signed in");
+  }
+}
+
+
+
 }

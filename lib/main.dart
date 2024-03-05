@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/blank_page.dart';
+import 'package:culture_pot/firebase_options.dart';
+import 'package:culture_pot/user_list';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,30 +11,38 @@ import './utils.dart';
 import '../services/firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Platform.isAndroid) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
-        appId: '1:174167442960:android:8971f3c6550c59282f2c95',
-        messagingSenderId: '174167442960',
-        projectId: 'culture-p',
-      ),
-    );
-  } else if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyAZpsW-SR-7PHxDp-oHgjXVEFnT0bkJOyo',
-        projectId: 'culture-p',
-        messagingSenderId: '174167442960',
-        appId: '1:174167442960:web:b7ff7d8f1310e71c2f2c95',
-      ),
-    );
-  } else {
-    // Handle other platforms if needed
-    await Firebase.initializeApp();
-  }
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform); 
+  // // if (Platform.isAndroid) {
+  // //   await Firebase.initializeApp(
+  // //     options: const FirebaseOptions(
+  // //       apiKey: 'AIzaSyABHTakeXo6w5LCmwH-KdaqxskI8uWmIbc',
+  // //       appId: '1:174167442960:android:8971f3c6550c59282f2c95',
+  // //       messagingSenderId: '174167442960',
+  // //       projectId: 'culture-p',
+  // //     ),
+  // //   );
+  // //   } else if (kIsWeb) {
+  //   await Firebase.initializeApp(
+  //     options: const FirebaseOptions(
+  //       apiKey: 'AIzaSyAZpsW-SR-7PHxDp-oHgjXVEFnT0bkJOyo',
+  //        authDomain: "culturepot-cb54f.firebaseapp.com",
+  //       projectId: 'culture-p',
+  //       messagingSenderId: '1:174167442960:android:8971f3c6550c59282f2c95',
+  //       storageBucket: "culture-p.appspot.com",
+  //       appId: '1:174167442960:web:b7ff7d8f1310e71c2f2c95',
+  //        measurementId: "174167442960",
+
+
+         
+  //     ),
+  //   );
+  // //  }else {
+  // //   // Handle other platforms if needed
+  // //   await Firebase.initializeApp();
+  // // }
 
   runApp(MyApp());
 }
@@ -93,6 +104,7 @@ class SignupPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   SignupPage({required this.onSignedIn});
+  final FirestoreService firestoreService = FirestoreService();
 
   Future<void> _signUp() async {
     final isValid = formKey.currentState!.validate();
@@ -104,13 +116,14 @@ class SignupPage extends StatelessWidget {
         password: _passwordController.text,
       );
       // If signup successful, invoke callback to notify parent widget
+      firestoreService.addUser(_auth.currentUser?.email as String, _auth.currentUser?.uid as String, friends: []);
       onSignedIn();
     } on FirebaseAuthException catch (e) {
       Utils.showSnackBar(e.message);
     } catch (e) {
       print(e);
     }
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
       // If login successful, navigate to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
+        MaterialPageRoute(builder: (context) => UserListScreen()),
       );
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -364,8 +377,12 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: openPostBox,
             child: Icon(Icons.add),
           ),
+            
         ],
       ),
+
+
+
       body: StreamBuilder<QuerySnapshot>(
         stream: firestoreService.getPostsStream(),
         builder: (context, snapshot) {
