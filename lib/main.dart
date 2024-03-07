@@ -10,6 +10,8 @@ import 'package:email_validator/email_validator.dart';
 import './utils.dart';
 import '../services/firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +39,25 @@ class _AuthenticationExampleState extends State<AuthenticationExample> {
   bool _userIsLoggedIn = false; // Tracks the user's login status
 
   @override
+  void initState() {
+    super.initState();
+    checkUserLoginStatus();
+  }
+
+  Future<void> checkUserLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+    if (isLoggedIn) {
+      await FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        setState(() {
+          _userIsLoggedIn = user != null;
+        });
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future:
@@ -52,10 +73,14 @@ class _AuthenticationExampleState extends State<AuthenticationExample> {
           if (_userIsLoggedIn) {
             return MyHomePage();
           } else {
-            return SignupPage(onSignedIn: () {
+            return SignupPage(onSignedIn: () async {
               setState(() {
                 _userIsLoggedIn = true;
               });
+
+              // Store user login status in shared preferences
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setBool('isLoggedIn', true);
             });
           }
         }

@@ -65,6 +65,7 @@ INJECTED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\new
 INJECTED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\android\app\src\main\AndroidManifest.xml:1:1-33:12
 INJECTED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\android\app\src\main\AndroidManifest.xml:1:1-33:12
 MERGED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\android\app\src\main\AndroidManifest.xml:1:1-33:12
+MERGED from [:shared_preferences_android] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\shared_preferences_android\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-9:12
 MERGED from [:firebase_auth] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\firebase_auth\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:cloud_firestore] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
 MERGED from [:firebase_core] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\firebase_core\intermediates\merged_manifest\debug\AndroidManifest.xml:2:1-17:12
@@ -144,6 +145,8 @@ uses-sdk
 INJECTED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\android\app\src\main\AndroidManifest.xml
 INJECTED from C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\android\app\src\main\AndroidManifest.xml
+MERGED from [:shared_preferences_android] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\shared_preferences_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
+MERGED from [:shared_preferences_android] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\shared_preferences_android\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:firebase_auth] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\firebase_auth\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:firebase_auth] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\firebase_auth\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
 MERGED from [:cloud_firestore] C:\Users\papij\OneDrive\Documents\Classes\Spring 2024\Projects\newCulturePot\CulturePot\build\cloud_firestore\intermediates\merged_manifest\debug\AndroidManifest.xml:5:5-7:41
