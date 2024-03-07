@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		ME0cAg6cl/bTZmwXEVgMugDccUI=
+		DTU94R0mrkenuMyG9xHGUM5F5+8=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		oG5/OGn+vw7vp/nu5DUDoZJ4nFc=
+		cnFg7BKJ35mIC2jlpkn0GNi0BJA=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -28,13 +28,29 @@
 		<data>
 		/CUoTuPQqqdexfyOT9lpJhV+2MQ=
 		</data>
+		<key>flutter_assets/images/SignIn.png</key>
+		<data>
+		MxVamn8VQ+6kGYUub2uTA4kEmPA=
+		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
 		NCrHh2I/9lzrnFtL1HoDKjZ7+as=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		61pLWl8tkM8dPV7DO/zJcYr55kk=
+		AWUdX1kNJmXgR0iyD1agIkxYXhA=
+		</data>
+		<key>flutter_assets/lib/images/.DS_Store</key>
+		<data>
+		3y++sUAKzaCQmjLBz2v0kvESHgc=
+		</data>
+		<key>flutter_assets/lib/images/Apple-Logo.png</key>
+		<data>
+		2rwrgWuwK9LGRWujejKYTvRPeJM=
+		</data>
+		<key>flutter_assets/lib/images/googleLogo.png</key>
+		<data>
+		E+KbuU+MHyQk30WN3g8rR/pRHD8=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -55,14 +71,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AK9VrT1vIYmP534P8JLRoc2lLJQbaGDpko1FyK+MCV0=
+			anMyw55jFZ4lfeCYYFmDpQwGrW6IDftRou/A+MzbjyI=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sps95+7JukayebvM0TLjL1LW1VXXndpKp/O8tOm9ZR8=
+			yrkl9bN+5AIOBIYFuobs2Scnqc8btvautxofdkR2w58=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -86,6 +102,13 @@
 			2YZbZxoJ1oPROoYwidiCXg9ho3aWzl19RIvIAjqmJFM=
 			</data>
 		</dict>
+		<key>flutter_assets/images/SignIn.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			kEzvXwiywSeCQAxmLIdQvQSrauJTLTNaq1wEK/gh4K0=
+			</data>
+		</dict>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<dict>
 			<key>hash2</key>
@@ -97,7 +120,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			e6hlo/MbgcX10vJKdlcKKqZ4LmtB53vOGGUj3/DDlms=
+			/D0wSyPZB/CTeKeNFRma8L+DD6MaImfnYgtUDoqfBJ0=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/images/Apple-Logo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			iqMEFhSUSGrxtx7kGi5B+ZNziPiAFHT/oF1XYOvccU0=
+			</data>
+		</dict>
+		<key>flutter_assets/lib/images/googleLogo.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			HW+s9YYFLCSsSKgGXGdlRfGxwrK1yLGS5OxC7tdu/+8=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
