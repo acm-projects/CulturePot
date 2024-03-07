@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
       // If login successful, navigate to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => UserListScreen()),
+        MaterialPageRoute(builder: (context) => MyHomePage()),
       );
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -349,6 +349,16 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             onPressed: openPostBox,
             child: Icon(Icons.add),
+          ),
+          SizedBox(height: 16), // Add space between the buttons
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserListScreen()),
+              );
+            },
+            child: Text('User List'),
           ),
         ],
       ),
