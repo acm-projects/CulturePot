@@ -1,19 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:culture_pot/blank_page.dart';
-import 'package:culture_pot/firebase_options.dart';
-import 'package:culture_pot/user_list';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'dart:io';
 import 'package:email_validator/email_validator.dart';
 import './utils.dart';
 import '../services/firestore.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
-import 'forgetPassword.dart';
-import 'main.dart';
 import 'loginPage.dart';
 
 class SignupPage extends StatelessWidget {

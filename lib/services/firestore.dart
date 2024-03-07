@@ -6,14 +6,27 @@ class FirestoreService {
   final CollectionReference posts =
       FirebaseFirestore.instance.collection("posts");
 
-      final CollectionReference users =
+  final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
+
+  String? getCurrentUserId() {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    User? user = _auth.currentUser;
+
+    if (user != null) {
+      String userId = user.uid;
+      return userId;
+    } else {
+      return null;
+    }
+  }
 
   // CREATE: add a new post
   Future<void> addPost(String post) {
     return posts.add({
       'post': post,
       'timestamp': Timestamp.now(),
+      'uid': getCurrentUserId(),
     });
   }
 
@@ -38,23 +51,20 @@ class FirestoreService {
     return posts.doc(docID).delete();
   }
 
-
-Future<void> addUser(String email, String uid, {List<String> friends = const []}) async {
-  User? user = FirebaseAuth.instance.currentUser;
-  if (user != null) {
-    Map<String, dynamic> userData = {
-      "email": email,
-      "uid":user.uid,
-      "friends": friends,
-    };
-    await users.doc(user.uid).set(userData);
-  } else {
-    // Handle the case where the user is not signed in
-    // You might throw an exception, return a future with an error, etc.
-    throw Exception("User is not signed in");
+  Future<void> addUser(String email, String uid,
+      {List<String> friends = const []}) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      Map<String, dynamic> userData = {
+        "email": email,
+        "uid": user.uid,
+        "friends": friends,
+      };
+      await users.doc(user.uid).set(userData);
+    } else {
+      // Handle the case where the user is not signed in
+      // You might throw an exception, return a future with an error, etc.
+      throw Exception("User is not signed in");
+    }
   }
-}
-
-
-
 }
