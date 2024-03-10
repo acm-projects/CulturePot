@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
 
   Future<void> _signIn() async {
     try {
@@ -45,6 +47,23 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
+            //circular widget  to accept and show our selected file
+            //Stack(
+
+            //),
+
+            // text input field for username
+            TextFormField(
+              controller: _usernameController,
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Username",
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20.0),
             TextField(
               controller: _emailController,
               decoration: InputDecoration(
@@ -63,6 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                 filled: true,
                 fillColor: Colors.grey[10],
                 border: InputBorder.none,
+              ),
+            ),
+            TextFormField(
+              controller: _bioController,
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Bio",
+                filled: true,
+                fillColor: Colors.grey[200],
+                border: OutlineInputBorder(),
               ),
             ),
             SizedBox(height: 20.0),
