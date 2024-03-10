@@ -28,69 +28,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: Utils.messengerKey,
-      home: AuthenticationExample(),
-    );
-  }
-}
-
-class AuthenticationExample extends StatefulWidget {
-  @override
-  _AuthenticationExampleState createState() => _AuthenticationExampleState();
-}
-
-class _AuthenticationExampleState extends State<AuthenticationExample> {
-  bool _userIsLoggedIn = false; // Tracks the user's login status
-
-  @override
-  void initState() {
-    super.initState();
-    checkUserLoginStatus();
-  }
-
-  Future<void> checkUserLoginStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
-
-    if (isLoggedIn) {
-      await FirebaseAuth.instance.authStateChanges().listen((User? user) {
-        setState(() {
-          _userIsLoggedIn = user != null;
-        });
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future:
-          Future.delayed(Duration(seconds: 2)), // Placeholder for future work
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return const Center(
-            child: Text("Something went wrong"),
-          );
-        }
-        if (snapshot.connectionState == ConnectionState.done) {
-          // Assuming user authentication status is checked in authsystem.dart
-          if (_userIsLoggedIn) {
-            return MyHomePage();
-          } else {
-            return SignupPage(onSignedIn: () async {
-              setState(() {
-                _userIsLoggedIn = true;
-              });
-
-              // Store user login status in shared preferences
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setBool('isLoggedIn', true);
-            });
+      // home: LoginPage(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return MyHomePage();
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            }
           }
-        }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.blue,
+              ),
+            );
+          }
+
+          return LoginPage();
+        },
+      ),
     );
   }
 }
