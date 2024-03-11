@@ -1,41 +1,69 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:image_picker/image_picker.dart';
 import './utils.dart';
 import '../services/firestore.dart';
 import 'loginPage.dart';
+import 'services/auth_methods.dart';
+import 'main.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   final VoidCallback onSignedIn;
+
+  SignupPage({required this.onSignedIn});
+
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
+  bool _isLoading = false;
 
   final formKey = GlobalKey<FormState>();
 
-  SignupPage({required this.onSignedIn});
   final FirestoreService firestoreService = FirestoreService();
 
-  Future<void> _signUp() async {
-    final isValid = formKey.currentState!.validate();
-    if (!isValid) return;
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
 
-    try {
-      final credential = await _auth.createUserWithEmailAndPassword(
-        email: _emailController.text,
-        password: _passwordController.text,
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: _image!,
+    );
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (res != 'success') {
+      showSnackBar(res, context);
+    } else {
+      //
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(),
+        ),
       );
-      // If signup successful, invoke callback to notify parent widget
-      firestoreService.addUser(
-          _auth.currentUser?.email as String, _auth.currentUser?.uid as String,
-          friends: []);
-      onSignedIn();
-    } on FirebaseAuthException catch (e) {
-      Utils.showSnackBar(e.message);
-    } catch (e) {
-      print(e);
     }
   }
 
@@ -55,16 +83,21 @@ class SignupPage extends StatelessWidget {
               //circular widget  to accept and show our selected file
               Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 64,
-                    backgroundImage: NetworkImage(
-                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 80,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: selectImage,
                       icon: const Icon(
                         Icons.add_a_photo,
                       ),
@@ -137,8 +170,12 @@ class SignupPage extends StatelessWidget {
                     child: Text("I already have an account"),
                   ),
                   ElevatedButton(
-                    onPressed: _signUp,
-                    child: Text("Create an account"),
+                    onPressed: signUpUser,
+                    child: _isLoading
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text("Create an account"),
                   ),
                 ],
               ),

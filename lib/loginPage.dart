@@ -4,6 +4,7 @@ import './utils.dart';
 import 'forgetPassword.dart';
 import 'signupPage.dart';
 import 'main.dart';
+import 'services/auth_methods.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,7 +15,9 @@ class _LoginPageState extends State<LoginPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
+/*
   Future<void> _signIn() async {
     try {
       final credential = await _auth.signInWithEmailAndPassword(
@@ -33,6 +36,34 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       print(e);
     }
+  }
+*/
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    String res = await AuthMethods().loginUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (res == "success") {
+      //
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => MyHomePage(),
+        ),
+      );
+    } else {
+      //
+      showSnackBar(res, context);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -69,10 +100,15 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 20.0),
             Center(
               child: ElevatedButton(
-                onPressed: _signIn,
-                child: Text(
-                  "Login",
-                  style: TextStyle(color: Colors.white),
+                onPressed: loginUser,
+                child: Container(
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
+                        )
+                      : const Text("Login"),
                 ),
               ),
             ),

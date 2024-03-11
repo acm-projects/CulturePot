@@ -187,26 +187,6 @@ class _MyHomePageState extends State<MyHomePage> {
           }
         },
       ),
-
-      // this body displays the email that is signed in
-      /* 
-      body: Padding(
-        padding: EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Signed in as',
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 8),
-            Text(
-              user!.email ?? 'null',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-            ),
-          ],
-        ),
-      ), */
     );
   }
 }

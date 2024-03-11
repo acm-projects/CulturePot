@@ -43,6 +43,9 @@ dependencies:
   flutterfire_cli: ^0.2.7
   shared_preferences: ^2.0.9
   provider: ^6.1.2
+  file_picker: ^6.2.0
+  firebase_storage: ^11.6.9
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
