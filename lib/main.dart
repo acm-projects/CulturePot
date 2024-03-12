@@ -69,6 +69,24 @@ class _MyHomePageState extends State<MyHomePage> {
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController textController = TextEditingController();
   Uint8List? _file;
+  String photoUrl = "";
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPhotoUrl();
+  }
 
   _selectImage(BuildContext context) async {
     return showDialog(
@@ -105,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void openPostBox({String? docID}) {
-    final User user = Provider.of<UserProvider>(context);
+    //final User user = Provider.of<UserProvider>(context);
 
     showDialog(
       context: context,
@@ -120,7 +138,7 @@ class _MyHomePageState extends State<MyHomePage> {
             */
             // Add IconButton here
             CircleAvatar(
-              backgroundImage: NetworkImage(user.photoUrl),
+              backgroundImage: NetworkImage(photoUrl),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.3,
@@ -134,21 +152,24 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SizedBox(
-              height: 45,
-              width: 45,
+              height: 15, // Adjust the height as needed
+              width: 15, // Adjust the width as needed
               child: AspectRatio(
-                aspectRatio: 487 / 451,
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: MemoryImage(_file!),
-                      fit: BoxFit.fill,
-                      alignment: FractionalOffset.topCenter,
-                    ),
-                  ),
-                ),
+                aspectRatio: 1, // Adjust the aspect ratio as needed
+                child: _file != null
+                    ? Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: MemoryImage(_file!),
+                            fit: BoxFit.fill,
+                            alignment: FractionalOffset.topCenter,
+                          ),
+                        ),
+                      )
+                    : Container(),
               ),
             ),
+
             const Divider(),
             IconButton(
               icon: const Icon(Icons.upload),
