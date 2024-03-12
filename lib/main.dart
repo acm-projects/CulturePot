@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:culture_pot/blank_page.dart';
 import 'package:culture_pot/firebase_options.dart';
+import 'package:culture_pot/models/user.dart';
+import 'package:culture_pot/providers/user_provider.dart';
 import 'package:culture_pot/user_list';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,15 +14,23 @@ import '../services/firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
-import 'forgetPassword.dart';
-import 'signupPage.dart';
 import 'loginPage.dart';
+import 'models/user.dart';
+import 'userProfile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        // other providers if needed
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,7 +38,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: Utils.messengerKey,
-      // home: LoginPage(),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -106,9 +115,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+  void initState() {
+    super.initState();
+    addData();
+  }
 
+  addData() async {
+    UserProvider _userProvider = Provider.of(context, listen: false);
+    await _userProvider.refreshUser();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Posts'),
@@ -139,6 +157,16 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
             child: Text('User List'),
+          ),
+          SizedBox(height: 16), // Add space between the buttons
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => userProfile()),
+              );
+            },
+            child: Text('User Profile'),
           ),
         ],
       ),
