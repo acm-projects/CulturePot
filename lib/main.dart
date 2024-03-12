@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/blank_page.dart';
 import 'package:culture_pot/firebase_options.dart';
@@ -7,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'dart:io';
 import 'package:email_validator/email_validator.dart';
+import 'package:image_picker/image_picker.dart';
 import './utils.dart';
 import '../services/firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -28,7 +31,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: Utils.messengerKey,
-      // home: LoginPage(),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
@@ -66,35 +68,116 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController textController = TextEditingController();
+  Uint8List? _file;
+
+  _selectImage(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(title: const Text('Create a Post'), children: [
+            SimpleDialogOption(
+              padding: const EdgeInsets.all(20),
+              child: const Text("Take a photo"),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                Uint8List file = await pickImage(
+                  ImageSource.camera,
+                );
+                setState(() {
+                  _file = file;
+                });
+              },
+            ),
+            SimpleDialogOption(
+                padding: const EdgeInsets.all(20),
+                child: const Text("Choose from gallery"),
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                  Uint8List file = await pickImage(
+                    ImageSource.gallery,
+                  );
+                  setState(() {
+                    _file = file;
+                  });
+                }),
+          ]);
+        });
+  }
 
   void openPostBox({String? docID}) {
+    final User user = Provider.of<UserProvider>(context);
+
     showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              content: TextField(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Column(
+          // Adjust the layout as needed
+          children: [
+            /*
+            TextField(
+              controller: textController,
+            ),
+            */
+            // Add IconButton here
+            CircleAvatar(
+              backgroundImage: NetworkImage(user.photoUrl),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.3,
+              child: TextField(
                 controller: textController,
+                decoration: const InputDecoration(
+                  hintText: 'Write a caption...',
+                  border: InputBorder.none,
+                ),
+                maxLines: 8,
               ),
-              actions: [
-                // button to save
-                ElevatedButton(
-                  onPressed: () {
-                    // add a new
-                    if (docID == null) {
-                      firestoreService.addPost(textController.text);
-                    } else {
-                      firestoreService.updatePost(docID, textController.text);
-                    }
+            ),
+            SizedBox(
+              height: 45,
+              width: 45,
+              child: AspectRatio(
+                aspectRatio: 487 / 451,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(_file!),
+                      fit: BoxFit.fill,
+                      alignment: FractionalOffset.topCenter,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Divider(),
+            IconButton(
+              icon: const Icon(Icons.upload),
+              onPressed: () => _selectImage(context),
+            ),
+          ],
+        ),
+        actions: [
+          // button to save
+          ElevatedButton(
+            onPressed: () {
+              // add a new
+              if (docID == null) {
+                firestoreService.addPost(textController.text);
+              } else {
+                firestoreService.updatePost(docID, textController.text);
+              }
 
-                    // clear the text controller
-                    textController.clear();
+              // clear the text controller
+              textController.clear();
 
-                    // close the box
-                    Navigator.pop(context);
-                  },
-                  child: Text("Add"),
-                )
-              ],
-            ));
+              // close the box
+              Navigator.pop(context);
+            },
+            child: Text("Add"),
+          )
+        ],
+      ),
+    );
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -107,8 +190,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Posts'),
