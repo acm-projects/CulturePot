@@ -54,6 +54,10 @@ cross_file
 3.2
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.3+8/
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.3+8/lib/
+crypto
+2.19
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/lib/
 cupertino_icons
 2.19
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.6/
@@ -138,6 +142,10 @@ firebase_storage_web
 3.2
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage_web-3.7.3/
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage_web-3.7.3/lib/
+fixnum
+2.19
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.0/
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.0/lib/
 flutter_lints
 2.19
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.3/
@@ -326,6 +334,10 @@ source_span
 2.18
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0/
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0/lib/
+sprintf
+2.12
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0/
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/sprintf-7.0.0/lib/
 stack_trace
 2.18
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.1/
@@ -358,6 +370,10 @@ uri
 2.12
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/uri-1.0.0/
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/uri-1.0.0/lib/
+uuid
+3.0
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.3.3/
+file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-4.3.3/lib/
 vector_math
 2.14
 file:///C:/Users/papij/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/

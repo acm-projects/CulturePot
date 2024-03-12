@@ -70,6 +70,37 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController textController = TextEditingController();
   Uint8List? _file;
   String photoUrl = "";
+  String uid = "";
+  String username = "";
+  bool _isLoading = false;
+
+  void postImage(
+    String uid,
+    String username,
+    String profImage,
+  ) async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      String res = await FirestoreService()
+          .addPost(textController.text, _file!, uid, username, profImage);
+
+      if (res == "success") {
+        showSnackBar('Posted!', context);
+        setState(() {
+          _isLoading = false;
+        });
+        clearImage();
+      } else {
+        showSnackBar(res, context);
+        _isLoading = false;
+      }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
 
   void getPhotoUrl() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
@@ -82,10 +113,40 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void getUid() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      uid = (snap.data() as Map<String, dynamic>)['uid'];
+    });
+  }
+
+  void getUsername() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      username = (snap.data() as Map<String, dynamic>)['username'];
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     getPhotoUrl();
+    getUsername();
+    getUid();
+  }
+
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
   }
 
   _selectImage(BuildContext context) async {
@@ -136,6 +197,8 @@ class _MyHomePageState extends State<MyHomePage> {
               controller: textController,
             ),
             */
+            _isLoading ? const LinearProgressIndicator() : Container(),
+
             // Add IconButton here
             CircleAvatar(
               backgroundImage: NetworkImage(photoUrl),
@@ -183,7 +246,8 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () {
               // add a new
               if (docID == null) {
-                firestoreService.addPost(textController.text);
+                //firestoreService.addPost(textController.text);
+                postImage(uid, username, photoUrl);
               } else {
                 firestoreService.updatePost(docID, textController.text);
               }
