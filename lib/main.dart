@@ -69,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController textController = TextEditingController();
+  final TextEditingController cultureController = TextEditingController();
   Uint8List? _file;
   String photoUrl = "";
   String uid = "";
@@ -79,14 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
     String uid,
     String username,
     String profImage,
+    String culture,
   ) async {
     setState(() {
       _isLoading = true;
     });
 
     try {
-      String res = await FirestoreService()
-          .addPost(textController.text, _file!, uid, username, profImage);
+      String res = await FirestoreService().addPost(
+          textController.text, _file!, uid, username, profImage, culture);
 
       if (res == "success") {
         showSnackBar('Posted!', context);
@@ -216,6 +218,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SizedBox(
+              width: 80,
+              child: TextField(
+                controller: cultureController,
+                decoration: const InputDecoration(
+                  hintText: 'Enter the culture()',
+                  border: InputBorder.none,
+                ),
+                maxLines: 1,
+              ),
+            ),
+            SizedBox(
               height: 15, // Adjust the height as needed
               width: 15, // Adjust the width as needed
               child: AspectRatio(
@@ -248,7 +261,9 @@ class _MyHomePageState extends State<MyHomePage> {
               // add a new
               if (docID == null) {
                 //firestoreService.addPost(textController.text);
-                postImage(uid, username, photoUrl);
+                postImage(uid, username, photoUrl, cultureController.text);
+              } else if (cultureController.text == null) {
+                postImage(uid, username, photoUrl, "none");
               } else {
                 firestoreService.updatePost(docID, textController.text);
               }

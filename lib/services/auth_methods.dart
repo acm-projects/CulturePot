@@ -6,6 +6,11 @@ import './storage_methods.dart';
 import '../models/user.dart' as model;
 
 class AuthMethods {
+  final CollectionReference posts =
+      FirebaseFirestore.instance.collection("posts");
+
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection("users");
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -16,6 +21,24 @@ class AuthMethods {
         await _firestore.collection('users').doc(currentUser.uid).get();
 
     return model.User.fromSnap(snap);
+  }
+
+  // method to edit user cultural preferences
+  Future<String> editUser({
+    required String uid,
+    required List preferences,
+  }) async {
+    String res = "Some error occured";
+    try {
+      // actual logic to implement the stuff
+      // takes in a list of cultural preferences, sets the users preferences to that list
+      await users.doc(uid).update({
+        'preferences': preferences,
+      });
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
   }
 
   // sign up user

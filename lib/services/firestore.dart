@@ -34,6 +34,7 @@ class FirestoreService {
     String uid,
     String username,
     String profImage,
+    String culture,
   ) async {
     String res = "success";
     try {
@@ -50,6 +51,7 @@ class FirestoreService {
         postUrl: photoUrl,
         profImage: profImage,
         likes: [],
+        culture: culture,
       );
 
       _firestore.collection('posts').doc(postId).set(
