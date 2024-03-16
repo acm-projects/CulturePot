@@ -49,6 +49,7 @@ class AuthMethods {
           bio: bio,
           photoUrl: photoUrl,
           friends: [],
+          preferences: [],
         );
 
         await _firestore.collection('users').doc(cred.user!.uid).set(
