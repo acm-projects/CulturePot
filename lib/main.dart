@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/blank_page.dart';
+import 'package:culture_pot/feed_screen.dart';
 import 'package:culture_pot/firebase_options.dart';
 import 'package:culture_pot/user_list';
 import 'package:flutter/material.dart';
@@ -305,6 +306,16 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
             child: Text('User List'),
+          ),
+          SizedBox(height: 16), // Add space between the buttons
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FeedScreen()),
+              );
+            },
+            child: Text('Feed Posts'),
           ),
         ],
       ),

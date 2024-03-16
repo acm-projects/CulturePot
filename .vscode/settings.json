@@ -1,7 +1,8 @@
 {
-    "files.autoSave": "off",
-    "files.autoSaveDelay": 500,
-    "dart.flutterGenerateLocalizationsOnSave": "never",
-    "dart.flutterHotReloadOnSave": "all",
-    "dart.hotReloadOnSave": "all"
+  "files.autoSave": "off",
+  "files.autoSaveDelay": 500,
+  "dart.flutterGenerateLocalizationsOnSave": "never",
+  "dart.flutterHotReloadOnSave": "all",
+  "dart.hotReloadOnSave": "all",
+  "cmake.sourceDirectory": "C:/Users/papij/OneDrive/Documents/Classes/Spring 2024/Projects/newCulturePot/CulturePot/linux"
 }
