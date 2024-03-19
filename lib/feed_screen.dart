@@ -1,9 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/post_card.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FeedScreen extends StatelessWidget {
+class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
+
+  @override
+  _FeedScreenState createState() => _FeedScreenState();
+}
+
+class _FeedScreenState extends State<FeedScreen> {
+  List<String> friendsUIDs = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch friends UIDs when the page is loaded
+    fetchFriendsUIDs();
+  }
+
+  Future<void> fetchFriendsUIDs() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      if (userSnapshot.exists) {
+        final List<String> friends = List<String>.from(userSnapshot.data()!['friends']); // Assuming 'friends' is the key for the friends list
+        setState(() {
+          friendsUIDs = friends;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +60,21 @@ class FeedScreen extends StatelessWidget {
             );
           }
 
+          // Filter posts made by friends
+          final List<DocumentSnapshot> friendPosts = snapshot.data!.docs
+              .where((post) => friendsUIDs.contains(post.data()['uid']))
+              .toList();
+
           return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) => PostCard(
-              snap: snapshot.data!.docs[index].data(),
-            ),
+            itemCount: friendPosts.length,
+            itemBuilder: (context, index) {
+              // Add the print statement here
+              print(friendPosts[index].data());
+
+              return PostCard(
+                snap: friendPosts[index].data(),
+              );
+            },
           );
         },
       ),

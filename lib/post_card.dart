@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PostCard extends StatelessWidget {
-  final snap;
+  final dynamic snap;
   const PostCard({
     Key? key,
     required this.snap,
@@ -10,6 +10,7 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(snap);
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 10),

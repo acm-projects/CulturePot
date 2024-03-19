@@ -40,7 +40,7 @@ class AuthMethods {
     }
     return res;
   }
-
+  
   // sign up user
   Future<String> signUpUser({
     required String email,

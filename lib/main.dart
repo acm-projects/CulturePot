@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/blank_page.dart';
+import 'package:culture_pot/culture_page.dart';
 import 'package:culture_pot/feed_screen.dart';
 import 'package:culture_pot/firebase_options.dart';
 import 'package:culture_pot/user_list';
@@ -19,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'forgetPassword.dart';
 import 'signupPage.dart';
 import 'loginPage.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -85,6 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _isLoading = true;
     });
+
+      // Printing values from text fields
+  print('Text field value: ${textController.text}');
+  print('Culture value: ${cultureController.text}');
+
 
     try {
       String res = await FirestoreService().addPost(
@@ -270,6 +277,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
               // clear the text controller
               textController.clear();
+              cultureController.clear();
 
               // close the box
               Navigator.pop(context);
@@ -331,6 +339,19 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
             child: Text('Feed Posts'),
+          ),
+          SizedBox(height: 16), // Add space between the buttons
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CulturePage()),
+              );
+            },
+            child: Text('Culture List'),
+
+
+
           ),
         ],
       ),
