@@ -13,23 +13,47 @@ class FeedScreen extends StatefulWidget {
 
 class _FeedScreenState extends State<FeedScreen> {
   List<String> friendsUIDs = [];
+  List<String> preferences = [];
 
   @override
   void initState() {
     super.initState();
     // Fetch friends UIDs when the page is loaded
     fetchFriendsUIDs();
+    fetchUserPreferences();
   }
 
   Future<void> fetchFriendsUIDs() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-          await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
       if (userSnapshot.exists) {
-        final List<String> friends = List<String>.from(userSnapshot.data()!['friends']); // Assuming 'friends' is the key for the friends list
+        final List<String> friends = List<String>.from(userSnapshot.data()![
+            'friends']); // Assuming 'friends' is the key for the friends list
         setState(() {
           friendsUIDs = friends;
+        });
+      }
+    }
+  }
+
+  Future<void> fetchUserPreferences() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
+      if (userSnapshot.exists) {
+        final List<String> userPrefs = List<String>.from(userSnapshot.data()![
+            'preferences']); // Assuming 'preferences' is the key for the preferences list
+        setState(() {
+          preferences = userPrefs;
         });
       }
     }
@@ -65,14 +89,40 @@ class _FeedScreenState extends State<FeedScreen> {
               .where((post) => friendsUIDs.contains(post.data()['uid']))
               .toList();
 
+          final List<DocumentSnapshot> culturePosts =
+              snapshot.data!.docs.where((post) {
+            // Retrieve the culture value from the post
+            String culture = post.data()['culture'];
+
+            // Check if the culture value is included in the user's preferences
+            return preferences.contains(culture);
+          }).toList();
+
+          // Combine friendPosts and culturePosts into a single Set
+          Set<DocumentSnapshot> combinedPosts = {};
+
+          // Add friendPosts to the combined set
+          combinedPosts.addAll(snapshot.data!.docs
+              .where((post) => friendsUIDs.contains(post.data()['uid'])));
+
+          // Add culturePosts to the combined set
+          combinedPosts.addAll(snapshot.data!.docs.where((post) {
+            String culture = post.data()['culture'];
+            return preferences.contains(culture);
+          }));
+
+          // Convert the combined set back to a list
+          List<DocumentSnapshot> combinedList = combinedPosts.toList();
+
           return ListView.builder(
-            itemCount: friendPosts.length,
+            itemCount: combinedList.length, // Use combinedList length
             itemBuilder: (context, index) {
               // Add the print statement here
-              print(friendPosts[index].data());
+              print(combinedList[index].data());
 
               return PostCard(
-                snap: friendPosts[index].data(),
+                snap: combinedList[index]
+                    .data(), // Access each post from combinedList
               );
             },
           );
