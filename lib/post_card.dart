@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/comments_screen.dart';
 import 'package:culture_pot/like_animation.dart';
 import 'package:culture_pot/models/user.dart';
 import 'package:culture_pot/providers/user_provider.dart';
@@ -173,7 +174,13 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentsScreen(
+                      snap: widget.snap,
+                    ),
+                  ),
+                ),
                 icon: const Icon(
                   Icons.send,
                 ),
