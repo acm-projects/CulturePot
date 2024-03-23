@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CommentCard extends StatelessWidget {
-  final snap;
+  final snap; // Change this to dynamic to allow DocumentSnapshot or QueryDocumentSnapshot
   const CommentCard({Key? key, required this.snap}) : super(key: key);
 
   @override
@@ -13,7 +13,7 @@ class CommentCard extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage: NetworkImage(
-              snap.data()['profilePic'],
+              snap['profilePic'], // Access data directly using map-like syntax
             ),
             radius: 18,
           ),
@@ -24,25 +24,17 @@ class CommentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: snap.data()['name'],
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            )),
-                        TextSpan(
-                          text: ' ${snap.data()['text']}',
-                        ),
-                      ],
+                  Text(
+                    '${snap['name']} ${snap['text']}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       DateFormat.yMMMd().format(
-                        snap.data()['datePublished'].toDate(),
+                        snap['datePublished'].toDate(),
                       ),
                       style: const TextStyle(
                         fontSize: 12,

@@ -20,8 +20,7 @@ class CommentsScreen extends StatefulWidget {
 }
 
 class _CommentsScreenState extends State<CommentsScreen> {
-  final TextEditingController commentEditingController =
-      TextEditingController();
+  TextEditingController commentEditingController = TextEditingController();
 
   String username = "";
   String photoUrl = "";
@@ -114,7 +113,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('posts')
-            .doc(widget.postId)
+            .doc(widget.snap['postId'])
             .collection('comments')
             .snapshots(),
         builder: (context,
@@ -167,6 +166,9 @@ class _CommentsScreenState extends State<CommentsScreen> {
                     username,
                     photoUrl,
                   );
+                  setState(() {
+                    commentEditingController.text = "";
+                  });
                 },
                 child: Container(
                   padding:
