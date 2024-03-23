@@ -4,6 +4,7 @@ import 'package:culture_pot/like_animation.dart';
 import 'package:culture_pot/models/user.dart';
 import 'package:culture_pot/providers/user_provider.dart';
 import 'package:culture_pot/services/firestore.dart';
+import 'package:culture_pot/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,7 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   String uid = "";
+  int commentLen = 0;
   bool isLikeAnimating = false;
   void getUid() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
@@ -31,6 +33,26 @@ class _PostCardState extends State<PostCard> {
         .get();
 
     uid = (snap.data() as Map<String, dynamic>)['uid'];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getComments();
+  }
+
+  void getComments() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+      commentLen = snap.docs.length;
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+    setState(() {});
   }
 
   @override
@@ -241,7 +263,7 @@ class _PostCardState extends State<PostCard> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: Text(
-                      'View all 200 comments',
+                      'View all $commentLen comments',
                       style: const TextStyle(fontSize: 16, color: Colors.blue),
                     ),
                   ),
