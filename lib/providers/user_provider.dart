@@ -9,12 +9,8 @@ class UserProvider with ChangeNotifier {
   User get getUser => _user!;
 
   Future<void> refreshUser() async {
-    try {
-      User user = await _authMethods.getUserDetails();
-      _user = user;
-      notifyListeners();
-    } catch (e) {
-      print('Error fetching user details: $e');
-    }
+    User user = await _authMethods.getUserDetails();
+    _user = user;
+    notifyListeners();
   }
 }
