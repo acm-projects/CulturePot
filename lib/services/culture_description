@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class CultureDescriptionPage extends StatelessWidget {
+  final String selectedCulture;
+  final Map<String, String> descriptions = {
+    'Indian': 'Indian culture is rich and diverse, known for its ancient heritage and traditions. It encompasses various religions, languages, cuisines, and art forms.',
+    'Chinese': 'Chinese culture is one of the world\'s oldest and most complex cultures, with a long history of traditions, customs, and philosophies. It includes aspects such as Confucianism, Taoism, and traditional Chinese medicine.',
+    'Japanese': 'Japanese culture is deeply rooted in tradition and is characterized by its unique aesthetics, art forms, and social customs. It emphasizes concepts like harmony, respect, and discipline.'
+  };
+   final Map<String, String> links = {
+    'Indian': 'https://en.wikipedia.org/wiki/Culture_of_India#Philosophy',
+    'Chinese': 'Chinese culture is one of the world\'s oldest and most complex cultures, with a long history of traditions, customs, and philosophies. It includes aspects such as Confucianism, Taoism, and traditional Chinese medicine.',
+    'Japanese': 'Japanese culture is deeply rooted in tradition and is characterized by its unique aesthetics, art forms, and social customs. It emphasizes concepts like harmony, respect, and discipline.'
+  };
+
+  CultureDescriptionPage({Key? key, required this.selectedCulture}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Culture Descriptions'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              selectedCulture,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            RichText(
+              text: TextSpan(
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                children: [
+                  TextSpan(
+                    text: descriptions[selectedCulture] ?? 'Description not found',
+                  ),
+                  TextSpan(
+                    text: ' Learn more', // Link text
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        final url = links[selectedCulture]; // Replace with your external link
+                        if (await canLaunch(url!)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
