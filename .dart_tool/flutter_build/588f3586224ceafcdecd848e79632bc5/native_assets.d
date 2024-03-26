@@ -1,0 +1,1 @@
+ /Users/kruthivancha/CulturePotV2/CulturePot/.dart_tool/flutter_build/588f3586224ceafcdecd848e79632bc5/native_assets.yaml: 
