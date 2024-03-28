@@ -30,11 +30,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^6.0.12 
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  google_nav_bar : ^5.0.6
+  salomon_bottom_bar: ^3.3.2
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +63,20 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/SignIn.png
+    - lib/images/SignIn.png
+    - lib/images/success.png
+    - lib/images/emptyPref.png
+    - lib/images/home.png
+    - lib/images/buzz.png
+    - lib/images/logo.png
+    - imagespot/SignUp.png
+    - imagespot/pfp.webp
+    - lib/images/postEx.png
+    - imagespot/pfpKenzo.jpeg
+    - imagespot/pfpReal.jpeg
+    - imagespot/indiaFlag.png
+    - imagespot/taj.png
+    - imagespot/duo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -83,6 +99,5 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

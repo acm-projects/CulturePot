@@ -1,19 +1,31 @@
+import 'package:culture_pot/pages/edit_profilepage.dart';
+import 'package:culture_pot/pages/empy_preferences.dart';
+import 'package:culture_pot/pages/homepage.dart';
+import 'package:culture_pot/pages/notifsempty_page.dart';
 import 'package:culture_pot/pages/sign_uppage.dart';
+import 'package:culture_pot/pages/success_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:culture_pot/pages/preferencesPick_page.dart';
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUp(),
+      initialRoute: '/', // Set the initial route
+      routes: {
+        '/': (context) => SignUp(), // signUp as the initial route
+        '/preferences': (context) => MyPreferences(), // SignUpPage route
+        '/success':(context) => SignSuccess(), // successPage route
+        '/emptypreferences':(context) => MyEmptyPreferences(), //emptyPreferences route
+        '/notifications':(context) => MyNotifsEmpty(),
+        '/editProfile' :(context) => MyEditProfile(),
+        '/home' : (context) => MyHome(),
+
+      },
     );
   }
 }
