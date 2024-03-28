@@ -50,12 +50,25 @@ class CultureEntry extends StatelessWidget {
   }
 
   Future<List<String>> _fetchCultures() async {
+    // Fetch user preferences
+    final user = FirebaseAuth.instance.currentUser;
+    final preferencesSnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get();
+
+    // Extract preferences
+    final preferences = preferencesSnapshot.data()?['preferences'];
+
+    // Fetch cultures and filter based on preferences
     QuerySnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('posts').get();
     Set<String> cultureSet = Set();
     snapshot.docs.forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
       final culture = doc['culture'] as String?;
-      if (culture != null && culture.isNotEmpty) {
+      if (culture != null &&
+          culture.isNotEmpty &&
+          preferences.contains(culture)) {
         cultureSet.add(culture);
       }
     });
