@@ -6,13 +6,17 @@ class CultureDescriptionPage extends StatelessWidget {
   final String selectedCulture;
   final Map<String, String> descriptions = {
     'Indian': 'Indian culture is rich and diverse, known for its ancient heritage and traditions. It encompasses various religions, languages, cuisines, and art forms.',
-    'Chinese': 'Chinese culture is one of the world\'s oldest and most complex cultures, with a long history of traditions, customs, and philosophies. It includes aspects such as Confucianism, Taoism, and traditional Chinese medicine.',
-    'Japanese': 'Japanese culture is deeply rooted in tradition and is characterized by its unique aesthetics, art forms, and social customs. It emphasizes concepts like harmony, respect, and discipline.'
+    'Chinese': "Chinese culture is one of the world's oldest and most complex cultures, with a long history of traditions, customs, and philosophies. It includes aspects such as Confucianism, Taoism, and traditional Chinese medicine.",
+    'Japanese': "Japanese culture is deeply rooted in tradition and is characterized by its unique aesthetics, art forms, and social customs. It emphasizes concepts like harmony, respect, and discipline.",
+    'Irish': "Irish people have the reputation of being very friendly and easy-going. Small talk is an important part of everyday life even among strangers.", 
+    'Mexican': "The dominant culture of Mexico reflects a blend of indigenous and Spanish customs; however, traditions vary greatly across the country. Many of the things often thought of as distinctively 'Mexican' have a local or regional origin."
   };
    final Map<String, String> links = {
     'Indian': 'https://en.wikipedia.org/wiki/Culture_of_India#Philosophy',
-    'Chinese': 'Chinese culture is one of the world\'s oldest and most complex cultures, with a long history of traditions, customs, and philosophies. It includes aspects such as Confucianism, Taoism, and traditional Chinese medicine.',
-    'Japanese': 'Japanese culture is deeply rooted in tradition and is characterized by its unique aesthetics, art forms, and social customs. It emphasizes concepts like harmony, respect, and discipline.'
+    'Chinese': 'https://en.wikipedia.org/wiki/Chinese_culture ',
+    'Japanese': 'https://en.wikipedia.org/wiki/Culture_of_Japan',
+    'Irish': 'https://en.wikipedia.org/wiki/Culture_of_Ireland', 
+    'Mexican': 'https://en.wikipedia.org/wiki/Culture_of_Mexico' 
   };
 
   CultureDescriptionPage({Key? key, required this.selectedCulture}) : super(key: key);
