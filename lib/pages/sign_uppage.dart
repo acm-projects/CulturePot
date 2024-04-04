@@ -3,6 +3,8 @@ import 'package:culture_pot/components/my_textfield.dart';
 import 'package:culture_pot/pages/preferencesPick_page.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/my_button1.dart';
+import 'package:page_transition/page_transition.dart';
+
 class SignUp extends StatelessWidget {
   SignUp({super.key});
   //text editing controller
@@ -20,13 +22,14 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),
+
       body: SafeArea(
         child: Center(
           child: Column(
             children: <Widget>[
               //logo
             
-            Image.asset('lib/images/SignIn.png',
+            Image.asset('lib/images/SignUp.png',
             height: 230, 
             ),
             
@@ -97,7 +100,10 @@ class SignUp extends StatelessWidget {
 
               //create account button
             MyButton1(
-              onTap:() => signUserUp(context),
+              onTap:()=> Navigator.of(context).push(PageTransition(
+                child: MyPreferences(),
+                type: PageTransitionType.fade)),
+
             ),
             const SizedBox(height: 20),
             //or continue with
@@ -134,7 +140,10 @@ class SignUp extends StatelessWidget {
               //google + apple sign up button
             const SizedBox(height: 15),
             MyButton2(
-              onTap: () => signUserUp(context),
+              onTap: ()=> Navigator.of(context).push(PageTransition(
+                child: MyPreferences(),
+                type: PageTransitionType.fade)),
+
             ),
           
           ]),

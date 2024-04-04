@@ -1,7 +1,8 @@
+import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/my_textfield.dart';
 import 'package:culture_pot/components/editProfile_button.dart';
-
+import 'package:page_transition/page_transition.dart';
 
 class MyEditProfile extends StatelessWidget {
    MyEditProfile({super.key});
@@ -17,10 +18,9 @@ class MyEditProfile extends StatelessWidget {
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),
       title: const Text('Edit Profile'),
       leading: IconButton(
-        onPressed: (){
-          //fix this!!
-          Navigator.pop;
-        }, 
+        onPressed: ()=> Navigator.of(context).push(PageTransition(
+                child: UserProfilePage(),
+                type: PageTransitionType.fade)),
         icon: Icon(Icons.arrow_back)),
     ),
     backgroundColor:  const Color.fromARGB(255, 233, 230, 230),

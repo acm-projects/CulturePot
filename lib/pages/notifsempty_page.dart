@@ -1,7 +1,8 @@
-import 'package:culture_pot/pages/edit_profilepage.dart';
 import 'package:culture_pot/pages/empy_preferences.dart';
+import 'package:culture_pot/pages/homepage.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MyNotifsEmpty extends StatefulWidget {
   const MyNotifsEmpty({Key? key}) : super(key: key);
@@ -16,10 +17,9 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
     return  Scaffold(
     appBar: AppBar(
       leading: IconButton(
-        onPressed: (){
-          //fix this!!
-          Navigator.pop;
-        }, 
+        onPressed: ()=> Navigator.of(context).push(PageTransition(
+                child: MyHome(),
+                type: PageTransitionType.fade)),
         icon: Icon(Icons.arrow_back)),
       ),
     backgroundColor:  const Color.fromARGB(255, 233, 230, 230),

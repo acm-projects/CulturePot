@@ -2,20 +2,16 @@ import 'package:culture_pot/pages/success_page.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/pref_buttons.dart';
 import 'package:culture_pot/components/pref_buttons2.dart';
+import 'package:page_transition/page_transition.dart';
 class MyPreferences extends StatelessWidget {
   const MyPreferences({super.key});
-  
-  void userNext(BuildContext context){
-    Navigator.pushReplacement(
-  context,MaterialPageRoute(builder: (context) => SignSuccess() //here pass the actual values of these variables, for example false if the payment isn't successfull..etc
-),);
-  }
   
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor:  const Color.fromARGB(255, 233, 230, 230),
+      backgroundColor: const Color.fromARGB(255, 233, 230, 230),
+
       body: SafeArea(
         child: Center(
           child: Column(
@@ -152,7 +148,10 @@ class MyPreferences extends StatelessWidget {
           const SizedBox(height: 80),
 
            MyPrefButton2(
-            onTap: () => userNext(context),
+            onTap:  ()=> Navigator.of(context).push(PageTransition(
+                child: SignSuccess(),
+                type: PageTransitionType.fade)),
+
             ),
             ]),
             

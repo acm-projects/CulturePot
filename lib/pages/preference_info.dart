@@ -27,7 +27,7 @@ class PreferenceInfo extends StatelessWidget {
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('imagespot/taj.png'),
+                  image: AssetImage('lib/images/taj.png'),
                   fit: BoxFit
                       .cover, // Cover the entire app bar area with the image
                 ),

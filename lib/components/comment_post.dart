@@ -1,46 +1,58 @@
 import 'package:flutter/material.dart';
 
 class Comment extends StatelessWidget {
-  // ignore: prefer_typing_uninitialized_variables
-  final controller;
+  final TextEditingController controller;
   final String hintText;
   final bool obscureText;
-  final String labelText;
+  final FocusNode focusNode;
+
   const Comment({
-    super.key,
+    Key? key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
-    required this.labelText,
-  });
+    required this.focusNode,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0),
-      child: TextField(
-        controller: controller,
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: Colors.white, width: 1.0),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(focusNode);
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            leading: const CircleAvatar(
+              backgroundColor: Colors.grey,
+              radius: 30,
+              backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+            ),
+            title: TextField(
+              focusNode: focusNode,
+              controller: controller,
+              autofocus: true,
+              obscureText: obscureText,
+              maxLines: null,
+              keyboardType: TextInputType.multiline,
+              decoration: InputDecoration(
+                isDense: true,
+                hintText: hintText,
+                border: InputBorder.none,
+              ),
+            ),
+            trailing: IconButton(
+              icon: const Icon(Icons.send),
+              onPressed: () {
+                // Sending comment here
+              },
+            ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-                color: Color.fromARGB(255, 247, 192, 25), width: 1.0),
-          ),
-          fillColor: Colors.white,
-          filled: true,
-          labelText: labelText,
-          labelStyle: const TextStyle(
-            color: Colors.grey,
-            fontFamily: 'Inter-Regular',
-            fontSize: 18,
-          ),
-          hintText: hintText,
-        ),
+          Divider(), // Adding divider below ListTile
+        ],
       ),
     );
   }

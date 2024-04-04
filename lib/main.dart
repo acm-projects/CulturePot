@@ -1,6 +1,7 @@
 import 'package:culture_pot/pages/edit_profilepage.dart';
 import 'package:culture_pot/pages/empy_preferences.dart';
 import 'package:culture_pot/pages/homepage.dart';
+import 'package:culture_pot/pages/login_page.dart';
 import 'package:culture_pot/pages/notifsempty_page.dart';
 import 'package:culture_pot/pages/sign_uppage.dart';
 import 'package:culture_pot/pages/success_page.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/', // Set the initial route
       routes: {
-        '/': (context) => SignUp(), // signUp as the initial route
+        '/': (context) => LoginPage(),
+        '/signup': (context) => SignUp(), // signUp as the initial route
         '/preferences': (context) => MyPreferences(), // SignUpPage route
         '/success':(context) => SignSuccess(), // successPage route
         '/emptypreferences':(context) => MyEmptyPreferences(), //emptyPreferences route

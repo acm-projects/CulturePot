@@ -29,7 +29,7 @@ class Preference extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       10), // Adjust border radius as needed
                   child: Image.asset(
-                    'imagespot/indiaFlag.png',
+                    'lib/images/indiaFlag.png',
                     width: 120, // Adjust width as needed
                     height: 150, // Adjust height as needed
                   ),

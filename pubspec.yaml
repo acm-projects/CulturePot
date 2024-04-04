@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   url_launcher: ^6.0.12 
 
+  page_transition: ^2.0.4
+  swipe_to: ^1.0.6
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -69,14 +71,14 @@ flutter:
     - lib/images/home.png
     - lib/images/buzz.png
     - lib/images/logo.png
-    - imagespot/SignUp.png
-    - imagespot/pfp.webp
+    - lib/images/pfp.webp
     - lib/images/postEx.png
-    - imagespot/pfpKenzo.jpeg
-    - imagespot/pfpReal.jpeg
-    - imagespot/indiaFlag.png
-    - imagespot/taj.png
-    - imagespot/duo.png
+    - lib/images/pfpKenzo.jpeg
+    - lib/images/pfpReal.jpeg
+    - lib/images/indiaFlag.png
+    - lib/images/taj.png
+    - lib/images/duo.png
+    - lib/images/SignUp.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

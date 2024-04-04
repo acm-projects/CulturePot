@@ -8,6 +8,7 @@ class MyEmptyPreferences extends StatelessWidget {
   const MyEmptyPreferences({super.key});
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       bottomNavigationBar: 
       Container(
@@ -22,8 +23,7 @@ class MyEmptyPreferences extends StatelessWidget {
             gap: 6,
             tabBackgroundColor: Color.fromARGB(167, 247, 192, 25),
             padding: EdgeInsets.all(12),
-            onTabChange: (index){
-            },
+          
             tabs: const[
               GButton(icon: Icons.home,
               iconSize: 30,

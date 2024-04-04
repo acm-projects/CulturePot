@@ -1,6 +1,11 @@
+import 'package:culture_pot/pages/homepage.dart';
+import 'package:culture_pot/pages/sign_uppage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/my_textfield.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
+import 'package:flutter/widgets.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -34,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               Align(
                 alignment: Alignment.center,
-                child: Image.asset('imagespot/SignUp.png'),
+                child: Image.asset('lib/images/SignUp.png'),
               ),
               const SizedBox(height: 20),
               const Align(
@@ -65,18 +70,18 @@ class _LoginPageState extends State<LoginPage> {
                 child: MyTextField(
                   controller: nameController, // Pass the name controller here
                   labelText: 'Your email',
-                  hintText: 'email',
+                  hintText: 'Email',
                   obscureText: false,
                 ),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: MyTextField(
                   controller:
-                      passwordController, // Pass the name controller here
+                  passwordController, // Pass the name controller here
                   labelText: 'Password',
-                  hintText: 'New password',
+                  hintText: 'Enter password',
                   obscureText: true,
                 ),
               ),
@@ -99,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const UserProfilePage()),
+                          builder: (context) => const MyHome()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -144,8 +149,27 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
+
                     ),
                   ),
+                ),
+              ),
+              const SizedBox(height : 10),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                 children: <Widget>[
+                  TextButton(
+                    style: TextButton.styleFrom(
+                textStyle: const TextStyle( fontSize: 17),
+                            ),
+                    onPressed: ()=> Navigator.of(context).push(PageTransition(
+                  child: SignUp(),
+                  type: PageTransitionType.fade)),
+                
+                    child: const Text('Create a CulturePot Account'))
+                
+                 ],
                 ),
               ),
             ],
