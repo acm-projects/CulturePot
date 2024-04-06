@@ -1,11 +1,13 @@
 import 'package:culture_pot/pages/empy_preferences.dart';
 import 'package:culture_pot/pages/notifsempty_page.dart';
+import 'package:culture_pot/pages/searchPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/components/post.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
+import 'package:culture_pot/pages/searchPage.dart';
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
   
@@ -98,10 +100,12 @@ class _MyHomeState extends State<MyHome> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal : 18.0),
               child: IconButton(
-                onPressed: (){
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) =>  ));
-                },
-                icon: Icon(Icons.search_rounded, color: Colors.black, size: 35.0)),
+                onPressed:
+                  ()=> Navigator.of(context).push(PageTransition(
+                child: MySearchPage(),
+                type: PageTransitionType.fade)),
+                icon: Icon(Icons.search_rounded, color: Colors.black, size: 35.0)
+                ),
             )
           ],
         ),

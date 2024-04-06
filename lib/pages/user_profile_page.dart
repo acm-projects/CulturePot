@@ -8,7 +8,7 @@ import 'package:culture_pot/components/post.dart';
 import 'preferences_page.dart'; // Import the PreferencesPage
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:page_transition/page_transition.dart';
-
+import 'package:culture_pot/pages/friends_listpage.dart';
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
 
@@ -178,13 +178,22 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Text(
-                            '48 ',
-                            style: TextStyle(fontWeight: FontWeight.w800),
-                          ),
+                        
+                          TextButton(
+                            onPressed: (){ Navigator.of(context).push(PageTransition(
+                            child: FriendsList(),
+                            type: PageTransitionType.fade));
+                            },
+                            child: Text('48',
+                            style: TextStyle(fontWeight: FontWeight.w800, color: Colors.black)),
+                            style: ButtonStyle(alignment: Alignment.centerLeft,
+                             tapTargetSize: MaterialTapTargetSize.shrinkWrap
+                            ),               
+                            ),
                           const Text(
                             'Partners',
                             style: TextStyle(color: Colors.black),
+                            
                           ),
                           const Text('   '),
                           GestureDetector(

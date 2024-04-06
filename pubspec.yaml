@@ -28,9 +28,12 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  contacts_service: ^0.6.3
   flutter:
     sdk: flutter
   url_launcher: ^6.0.12 
+  firebase_core: ^2.28.0
+
 
   page_transition: ^2.0.4
   swipe_to: ^1.0.6
