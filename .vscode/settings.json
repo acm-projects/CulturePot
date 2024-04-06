@@ -4,5 +4,6 @@
   "dart.flutterGenerateLocalizationsOnSave": "never",
   "dart.flutterHotReloadOnSave": "all",
   "dart.hotReloadOnSave": "all",
-  "cmake.sourceDirectory": "C:/Users/papij/OneDrive/Documents/Classes/Spring 2024/Projects/newCulturePot/CulturePot/linux"
+  "cmake.sourceDirectory": "C:/Users/papij/OneDrive/Documents/Classes/Spring 2024/Projects/newCulturePot/CulturePot/linux",
+  "java.configuration.updateBuildConfiguration": "interactive"
 }

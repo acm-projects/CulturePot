@@ -74,6 +74,7 @@ class AuthMethods {
           photoUrl: photoUrl,
           friends: [],
           preferences: [],
+          bookmarks: [],
         );
 
         await _firestore.collection('users').doc(cred.user!.uid).set(

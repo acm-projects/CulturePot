@@ -7,6 +7,7 @@ import 'package:culture_pot/culture_phrasebook.dart';
 import 'package:culture_pot/culture_phraseboook_entry.dart';
 import 'package:culture_pot/feed_screen.dart';
 import 'package:culture_pot/firebase_options.dart';
+import 'package:culture_pot/map.dart';
 import 'package:culture_pot/services/culture_entry.dart';
 import 'package:culture_pot/user_list';
 import 'package:flutter/material.dart';
@@ -23,13 +24,19 @@ import 'package:provider/provider.dart';
 import 'forgetPassword.dart';
 import 'signupPage.dart';
 import 'loginPage.dart';
-
+import 'package:flutter_mapbox_navigation/flutter_mapbox_navigation.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  runApp(MyApp());
+  // runApp(MyApp());
+  await DotEnv().load(fileName: '.env').then((_) {
+    runApp(MyApp());
+  }).catchError((e) {
+    print('Error loading .env file: $e');
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -70,8 +77,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // text controller
-
   final FirestoreService firestoreService = FirestoreService();
   final TextEditingController textController = TextEditingController();
   final TextEditingController cultureController = TextEditingController();
@@ -81,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String username = "";
   bool _isLoading = false;
 
+  // Method to post image
   void postImage(
     String uid,
     String username,
@@ -91,14 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
       _isLoading = true;
     });
 
-      // Printing values from text fields
-  print('Text field value: ${textController.text}');
-  print('Culture value: ${cultureController.text}');
-
-
     try {
       String res = await FirestoreService().addPost(
-          textController.text, _file!, uid, username, profImage, culture);
+        textController.text,
+        _file!,
+        uid,
+        username,
+        profImage,
+        culture,
+      );
 
       if (res == "success") {
         showSnackBar('Posted!', context);
@@ -115,6 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  // Method to get photo URL
   void getPhotoUrl() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
         .collection('users')
@@ -126,6 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // Method to get UID
   void getUid() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
         .collection('users')
@@ -137,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // Method to get username
   void getUsername() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
         .collection('users')
@@ -156,17 +166,21 @@ class _MyHomePageState extends State<MyHomePage> {
     getUid();
   }
 
+  // Method to clear image
   void clearImage() {
     setState(() {
       _file = null;
     });
   }
 
+  // Method to select image
   _selectImage(BuildContext context) async {
     return showDialog(
-        context: context,
-        builder: (context) {
-          return SimpleDialog(title: const Text('Create a Post'), children: [
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: const Text('Create a Post'),
+          children: [
             SimpleDialogOption(
               padding: const EdgeInsets.all(20),
               child: const Text("Take a photo"),
@@ -181,38 +195,32 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             SimpleDialogOption(
-                padding: const EdgeInsets.all(20),
-                child: const Text("Choose from gallery"),
-                onPressed: () async {
-                  Navigator.of(context).pop();
-                  Uint8List file = await pickImage(
-                    ImageSource.gallery,
-                  );
-                  setState(() {
-                    _file = file;
-                  });
-                }),
-          ]);
-        });
+              padding: const EdgeInsets.all(20),
+              child: const Text("Choose from gallery"),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                Uint8List file = await pickImage(
+                  ImageSource.gallery,
+                );
+                setState(() {
+                  _file = file;
+                });
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
+  // Method to open post box
   void openPostBox({String? docID}) {
-    //final User user = Provider.of<UserProvider>(context);
-
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         content: Column(
-          // Adjust the layout as needed
           children: [
-            /*
-            TextField(
-              controller: textController,
-            ),
-            */
             _isLoading ? const LinearProgressIndicator() : Container(),
-
-            // Add IconButton here
             CircleAvatar(
               backgroundImage: NetworkImage(photoUrl),
             ),
@@ -232,17 +240,17 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextField(
                 controller: cultureController,
                 decoration: const InputDecoration(
-                  hintText: 'Enter the culture()',
+                  hintText: 'Enter the culture',
                   border: InputBorder.none,
                 ),
                 maxLines: 1,
               ),
             ),
             SizedBox(
-              height: 15, // Adjust the height as needed
-              width: 15, // Adjust the width as needed
+              height: 15,
+              width: 15,
               child: AspectRatio(
-                aspectRatio: 1, // Adjust the aspect ratio as needed
+                aspectRatio: 1,
                 child: _file != null
                     ? Container(
                         decoration: BoxDecoration(
@@ -256,7 +264,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     : Container(),
               ),
             ),
-
             const Divider(),
             IconButton(
               icon: const Icon(Icons.upload),
@@ -265,24 +272,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         actions: [
-          // button to save
           ElevatedButton(
             onPressed: () {
-              // add a new
               if (docID == null) {
-                //firestoreService.addPost(textController.text);
                 postImage(uid, username, photoUrl, cultureController.text);
               } else if (cultureController.text == null) {
                 postImage(uid, username, photoUrl, "none");
               } else {
                 firestoreService.updatePost(docID, textController.text);
               }
-
-              // clear the text controller
               textController.clear();
               cultureController.clear();
-
-              // close the box
               Navigator.pop(context);
             },
             child: Text("Add"),
@@ -292,12 +292,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  // Method to sign out
   final FirebaseAuth auth = FirebaseAuth.instance;
-
-  signOut() async {
+  void signOut() async {
     await auth.signOut();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 
   @override
@@ -306,7 +308,6 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Posts'),
       ),
-      //signout button
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -318,12 +319,12 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Icon(Icons.logout_rounded),
             backgroundColor: Colors.green,
           ),
-          SizedBox(height: 16), // Add some space between the buttons
+          SizedBox(height: 16),
           FloatingActionButton(
             onPressed: openPostBox,
             child: Icon(Icons.add),
           ),
-          SizedBox(height: 16), // Add space between the buttons
+          SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -333,7 +334,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text('User List'),
           ),
-          SizedBox(height: 16), // Add space between the buttons
+          SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -343,7 +344,7 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text('Feed Posts'),
           ),
-          SizedBox(height: 16), // Add space between the buttons
+          SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -352,11 +353,8 @@ class _MyHomePageState extends State<MyHomePage> {
               );
             },
             child: Text('Culture List'),
-
-
-
           ),
-                    SizedBox(height: 16), // Add space between the buttons
+          SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -366,59 +364,59 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             child: Text('Cultures'),
           ),
-
-          SizedBox(height: 16), // Add space between the buttons
+          SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CulturePhrasebookEntryPage()),
+                MaterialPageRoute(builder: (context) => MapWidget()),
               );
             },
-            child: Text('Culture phrasebook'),
+            child: Text('View Map'),
+          ),
+          SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MapWidget()),
+              );
+            },
+            child: Text('Bookmarks'),
           ),
         ],
       ),
-
       body: StreamBuilder<QuerySnapshot>(
         stream: firestoreService.getPostsStream(),
         builder: (context, snapshot) {
-          // if we have data, get all the docs
           if (snapshot.hasData) {
             List postsList = snapshot.data!.docs;
-
-            // display as a list
             return ListView.builder(
-                itemCount: postsList.length,
-                itemBuilder: (context, index) {
-                  // get each individual doc
-                  DocumentSnapshot document = postsList[index];
-                  String docID = document.id;
-
-                  // get node from each doc
-                  Map<String, dynamic> data =
-                      document.data() as Map<String, dynamic>;
-                  String postText = data['post'];
-
-                  // display as a list tile
-                  return ListTile(
-                      title: Text(postText),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // update button
-                          IconButton(
-                            onPressed: () => openPostBox(docID: docID),
-                            icon: const Icon(Icons.settings),
-                          ),
-
-                          IconButton(
-                            onPressed: () => firestoreService.deletePost(docID),
-                            icon: const Icon(Icons.delete),
-                          )
-                        ],
-                      ));
-                });
+              itemCount: postsList.length,
+              itemBuilder: (context, index) {
+                DocumentSnapshot document = postsList[index];
+                String docID = document.id;
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                String postText = data['post'];
+                return ListTile(
+                  title: Text(postText),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () => openPostBox(docID: docID),
+                        icon: const Icon(Icons.settings),
+                      ),
+                      IconButton(
+                        onPressed: () => firestoreService.deletePost(docID),
+                        icon: const Icon(Icons.delete),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
           } else {
             return const Text("No posts...");
           }
