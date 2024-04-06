@@ -7,6 +7,7 @@ import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/pages/post_screen.dart';
 import 'package:culture_pot/pages/make_post.dart';
+import 'package:culture_pot/pages/search_page.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -96,7 +97,10 @@ class _MyHomeState extends State<MyHome> {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: IconButton(
                 onPressed: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context) =>  ));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MySearchPage()));
                 },
                 icon: const Icon(Icons.search_rounded,
                     color: Colors.black, size: 35.0)),
