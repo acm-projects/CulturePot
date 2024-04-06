@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 class ViewComment extends StatefulWidget {
   final String commentText;
   final String profileImageAsset;
+  final String username; // Added username parameter
 
   const ViewComment({
     Key? key,
     required this.commentText,
     required this.profileImageAsset,
+    required this.username, // Added username parameter
   }) : super(key: key);
 
   @override
@@ -22,7 +24,8 @@ class _ViewCommentState extends State<ViewComment> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+          horizontal: 16, vertical: 8), // Increased vertical padding
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,8 +53,8 @@ class _ViewCommentState extends State<ViewComment> {
                       );
                     },
                     child: Text(
-                      '@username',
-                      style: TextStyle(
+                      '@${widget.username}', // Show dynamic username
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: Colors.black,

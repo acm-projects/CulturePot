@@ -15,7 +15,7 @@ class PreferencesPage extends StatefulWidget {
 }
 
 class _PreferencesPageState extends State<PreferencesPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -50,24 +50,22 @@ class _PreferencesPageState extends State<PreferencesPage> {
             onTabChange: (index) {
               setState(() {
                 _selectedIndex = index;
-                switch (index) {
-                  case 0:
-                    // Navigator.of(context).push(PageTransition(
-                    //     child: MyHome(), type: PageTransitionType.fade));
-                    break;
-                  case 1:
-                    Navigator.of(context).push(PageTransition(
-                        child: PreferencesPage(),
-                        type: PageTransitionType.fade));
-                  case 2:
-                    Navigator.of(context).push(PageTransition(
-                        child: MyHome(), type: PageTransitionType.fade));
-                  case 3:
-                    Navigator.of(context).push(PageTransition(
-                        child: UserProfilePage(),
-                        type: PageTransitionType.fade));
-                }
               });
+              switch (index) {
+                case 0:
+                  Navigator.of(context).push(PageTransition(
+                      child: MyHome(), type: PageTransitionType.fade));
+                  break;
+                case 1:
+                  Navigator.of(context).push(PageTransition(
+                      child: PreferencesPage(), type: PageTransitionType.fade));
+                case 2:
+                  Navigator.of(context).push(PageTransition(
+                      child: MyHome(), type: PageTransitionType.fade));
+                case 3:
+                  Navigator.of(context).push(PageTransition(
+                      child: UserProfilePage(), type: PageTransitionType.fade));
+              }
             },
           ),
         ),

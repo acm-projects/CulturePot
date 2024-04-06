@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/post.dart';
 import 'preferences_page.dart'; // Import the PreferencesPage
-// ignore: depend_on_referenced_packages
+import 'package:page_transition/page_transition.dart';
+import 'package:culture_pot/pages/edit_profile_page.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'home.dart';
 
@@ -13,7 +14,7 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  int _selectedIndex = 0; // Added this line to define _selectedIndex
+  int _selectedIndex = 3; // Added this line to define _selectedIndex
 
   @override
   Widget build(BuildContext context) {
@@ -50,30 +51,20 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 _selectedIndex = index;
                 switch (index) {
                   case 0:
-                    // Navigator.of(context).push(PageTransition(
-                    //     child: MyHome(), type: PageTransitionType.fade));
+                    Navigator.of(context).push(PageTransition(
+                        child: MyHome(), type: PageTransitionType.fade));
                     break;
                   case 1:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PreferencesPage(),
-                      ),
-                    );
+                    Navigator.of(context).push(PageTransition(
+                        child: PreferencesPage(),
+                        type: PageTransitionType.fade));
                   case 2:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PreferencesPage(),
-                      ),
-                    );
+                    Navigator.of(context).push(PageTransition(
+                        child: MyHome(), type: PageTransitionType.fade));
                   case 3:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const UserProfilePage(),
-                      ),
-                    );
+                    Navigator.of(context).push(PageTransition(
+                        child: UserProfilePage(),
+                        type: PageTransitionType.fade));
                 }
               });
             },
@@ -114,14 +105,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               radius: 40,
                               backgroundImage:
                                   AssetImage('imagespot/pfpReal.jpeg'),
                             ),
                             TextButton(
                               onPressed: () {
-                                // Edit profile
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyEditProfile(),
+                                  ),
+                                );
                               },
                               style: TextButton.styleFrom(
                                 backgroundColor: Colors.orange[300],
@@ -137,7 +133,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ), // Add some space to move the row down
                     ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
+import 'package:culture_pot/components/save_button.dart';
 import 'package:culture_pot/pages/comment_page.dart'; // Import CommentPage here
 
 class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
@@ -39,6 +40,7 @@ class Post extends StatefulWidget {
 
 class _PostState extends State<Post> {
   bool isLiked = false;
+  bool isSaved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,9 +92,14 @@ class _PostState extends State<Post> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 44),
-                const SizedBox(
-                  width: 4,
+                const SizedBox(width: 200), // Adjust the spacing between icons
+                SaveButton(
+                  isSaved: isSaved,
+                  onTap: () {
+                    setState(() {
+                      isSaved = !isSaved;
+                    });
+                  },
                 ),
               ],
             ),
@@ -138,6 +145,7 @@ class _PostState extends State<Post> {
                     );
                   },
                 ),
+                const SizedBox(width: 4), // Adjust the spacing between icons
                 IconButton(
                   icon: Icon(
                     isLiked ? Icons.favorite : Icons.favorite_border,
@@ -150,6 +158,9 @@ class _PostState extends State<Post> {
                     });
                   },
                 ),
+                SizedBox(
+                  width: 4,
+                ), // Adjust the spacing between icons and text
                 GestureDetector(
                   onTap: () async {
                     Navigator.push(
@@ -166,9 +177,9 @@ class _PostState extends State<Post> {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 4,
-                ),
+                ), // Adjust the spacing between text and "and"
                 const Text(
                   'and 12 other Partners',
                   style: TextStyle(

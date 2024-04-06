@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/pages/post_screen.dart';
+import 'package:culture_pot/pages/make_post.dart';
 
 class MyHome extends StatefulWidget {
   const MyHome({Key? key}) : super(key: key);
@@ -52,30 +53,23 @@ class _MyHomeState extends State<MyHome> {
                 _selectedIndex = index;
                 switch (index) {
                   case 0:
-                    // Navigator.of(context).push(PageTransition(
-                    //     child: MyHome(), type: PageTransitionType.fade));
+                    Navigator.of(context).push(PageTransition(
+                        child: MyHome(), type: PageTransitionType.fade));
                     break;
                   case 1:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PreferencesPage(),
-                      ),
-                    );
+                    Navigator.of(context).push(PageTransition(
+                        child: PreferencesPage(),
+                        type: PageTransitionType.fade));
+                    break;
                   case 2:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PreferencesPage(),
-                      ),
-                    );
+                    Navigator.of(context).push(PageTransition(
+                        child: MyHome(), type: PageTransitionType.fade));
+                    break;
                   case 3:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const UserProfilePage(),
-                      ),
-                    );
+                    Navigator.of(context).push(PageTransition(
+                        child: UserProfilePage(),
+                        type: PageTransitionType.fade));
+                    break;
                 }
               });
             },
@@ -135,10 +129,17 @@ class _MyHomeState extends State<MyHome> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Color.fromARGB(255, 247, 192, 25),
-        child: Icon(Icons.add),
-        shape: CircleBorder(), // Make the button circular
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MakePost(),
+            ),
+          );
+        },
+        backgroundColor: const Color.fromARGB(255, 247, 192, 25),
+        child: const Icon(Icons.add),
+        shape: const CircleBorder(), // Make the button circular
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

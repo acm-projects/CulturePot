@@ -4,7 +4,8 @@ import 'package:culture_pot/pages/comment_page.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
-import 'package:culture_pot/components/comment_sheet.dart';
+import 'package:culture_pot/components/save_button.dart';
+//import 'package:culture_pot/components/comment_sheet.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -16,21 +17,22 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   bool isLiked = false;
   int _selectedIndex = 0;
+  bool isSaved = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        color: Color.fromARGB(255, 233, 230, 230),
+        color: const Color.fromARGB(255, 233, 230, 230),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15.0),
           child: GNav(
             backgroundColor: const Color.fromARGB(255, 233, 230, 230),
-            color: Color.fromARGB(255, 247, 192, 25),
+            color: const Color.fromARGB(255, 247, 192, 25),
             activeColor: Colors.black,
             gap: 6,
-            tabBackgroundColor: Color.fromARGB(167, 247, 192, 25),
-            padding: EdgeInsets.all(12),
+            tabBackgroundColor: const Color.fromARGB(167, 247, 192, 25),
+            padding: const EdgeInsets.all(12),
             tabs: const [
               GButton(icon: Icons.home, iconSize: 30, text: 'Home'),
               GButton(
@@ -88,7 +90,7 @@ class _PostScreenState extends State<PostScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -107,7 +109,7 @@ class _PostScreenState extends State<PostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(width: 8),
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
                         radius: 18,
                       ),
@@ -128,6 +130,16 @@ class _PostScreenState extends State<PostScreen> {
                             fontSize: 16,
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                          width: 200), // Adjust the spacing between icons
+                      SaveButton(
+                        isSaved: isSaved,
+                        onTap: () {
+                          setState(() {
+                            isSaved = !isSaved;
+                          });
+                        },
                       ),
                     ],
                   ),
@@ -150,7 +162,7 @@ class _PostScreenState extends State<PostScreen> {
                 alignment: Alignment.center,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
-                  child: Text(
+                  child: const Text(
                     'My family and I visited the Statue of Unity in Gujarat, India this spring for the first time. I was fascinated at the way locals spoke dialect X of Gujarati while we tourists spoke and learned in dialect Y. Does anyone know why that is?',
                     style: TextStyle(
                       color: Colors.black,
@@ -227,9 +239,9 @@ class _PostScreenState extends State<PostScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: Color.fromARGB(255, 247, 192, 25),
+        backgroundColor: const Color.fromARGB(255, 247, 192, 25),
         child: Icon(Icons.add),
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
