@@ -5,7 +5,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/components/save_button.dart';
-//import 'package:culture_pot/components/comment_sheet.dart';
+import 'package:culture_pot/components/comment_view.dart'; // Adjusted import statement
+import 'package:culture_pot/components/comment_post.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({Key? key}) : super(key: key);
@@ -54,8 +55,6 @@ class _PostScreenState extends State<PostScreen> {
                 _selectedIndex = index;
                 switch (index) {
                   case 0:
-                    // Navigator.of(context).push(PageTransition(
-                    //     child: MyHome(), type: PageTransitionType.fade));
                     break;
                   case 1:
                     Navigator.push(
@@ -64,6 +63,7 @@ class _PostScreenState extends State<PostScreen> {
                         builder: (context) => const PreferencesPage(),
                       ),
                     );
+                    break;
                   case 2:
                     Navigator.push(
                       context,
@@ -71,6 +71,7 @@ class _PostScreenState extends State<PostScreen> {
                         builder: (context) => const PreferencesPage(),
                       ),
                     );
+                    break;
                   case 3:
                     Navigator.push(
                       context,
@@ -78,6 +79,7 @@ class _PostScreenState extends State<PostScreen> {
                         builder: (context) => const UserProfilePage(),
                       ),
                     );
+                    break;
                 }
               });
             },
@@ -184,8 +186,8 @@ class _PostScreenState extends State<PostScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        CustomPageRouteBuilder(
-                          widget: const CommentPage(),
+                        MaterialPageRoute(
+                          builder: (context) => const CommentPage(),
                         ),
                       );
                     },
@@ -232,7 +234,19 @@ class _PostScreenState extends State<PostScreen> {
               ),
               const SizedBox(height: 8),
               const Divider(),
-              //CommentSheet(),
+              Comment(
+                controller: TextEditingController(), // Example controller
+                hintText: 'Interact with @username',
+                obscureText: false,
+                focusNode: FocusNode(),
+              ),
+              const ViewComment(
+                commentText:
+                    'This is a comment', // Provide the comment text here
+                profileImageAsset:
+                    'imagespot/pfpReal.jpeg', // Provide the path to the profile image asset
+                username: 'username', // Provide the username here
+              ),
             ],
           ),
         ),
@@ -245,52 +259,6 @@ class _PostScreenState extends State<PostScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
-  }
-
-  void navigateToPage(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        // No need to navigate to the same page
-        break;
-      case 1:
-        // Navigate to Cultures page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
-        break;
-      case 2:
-        // Navigate to Map page
-        // Replace PreferencesPage with your desired page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
-        break;
-      case 3:
-        // Navigate to Profile page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const UserProfilePage(),
-          ),
-        );
-        break;
-      default:
-    }
-
-    // Update tab color after navigation
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 }
 
@@ -308,7 +276,7 @@ class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
           ) {
             return SlideTransition(
               position: Tween<Offset>(
-                begin: const Offset(0.0, 1.0), // Slide up from bottom
+                begin: const Offset(0.0, 1.0),
                 end: Offset.zero,
               ).animate(CurvedAnimation(
                 parent: animation,

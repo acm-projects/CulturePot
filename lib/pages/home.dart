@@ -125,7 +125,17 @@ class _MyHomeState extends State<MyHome> {
                 child: Post(),
               ),
               const SizedBox(height: 10),
-              Post(),
+              GestureDetector(
+                onTap: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PostScreen(),
+                    ),
+                  );
+                },
+                child: Post(),
+              ),
               const SizedBox(height: 12),
               Post(),
             ],

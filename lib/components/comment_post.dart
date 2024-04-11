@@ -28,7 +28,7 @@ class Comment extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             leading: const CircleAvatar(
               backgroundColor: Colors.grey,
-              radius: 30,
+              radius: 25,
               backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
             ),
             title: TextField(
@@ -51,7 +51,7 @@ class Comment extends StatelessWidget {
               },
             ),
           ),
-          Divider(), // Adding divider below ListTile
+          //Divider(), // Adding divider below ListTile
         ],
       ),
     );

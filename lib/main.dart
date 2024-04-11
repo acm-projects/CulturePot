@@ -1,11 +1,16 @@
-import 'package:culture_pot/pages/login_page.dart';
-import 'package:culture_pot/pages/user_profile_page.dart';
-import 'package:culture_pot/pages/preference_info.dart';
-// Import the ProfilePage
-
+import 'package:culture_pot/pages/edit_profilepage.dart';
+import 'package:culture_pot/pages/empty_preferences.dart';
+import 'package:culture_pot/pages/home.dart';
+import 'package:culture_pot/pages/notifsempty_page.dart';
+import 'package:culture_pot/pages/sign_uppage.dart';
+import 'package:culture_pot/pages/success_page.dart';
 import 'package:flutter/material.dart';
+import 'package:culture_pot/pages/preferencesPick_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -14,12 +19,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      //home: LoginPage(),
-      initialRoute: '/',
+      initialRoute: '/', // Set the initial route
       routes: {
-        '/': (context) => LoginPage(),
-        '/profile': (context) => const UserProfilePage(),
-        '/preference': (context) => const PreferenceInfo(),
+        '/': (context) => SignUp(), // signUp as the initial route
+        '/preferences': (context) => MyPreferences(), // SignUpPage route
+        '/success': (context) => SignSuccess(), // successPage route
+        '/emptypreferences': (context) =>
+            MyEmptyPreferences(), //emptyPreferences route
+        '/notifications': (context) => MyNotifsEmpty(),
+        '/editProfile': (context) => MyEditProfile(),
+        '/home': (context) => MyHome(),
       },
     );
   }

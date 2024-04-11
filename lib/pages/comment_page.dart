@@ -53,15 +53,15 @@ class _CommentSheetState extends State<CommentSheet> {
 
               const ViewComment(
                 commentText: "Another comment.",
-                profileImageAsset: "imagespot/indiaFlag.",
-                username: '@vidurnangia',
+                profileImageAsset: "imagespot/indiaFlag.png",
+                username: 'vidurnangia',
               ),
 
               // Add more ViewComment widgets as needed
               const ViewComment(
                 commentText: "Another comment.",
-                profileImageAsset: "imagespot/indiaFlag.",
-                username: '@vidurnangia',
+                profileImageAsset: "imagespot/indiaFlag.png",
+                username: 'vidurnangia',
               ),
 
               const SizedBox(height: 20), // Adding space below comments

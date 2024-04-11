@@ -139,8 +139,8 @@ class _PostState extends State<Post> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      CustomPageRouteBuilder(
-                        widget: const CommentPage(),
+                      MaterialPageRoute(
+                        builder: (context) => const CommentPage(),
                       ),
                     );
                   },

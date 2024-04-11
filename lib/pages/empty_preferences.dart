@@ -6,7 +6,9 @@ import 'package:culture_pot/pages/notifsempty_page.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:culture_pot/pages/search_page.dart';
 
 class MyEmptyPreferences extends StatelessWidget {
   const MyEmptyPreferences({super.key});
@@ -43,6 +45,35 @@ class MyEmptyPreferences extends StatelessWidget {
           ),
         ),
       ),
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 233, 230, 230),
+        title: Image.asset('imagespot/logo.png', height: 90),
+        leading: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 9.0),
+          child: IconButton(
+            onPressed: () => Navigator.of(context).push(PageTransition(
+                child: MyNotifsEmpty(), type: PageTransitionType.fade)),
+            icon: const Icon(
+              Icons.favorite_border_rounded,
+              size: 35.0,
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 18.0),
+            child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MySearchPage()));
+                },
+                icon: const Icon(Icons.search_rounded,
+                    color: Colors.black, size: 35.0)),
+          )
+        ],
+      ),
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),
       body: SafeArea(
         child: Center(
@@ -68,9 +99,9 @@ class MyEmptyPreferences extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 35.0),
-                child: const Align(
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 35.0),
+                child: Align(
                   alignment: Alignment.center,
                   child: Text(
                     "Start Building your Culture preference list by saving inspiring cultures and experiences  ",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/my_text_field.dart';
 import 'package:culture_pot/pages/home.dart';
+import 'package:culture_pot/pages/sign_uppage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -83,12 +84,12 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 10),
               GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => SignUp(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignUp(),
+                    ),
+                  );
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -151,8 +152,13 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: ElevatedButton(
-                  onPressed: () async {
-                    // Implement sign-in with Google logic here
+                  onPressed: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const SignUp(),
+                    //   ),
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
