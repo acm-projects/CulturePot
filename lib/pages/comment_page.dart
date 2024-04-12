@@ -16,7 +16,7 @@ class CommentPage extends StatelessWidget {
           },
         ),
       ),
-      body: const CommentSheet(),
+      body: CommentSheet(),
     );
   }
 }

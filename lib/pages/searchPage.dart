@@ -1,4 +1,10 @@
+import 'package:culture_pot/pages/homepage.dart';
+import 'package:culture_pot/pages/preferencesPick_page.dart';
+import 'package:culture_pot/pages/preferences_page.dart';
+import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:culture_pot/components/searchPref.dart';
+import 'package:page_transition/page_transition.dart';
 
 class MySearchPage extends StatefulWidget {
   const MySearchPage({super.key});
@@ -14,6 +20,7 @@ class _MySearchPageState extends State<MySearchPage> {
       padding: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Scaffold(
         appBar: AppBar(
+          title: Text("Search Page"),
           actions: [
             IconButton(
               onPressed: (){
@@ -25,7 +32,32 @@ class _MySearchPageState extends State<MySearchPage> {
               icon: const Icon(Icons.search), iconSize: 35,)
           ],
           ),
-        
+          body: SafeArea(
+            child:Center(
+              child: Column(
+                children: <Widget>[
+                 const SizedBox(height : 60),
+                  MySearchPrefButton(
+                    onTap: ()=> Navigator.of(context).push(PageTransition(
+                child: PreferencesPage(),
+                type: PageTransitionType.fade)),
+            ),
+              const SizedBox(height : 25),
+                MySearchPrefButton2(onTap: ()=> Navigator.of(context).push(PageTransition(
+                child: MyHome(),
+                type: PageTransitionType.fade)),
+                ),
+                const SizedBox(height: 25,),
+                MySearchPrefButton3(
+                  onTap: ()=> Navigator.of(context).push(PageTransition(
+                child: UserProfilePage(),
+                type: PageTransitionType.fade)),
+                )
+                ],
+              ),
+            ),
+            ),
+          
       ),
     );
   }

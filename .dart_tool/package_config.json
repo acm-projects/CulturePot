@@ -32,6 +32,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "comment_box",
+      "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/comment_box-0.0.18",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "contacts_service",
       "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/contacts_service-0.6.3",
       "packageUri": "lib/",
@@ -94,6 +100,18 @@
     {
       "name": "google_nav_bar",
       "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/google_nav_bar-5.0.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "http",
+      "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/http-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "http_parser",
+      "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -218,6 +236,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "typed_data",
+      "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "url_launcher",
       "rootUri": "file:///Users/leilaigwegbe/.pub-cache/hosted/pub.dev/url_launcher-6.2.5",
       "packageUri": "lib/",
@@ -290,7 +314,7 @@
       "languageVersion": "3.2"
     }
   ],
-  "generated": "2024-04-06T18:38:57.943613Z",
+  "generated": "2024-04-12T21:30:43.629943Z",
   "generator": "pub",
   "generatorVersion": "3.3.0"
 }

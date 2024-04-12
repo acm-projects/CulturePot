@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class Comment extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -22,14 +21,14 @@ class Comment extends StatelessWidget {
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           ListTile(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             leading: const CircleAvatar(
               backgroundColor: Colors.grey,
               radius: 30,
-              backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+              backgroundImage: AssetImage('lib/images/pfpReal.jpeg'),
             ),
             title: TextField(
               focusNode: focusNode,
@@ -51,7 +50,7 @@ class Comment extends StatelessWidget {
               },
             ),
           ),
-          Divider(), // Adding divider below ListTile
+          const Divider(), // Adding divider below ListTile
         ],
       ),
     );

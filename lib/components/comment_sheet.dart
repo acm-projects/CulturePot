@@ -20,7 +20,8 @@ class _CommentSheetState extends State<CommentSheet> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
+              
               const SizedBox(height: 20), // Adding space above comments
 
               Comment(

@@ -71,7 +71,7 @@ class _ViewCommentState extends State<ViewComment> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 IconButton(
                   icon: const Icon(
                     Icons.comment,

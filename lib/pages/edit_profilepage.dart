@@ -15,7 +15,7 @@ class MyEditProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
     appBar: AppBar(
-      backgroundColor: const Color.fromARGB(255, 233, 230, 230),
+      backgroundColor: Colors.white,
       title: const Text('Edit Profile'),
       leading: IconButton(
         onPressed: ()=> Navigator.of(context).push(PageTransition(
@@ -23,7 +23,7 @@ class MyEditProfile extends StatelessWidget {
                 type: PageTransitionType.fade)),
         icon: Icon(Icons.arrow_back)),
     ),
-    backgroundColor:  const Color.fromARGB(255, 233, 230, 230),
+    backgroundColor:  Colors.white,
     body: SafeArea(
       child: Center(
         child: Column(

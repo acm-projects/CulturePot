@@ -124,9 +124,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                                   AssetImage('lib/images/pfpReal.jpeg'),
                             ),
                             TextButton(
-                              onPressed: () {
-                                // Edit profile
-                              },
+                              onPressed: ()=> Navigator.of(context).push(PageTransition(
+                child: MyEditProfile(),
+                type: PageTransitionType.fade)),
                               style: TextButton.styleFrom(
                                 backgroundColor: Colors.orange[300],
                               ),
@@ -181,7 +181,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         
                           TextButton(
                             onPressed: (){ Navigator.of(context).push(PageTransition(
-                            child: FriendsList(),
+                            child: FriendsPage(),
                             type: PageTransitionType.fade));
                             },
                             child: Text('48',
