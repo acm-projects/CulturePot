@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:culture_pot/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
@@ -48,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
       password: _passwordController.text,
       username: _usernameController.text,
       bio: _bioController.text,
-      file: _image!,
+      // file: _image!,
     );
 
     setState(() {
@@ -61,7 +62,7 @@ class _SignupPageState extends State<SignupPage> {
       //
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => MyHomePage(),
+          builder: (context) => MyHome(),
         ),
       );
     }

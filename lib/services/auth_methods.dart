@@ -44,25 +44,24 @@ class AuthMethods {
 
   // sign up user
   Future<String> signUpUser({
+     required String username,
+    required String bio,
     required String email,
     required String password,
-    required String username,
-    required String bio,
-    required Uint8List file,
   }) async {
     String res = "Some error occured";
     try {
       if (email.isNotEmpty ||
           password.isNotEmpty ||
           username.isNotEmpty ||
-          bio.isNotEmpty ||
-          file != null) {
+          bio.isNotEmpty
+         ) {
         // register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        String photoUrl = await StorageMethods()
-            .uploadImageToStorage('profilePics', file, false);
+        // String photoUrl = await StorageMethods()
+        //     .uploadImageToStorage('profilePics', file, false);
 
         // add user to our database
 
@@ -71,7 +70,7 @@ class AuthMethods {
           uid: cred.user!.uid,
           email: email,
           bio: bio,
-          photoUrl: photoUrl,
+         photoUrl: "dummy_url",
           friends: [],
           preferences: [],
         );

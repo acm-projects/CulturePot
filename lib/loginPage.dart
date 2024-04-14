@@ -1,3 +1,4 @@
+import 'package:culture_pot/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './utils.dart';
@@ -27,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       // If login successful, navigate to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
+        MaterialPageRoute(builder: (context) => MyHome()),
       );
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -53,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
       //
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => MyHomePage(),
+          builder: (context) => MyHome(),
         ),
       );
     } else {

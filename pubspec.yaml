@@ -30,19 +30,25 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^2.25.5
+  url_launcher: ^6.0.12 
+  page_transition: ^2.0.0
+  firebase_core: ^2.29.0
+  firebase_auth: ^4.19.1
 
 
   translator: ^0.1.7
-
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  google_nav_bar : ^5.0.6
+  salomon_bottom_bar: ^3.3.2
+
+
 
   email_validator: ^2.0.1
   # Firebase database
   cloud_firestore: ^4.15.5
-  firebase_auth: ^4.17.5
   flutterfire_cli: ^0.2.7
   shared_preferences: ^2.0.9
   provider: ^6.1.2
@@ -55,13 +61,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  url_launcher: ^6.0.0
+  url_launcher: ^6.0.0  
+
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.2
+  #google_nav_bar : ^5.0.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,10 +82,36 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - lib/images/SignIn.png
+    - lib/images/success.png
+    - lib/images/emptyPref.png
+    - lib/images/home.png
+    - lib/images/buzz.png
+    - lib/images/logo.png
+    #- lib/images/SignUp.png
+    #- lib/images/pfp.webp
+    - lib/images/postEx.png
+    #- lib/images/pfpKenzo.jpeg
+    #- lib/images/pfpReal.jpeg
+    #- lib/images/indiaFlag.png
+    #- lib/images/taj.png
+    #- lib/images/duo.png
 
+    - imagespot/SignIn.png
+    #- imagespot/success.png
+    #- imagespot/emptyPref.png
+    #- imagespot/home.png
+    #- imagespot/buzz.png
+    - imagespot/logo.png
+    - imagespot/SignUp.png
+    - imagespot/pfp.webp
+    - imagespot/postEx.png
+    - imagespot/pfpKenzo.jpeg
+    - imagespot/pfpReal.jpeg
+    - imagespot/indiaFlag.png
+    - imagespot/taj.png
+    - imagespot/duo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -90,7 +124,7 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   # fonts:
-  #   - family: Schyler
+  #   - family: Inter
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
@@ -100,6 +134,5 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
