@@ -190,13 +190,6 @@ class _MyHomeState extends State<MyHome> {
                     );
                   }
 
-                  // Print out the contents of snapshot.data!.docs
-                  print('Documents in collection:');
-                  snapshot.data!.docs.forEach((doc) {
-                    print(doc.data());
-                  });
-
-                  // Filter posts made by friends
                   final List<DocumentSnapshot> friendPosts = snapshot.data!.docs
                       .where((post) => friendsUIDs.contains(post.data()['uid']))
                       .toList();
@@ -205,44 +198,35 @@ class _MyHomeState extends State<MyHome> {
 
                   final List<DocumentSnapshot> culturePosts =
                       snapshot.data!.docs.where((post) {
-                    // Retrieve the culture value from the post
                     String culture = post.data()['culture'];
-
-                    // Check if the culture value is included in the user's preferences
                     return preferences.contains(culture);
                   }).toList();
 
                   print('Culture Posts: $culturePosts');
 
-                  // Combine friendPosts and culturePosts into a single Set
                   Set<DocumentSnapshot> combinedPosts = {};
-
-                  // Add friendPosts to the combined set
-                  //combinedPosts.addAll(snapshot.data!.docs.where(
-                  //    (post) => friendsUIDs.contains(post.data()['uid'])));
-
-                  // Add culturePosts to the combined set
-                  combinedPosts.addAll(snapshot.data!.docs.where((post) {
-                    String culture = post.data()['culture'];
-                    return preferences.contains(culture);
-                  }));
-
-                  // Convert the combined set back to a list
+                  combinedPosts.addAll(friendPosts);
+                  combinedPosts.addAll(culturePosts);
                   List<DocumentSnapshot> combinedList = combinedPosts.toList();
 
                   print('Combined Posts: $combinedList');
 
-                  // Display posts
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: combinedList.length, // Use combinedList length
-                    itemBuilder: (context, index) {
-                      return PostScreen(
-                        snap: combinedList[index]
-                            .data(), // Access each post from combinedList
-                      );
-                    },
+                  return Column(
+                    children: combinedList
+                        .map((doc) => GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PostScreen(
+                                      snap: doc.data(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Post(),
+                            ))
+                        .toList(),
                   );
                 },
               ),
@@ -265,51 +249,5 @@ class _MyHomeState extends State<MyHome> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
-  }
-
-  void navigateToPage(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        // No need to navigate to the same page
-        break;
-      case 1:
-        // Navigate to Cultures page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
-        break;
-      case 2:
-        // Navigate to Map page
-        // Replace PreferencesPage with your desired page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
-        break;
-      case 3:
-        // Navigate to Profile page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const UserProfilePage(),
-          ),
-        );
-        break;
-      default:
-    }
-
-    // Update tab color after navigation
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 }
