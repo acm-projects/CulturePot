@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +19,99 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   int _selectedIndex = 3; // Added this line to define _selectedIndex
+
+  String photoUrl = "";
+  String uid = "";
+  String username = "";
+  String bio = "";
+  List friendsUIDs = [];
+  int numFriends = 0;
+  String numFriendsString = ""; // Define numFriendsString variable as a string
+
+  Future<void> fetchFriendsUIDs() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
+      if (userSnapshot.exists) {
+        final List<String> friends = List<String>.from(userSnapshot.data()![
+            'friends']); // Assuming 'friends' is the key for the friends list
+        setState(() {
+          friendsUIDs = friends;
+        });
+      }
+
+      setState(() {
+        numFriends = friendsUIDs
+            .length; // Update numFriends with the length of friendsUIDs
+      });
+
+      setState(() {
+        numFriendsString = numFriends.toString() +
+            " "; // Convert numFriends to string and concatenate with a space
+      });
+    }
+  }
+
+  void getBio() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    print("Snapshot data: ${snap.data()}"); // Add this debug print statement
+
+    setState(() {
+      bio = (snap.data()
+          as Map<String, dynamic>)['bio']; // Assign to the bio variable
+    });
+  }
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
+    });
+  }
+
+  void getUid() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      uid = (snap.data() as Map<String, dynamic>)['uid'];
+    });
+  }
+
+  void getUsername() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      username = (snap.data() as Map<String, dynamic>)['username'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPhotoUrl();
+    getUsername();
+    getUid();
+    getBio();
+    fetchFriendsUIDs();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +202,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 40,
-                              backgroundImage:
-                                  AssetImage('imagespot/pfpReal.jpeg'),
+                              backgroundImage: NetworkImage(photoUrl),
                             ),
                             TextButton(
                               onPressed: () {
@@ -163,8 +256,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        '@username',
+                      Text(
+                        "@" + username,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 18,
@@ -173,8 +266,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Text(
-                            '48 ',
+                          Text(
+                            numFriendsString,
                             style: TextStyle(fontWeight: FontWeight.w800),
                           ),
                           const Text(
@@ -206,8 +299,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Bio example: Love to travel, eat, and learn! HMU for language lessons in Hindi or Spanish',
+                      Text(
+                        bio,
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
@@ -243,35 +336,33 @@ class _UserProfilePageState extends State<UserProfilePage> {
           ),
         ],
       ),
-
-
-  floatingActionButton: Column(
-  mainAxisAlignment: MainAxisAlignment.end,
-  children: [
-    ElevatedButton(
-      onPressed:() async {
-        await FirebaseAuth.instance.signOut();
-     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => LoginPage()));
-      },
-      child: Icon(Icons.logout_rounded),
-      
-    ),
-    SizedBox(height: 16), // Add some space between the Log out button and the Add button
-    FloatingActionButton(
-      onPressed: () {
-        // Add your logic to navigate to the screen where users can add a post
-        // For example:
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => AddPostScreen()));
-      },
-      backgroundColor: const Color.fromARGB(255, 247, 192, 25),
-      child: const Icon(Icons.add),
-      shape: const CircleBorder(), // Make the button circular
-    ),
-  ],
-),
-floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            },
+            child: Icon(Icons.logout_rounded),
+          ),
+          SizedBox(
+              height:
+                  16), // Add some space between the Log out button and the Add button
+          FloatingActionButton(
+            onPressed: () {
+              // Add your logic to navigate to the screen where users can add a post
+              // For example:
+              // Navigator.push(context, MaterialPageRoute(builder: (context) => AddPostScreen()));
+            },
+            backgroundColor: const Color.fromARGB(255, 247, 192, 25),
+            child: const Icon(Icons.add),
+            shape: const CircleBorder(), // Make the button circular
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 

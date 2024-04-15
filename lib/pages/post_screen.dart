@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:culture_pot/pages/comment_page.dart';
@@ -9,13 +12,50 @@ import 'package:culture_pot/components/comment_view.dart'; // Adjusted import st
 import 'package:culture_pot/components/comment_post.dart';
 
 class PostScreen extends StatefulWidget {
-  const PostScreen({Key? key}) : super(key: key);
+  final dynamic snap;
+
+  PostScreen({
+    Key? key,
+    required this.snap,
+  }) : super(key: key);
 
   @override
   State<PostScreen> createState() => _PostScreenState();
 }
 
 class _PostScreenState extends State<PostScreen> {
+  String uid = "";
+  int commentLen = 0;
+  bool isLikeAnimating = false;
+  void getUid() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    uid = (snap.data() as Map<String, dynamic>)['uid'];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getComments();
+  }
+
+  void getComments() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+      commentLen = snap.docs.length;
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+    setState(() {});
+  }
+
   bool isLiked = false;
   int _selectedIndex = 0;
   bool isSaved = false;
@@ -125,8 +165,8 @@ class _PostScreenState extends State<PostScreen> {
                             ),
                           );
                         },
-                        child: const Text(
-                          '@username',
+                        child: Text(
+                          widget.snap['username'],
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 16,
