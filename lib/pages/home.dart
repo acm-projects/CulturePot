@@ -224,7 +224,29 @@ class _MyHomeState extends State<MyHome> {
                                   ),
                                 );
                               },
-                              child: Post(),
+                              child: Post(
+                                pfp: (doc.data()
+                                        as Map<String, dynamic>)['profImage'] ??
+                                    '',
+                                likes: (doc.data()
+                                        as Map<String, dynamic>)['likes'] ??
+                                    '',
+                                username: (doc.data()
+                                        as Map<String, dynamic>)['username'] ??
+                                    '', // Provide default value if null
+                                imageUrl: (doc.data()
+                                        as Map<String, dynamic>)['postUrl'] ??
+                                    '', // Provide default value if null
+                                description: (doc.data() as Map<String,
+                                        dynamic>)['description'] ??
+                                    '', // Provide default value if null
+                                isLiked: (doc.data()
+                                        as Map<String, dynamic>)['isLiked'] ??
+                                    false, // Provide default value if null
+                                isSaved: (doc.data()
+                                        as Map<String, dynamic>)['isSaved'] ??
+                                    false, // Provide default value if null
+                              ),
                             ))
                         .toList(),
                   );

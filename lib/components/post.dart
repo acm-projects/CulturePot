@@ -32,15 +32,36 @@ class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
 }
 
 class Post extends StatefulWidget {
-  Post({Key? key}) : super(key: key);
+  final String username;
+  final String pfp;
+  final List<dynamic> likes; // Change type to List<dynamic>
+  late int numLikes; // Change to late to allow initialization in initState
+  final String imageUrl;
+  final String description;
+  final bool isLiked;
+  final bool isSaved;
+
+  Post({
+    Key? key,
+    required this.pfp,
+    required this.likes, // Change to List<dynamic>
+    required this.username,
+    required this.imageUrl,
+    required this.description,
+    required this.isLiked,
+    required this.isSaved,
+  }) : super(key: key);
 
   @override
   _PostState createState() => _PostState();
 }
 
 class _PostState extends State<Post> {
-  bool isLiked = false;
-  bool isSaved = false;
+  @override
+  void initState() {
+    super.initState();
+    widget.numLikes = widget.likes.length; // Initialize numLikes in initState
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +75,10 @@ class _PostState extends State<Post> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    widget.pfp,
+                  ),
                   radius: 16,
                 ),
                 const SizedBox(width: 8),
@@ -85,19 +108,20 @@ class _PostState extends State<Post> {
                       ),
                     );
                   },
-                  child: const Text(
-                    'username',
-                    style: TextStyle(
+                  child: Text(
+                    widget.username,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
                 const SizedBox(width: 200), // Adjust the spacing between icons
                 SaveButton(
-                  isSaved: isSaved,
+                  isSaved: widget.isSaved,
                   onTap: () {
                     setState(() {
-                      isSaved = !isSaved;
+                      // Toggle the save button state
+                      // You can add your logic here
                     });
                   },
                 ),
@@ -108,7 +132,7 @@ class _PostState extends State<Post> {
               child: SizedBox(
                 width:
                     MediaQuery.of(context).size.width * 0.85, // 90% of screen w
-                child: Image.asset('imagespot/postEx.png'),
+                child: Image.network(widget.imageUrl),
               ),
             ),
             const SizedBox(height: 8),
@@ -117,9 +141,9 @@ class _PostState extends State<Post> {
               child: SizedBox(
                 width:
                     MediaQuery.of(context).size.width * 0.83, // 90% of screen w
-                child: const Text(
-                  'My family and I visited the Statue of Unity in Gujarat, India this spring for the first time. I was fascinated at the way locals spoke dialect X of Gujarati while we tourists spoke and learned in dialect Y. Does anyone know why that is?',
-                  style: TextStyle(
+                child: Text(
+                  widget.description,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                   ),
@@ -148,13 +172,14 @@ class _PostState extends State<Post> {
                 const SizedBox(width: 4), // Adjust the spacing between icons
                 IconButton(
                   icon: Icon(
-                    isLiked ? Icons.favorite : Icons.favorite_border,
-                    color: isLiked ? Colors.red : Colors.black,
+                    widget.isLiked ? Icons.favorite : Icons.favorite_border,
+                    color: widget.isLiked ? Colors.red : Colors.black,
                     size: 20,
                   ),
                   onPressed: () {
                     setState(() {
-                      isLiked = !isLiked;
+                      // Toggle the like button state
+                      // You can add your logic here
                     });
                   },
                 ),
@@ -170,9 +195,9 @@ class _PostState extends State<Post> {
                       ),
                     );
                   },
-                  child: const Text(
-                    'vidurnangia',
-                    style: TextStyle(
+                  child: Text(
+                    widget.username,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -180,8 +205,8 @@ class _PostState extends State<Post> {
                 SizedBox(
                   width: 4,
                 ), // Adjust the spacing between text and "and"
-                const Text(
-                  'and 12 other Partners',
+                Text(
+                  'and ${widget.numLikes} other Partners',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,

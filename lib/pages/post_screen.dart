@@ -25,8 +25,28 @@ class PostScreen extends StatefulWidget {
 
 class _PostScreenState extends State<PostScreen> {
   String uid = "";
+  String currentUserName = "";
+  List comments = [];
+
   int commentLen = 0;
   bool isLikeAnimating = false;
+
+  Future<void> fetchUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
+      if (userSnapshot.exists) {
+        setState(() {
+          currentUserName = userSnapshot.data()?['username'];
+        });
+      }
+    }
+  }
+
   void getUid() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
         .collection('users')
@@ -39,10 +59,25 @@ class _PostScreenState extends State<PostScreen> {
   @override
   void initState() {
     super.initState();
-    getComments();
+    getCommentsLength();
+    fetchUserName();
   }
 
   void getComments() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+      commentLen = snap.docs.length;
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+    setState(() {});
+  }
+
+  void getCommentsLength() async {
     try {
       QuerySnapshot snap = await FirebaseFirestore.instance
           .collection('posts')
@@ -151,8 +186,10 @@ class _PostScreenState extends State<PostScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(width: 8),
-                      const CircleAvatar(
-                        backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          widget.snap['profImage'],
+                        ),
                         radius: 18,
                       ),
                       const SizedBox(width: 8),
@@ -196,7 +233,9 @@ class _PostScreenState extends State<PostScreen> {
                 alignment: Alignment.center,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
-                  child: Image.asset('imagespot/postEx.png'),
+                  child: Image.network(
+                    widget.snap['postUrl'],
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
@@ -204,8 +243,8 @@ class _PostScreenState extends State<PostScreen> {
                 alignment: Alignment.center,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.88,
-                  child: const Text(
-                    'My family and I visited the Statue of Unity in Gujarat, India this spring for the first time. I was fascinated at the way locals spoke dialect X of Gujarati while we tourists spoke and learned in dialect Y. Does anyone know why that is?',
+                  child: Text(
+                    widget.snap['description'],
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -263,8 +302,8 @@ class _PostScreenState extends State<PostScreen> {
                   const SizedBox(
                     width: 4,
                   ),
-                  const Text(
-                    'and 12 other Partners',
+                  Text(
+                    'and ${(widget.snap['likes']?.length ?? 0)} other Partners',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
@@ -276,16 +315,17 @@ class _PostScreenState extends State<PostScreen> {
               const Divider(),
               Comment(
                 controller: TextEditingController(), // Example controller
-                hintText: 'Interact with @username',
+                hintText:
+                    'Interact with @${(widget.snap['username'])}', // tz fix this
                 obscureText: false,
                 focusNode: FocusNode(),
               ),
-              const ViewComment(
+              ViewComment(
                 commentText:
                     'This is a comment', // Provide the comment text here
                 profileImageAsset:
                     'imagespot/pfpReal.jpeg', // Provide the path to the profile image asset
-                username: 'username', // Provide the username here
+                username: currentUserName, // Provide the username here
               ),
             ],
           ),

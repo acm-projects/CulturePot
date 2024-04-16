@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/login_page.dart';
+import 'package:culture_pot/pages/post_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -324,10 +325,75 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           ),
                         ),
                       ),
+                      // here are posts
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('posts')
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            print('Error: ${snapshot.error}');
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          }
+
+                          if (snapshot.data == null ||
+                              snapshot.data!.docs.isEmpty) {
+                            print('No posts available');
+                            return Center(
+                              child: Text('No posts available.'),
+                            );
+                          }
+
+                          final List<DocumentSnapshot> friendPosts = snapshot
+                              .data!.docs
+                              .where((post) =>
+                                  friendsUIDs.contains(post.data()['uid']))
+                              .toList();
+
+                          print('Friend Posts: $friendPosts');
+
+                          Set<DocumentSnapshot> combinedPosts = {};
+                          combinedPosts.addAll(friendPosts);
+                          List<DocumentSnapshot> combinedList =
+                              combinedPosts.toList();
+
+                          print('Combined Posts: $combinedList');
+
+                          return Column(
+                            children: combinedList
+                                .map((doc) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PostScreen(
+                                              snap: doc.data(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      //child: Post(),
+                                    ))
+                                .toList(),
+                          );
+                        },
+                      ),
+
                       const SizedBox(height: 12),
-                      Post(),
+                      //Post(),
                       const SizedBox(height: 12),
-                      Post(),
+                      //Post(),
                     ],
                   ),
                 ),
