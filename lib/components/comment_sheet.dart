@@ -30,14 +30,14 @@ class _CommentSheetState extends State<CommentFeet> {
                 focusNode: FocusNode(),
               ),
 
-              const ViewComment(
+              ViewComment(
                 commentText: "This is a comment.",
                 profileImageAsset: "imagespot/pfpKenzo.jpeg",
                 username: '@vidurnangia',
               ),
 
               // Add more ViewComment widgets as needed
-              const ViewComment(
+              ViewComment(
                 commentText: "Another comment.",
                 profileImageAsset: "imagespot/indiaFlag.",
                 username: '@vidurnangia',

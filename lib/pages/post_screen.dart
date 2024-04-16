@@ -198,7 +198,7 @@ class _PostScreenState extends State<PostScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ViewerProfilePage(),
+                              builder: (context) => ViewerProfilePage(uid: uid),
                             ),
                           );
                         },
@@ -288,7 +288,7 @@ class _PostScreenState extends State<PostScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ViewerProfilePage(),
+                          builder: (context) => ViewerProfilePage(uid: uid),
                         ),
                       );
                     },

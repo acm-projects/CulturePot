@@ -2,34 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:culture_pot/components/save_button.dart';
 import 'package:culture_pot/pages/comment_page.dart'; // Import CommentPage here
-
-class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
-  final Widget widget;
-
-  CustomPageRouteBuilder({required this.widget})
-      : super(
-          transitionDuration: const Duration(milliseconds: 250),
-          transitionsBuilder: (BuildContext context,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-              Widget child) {
-            return SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(0.0, 1.0), // Slide up from bottom
-                end: Offset.zero,
-              ).animate(CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeInOut,
-              )),
-              child: child,
-            );
-          },
-          pageBuilder: (BuildContext context, Animation<double> animation,
-              Animation<double> secondaryAnimation) {
-            return widget;
-          },
-        );
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post extends StatefulWidget {
   final String username;
@@ -57,10 +30,26 @@ class Post extends StatefulWidget {
 }
 
 class _PostState extends State<Post> {
+  String uid = '';
+
   @override
   void initState() {
     super.initState();
     widget.numLikes = widget.likes.length; // Initialize numLikes in initState
+    findUidByUsername();
+  }
+
+  Future<void> findUidByUsername() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: widget.username)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      setState(() {
+        uid = querySnapshot.docs.first.id;
+      });
+    }
   }
 
   @override
@@ -84,12 +73,14 @@ class _PostState extends State<Post> {
                 const SizedBox(width: 8),
                 GestureDetector(
                   onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ViewerProfilePage(),
-                      ),
-                    );
+                    if (uid.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewerProfilePage(uid: uid),
+                        ),
+                      );
+                    }
                   },
                   child: const Text(
                     '@',
@@ -101,12 +92,14 @@ class _PostState extends State<Post> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ViewerProfilePage(),
-                      ),
-                    );
+                    if (uid.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewerProfilePage(uid: uid),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     widget.username,
@@ -188,12 +181,14 @@ class _PostState extends State<Post> {
                 ), // Adjust the spacing between icons and text
                 GestureDetector(
                   onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ViewerProfilePage(),
-                      ),
-                    );
+                    if (uid.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewerProfilePage(uid: uid),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     widget.username,

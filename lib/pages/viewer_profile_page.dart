@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/pages/post_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/post.dart';
 import 'preferences_page.dart'; // Import the PreferencesPage
@@ -6,7 +9,12 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'home.dart';
 
 class ViewerProfilePage extends StatefulWidget {
-  const ViewerProfilePage({Key? key}) : super(key: key);
+  final String uid;
+
+  const ViewerProfilePage({
+    Key? key,
+    required this.uid,
+  }) : super(key: key);
 
   @override
   _ViewerProfilePageState createState() => _ViewerProfilePageState();
@@ -15,6 +23,77 @@ class ViewerProfilePage extends StatefulWidget {
 class _ViewerProfilePageState extends State<ViewerProfilePage> {
   int _selectedIndex = 0;
   bool _isPartnersClicked = false;
+
+  String username = "";
+  String bio = "";
+  String photoUrl = "";
+  List friendsUIDs = [];
+  int numFriends = 0;
+  String numFriendsString = ""; // Define numFriendsString variable as a string
+
+  void getBio() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid) // Use the uid variable here
+        .get();
+
+    print("Snapshot data: ${snap.data()}"); // Add this debug print statement
+
+    setState(() {
+      bio = (snap.data()
+          as Map<String, dynamic>)['bio']; // Assign to the bio variable
+    });
+  }
+
+  Future<void> fetchFriendsUIDs(String uid) async {
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    if (userSnapshot.exists) {
+      final List<String> friends = List<String>.from(userSnapshot.data()![
+          'friends']); // Assuming 'friends' is the key for the friends list
+      setState(() {
+        friendsUIDs = friends;
+      });
+    }
+
+    setState(() {
+      numFriends = friendsUIDs
+          .length; // Update numFriends with the length of friendsUIDs
+      numFriendsString = numFriends.toString() +
+          " "; // Convert numFriends to string and concatenate with a space
+    });
+  }
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .get();
+
+    setState(() {
+      photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
+    });
+  }
+
+  void getUsername() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .get();
+
+    setState(() {
+      username = (snap.data() as Map<String, dynamic>)['username'];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getBio();
+    fetchFriendsUIDs(widget.uid);
+    getPhotoUrl();
+    getUsername();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +132,11 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 40,
-                              backgroundImage:
-                                  AssetImage('imagespot/pfpReal.jpeg'),
+                              backgroundImage: NetworkImage(
+                                photoUrl,
+                              ),
                             ),
                             TextButton(
                               onPressed: () {
@@ -109,8 +189,8 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        '@username',
+                      Text(
+                        username,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 18,
@@ -123,8 +203,8 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                             '48 ',
                             style: TextStyle(fontWeight: FontWeight.w800),
                           ),
-                          const Text(
-                            'Partners',
+                          Text(
+                            numFriendsString,
                             style: TextStyle(color: Colors.black),
                           ),
                           const Text('   '),
@@ -152,8 +232,8 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'Bio example: Love to travel, eat, and learn! HMU for language lessons in Hindi or Spanish',
+                      Text(
+                        bio,
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(height: 8),
@@ -177,10 +257,88 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      // const SizedBox(height: 12),
                       //Post(),
-                      const SizedBox(height: 12),
+                      // const SizedBox(height: 12),
                       //Post(),
+
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('posts')
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            print('Error: ${snapshot.error}');
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          }
+
+                          if (snapshot.data == null ||
+                              snapshot.data!.docs.isEmpty) {
+                            print('No posts available');
+                            return Center(
+                              child: Text('No posts available.'),
+                            );
+                          }
+
+                          final List<DocumentSnapshot> userPosts = snapshot
+                              .data!.docs
+                              .where((post) =>
+                                  post.data()['uid'] ==
+                                  widget.uid) // Filter based on UID
+                              .toList();
+
+                          return Column(
+                            children: userPosts
+                                .map((doc) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PostScreen(
+                                              snap: doc.data(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Post(
+                                        pfp: (doc.data() as Map<String,
+                                                dynamic>)['profImage'] ??
+                                            '',
+                                        likes: (doc.data() as Map<String,
+                                                dynamic>)['likes'] ??
+                                            '',
+                                        username: (doc.data() as Map<String,
+                                                dynamic>)['username'] ??
+                                            '', // Provide default value if null
+                                        imageUrl: (doc.data() as Map<String,
+                                                dynamic>)['postUrl'] ??
+                                            '', // Provide default value if null
+                                        description: (doc.data() as Map<String,
+                                                dynamic>)['description'] ??
+                                            '', // Provide default value if null
+                                        isLiked: (doc.data() as Map<String,
+                                                dynamic>)['isLiked'] ??
+                                            false, // Provide default value if null
+                                        isSaved: (doc.data() as Map<String,
+                                                dynamic>)['isSaved'] ??
+                                            false, // Provide default value if null
+                                      ),
+                                    ))
+                                .toList(),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

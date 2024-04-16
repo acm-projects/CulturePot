@@ -1,13 +1,14 @@
 import 'package:culture_pot/pages/comment_page.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ViewComment extends StatefulWidget {
   final String commentText;
   final String profileImageAsset;
   final String username;
 
-  const ViewComment({
+  ViewComment({
     Key? key,
     required this.commentText,
     required this.profileImageAsset,
@@ -20,6 +21,30 @@ class ViewComment extends StatefulWidget {
 
 class _ViewCommentState extends State<ViewComment> {
   bool isLiked = false;
+  late String uid;
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the function to find the UID when the widget is initialized
+    findUidByUsername();
+  }
+
+  Future<void> findUidByUsername() async {
+    // Query Firestore to find the document where the username matches
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('username', isEqualTo: widget.username)
+        .get();
+
+    // Check if any documents were found
+    if (querySnapshot.docs.isNotEmpty) {
+      // Extract the UID from the first document found
+      setState(() {
+        uid = querySnapshot.docs.first.id;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +67,15 @@ class _ViewCommentState extends State<ViewComment> {
                   const SizedBox(width: 8),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ViewerProfilePage(),
-                        ),
-                      );
+                      // Check if the UID is available
+                      if (uid.isNotEmpty) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewerProfilePage(uid: uid),
+                          ),
+                        );
+                      }
                     },
                     child: Text(
                       '@${widget.username}',

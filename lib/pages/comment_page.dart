@@ -51,14 +51,14 @@ class _CommentSheetState extends State<CommentSheet> {
                 focusNode: FocusNode(),
               ),
 
-              const ViewComment(
+              ViewComment(
                 commentText: "Another comment.",
                 profileImageAsset: "imagespot/indiaFlag.png",
                 username: 'vidurnangia',
               ),
 
               // Add more ViewComment widgets as needed
-              const ViewComment(
+              ViewComment(
                 commentText: "Another comment.",
                 profileImageAsset: "imagespot/indiaFlag.png",
                 username: 'vidurnangia',
