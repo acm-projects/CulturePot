@@ -390,10 +390,88 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         },
                       ),
 
-                      const SizedBox(height: 12),
-                      //Post(),
-                      const SizedBox(height: 12),
-                      //Post(),
+                      //const SizedBox(height: 12),
+                      // Post(),
+                      // const SizedBox(height: 12),
+                      // Post(),
+
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance
+                            .collection('posts')
+                            .snapshots(),
+                        builder: (context,
+                            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                                snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          if (snapshot.hasError) {
+                            print('Error: ${snapshot.error}');
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          }
+
+                          if (snapshot.data == null ||
+                              snapshot.data!.docs.isEmpty) {
+                            print('No posts available');
+                            return Center(
+                              child: Text('No posts available.'),
+                            );
+                          }
+
+                          final List<DocumentSnapshot> userPosts = snapshot
+                              .data!.docs
+                              .where((post) =>
+                                  post.data()['uid'] ==
+                                  uid) // Filter based on UID
+                              .toList();
+
+                          return Column(
+                            children: userPosts
+                                .map((doc) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => PostScreen(
+                                              snap: doc.data(),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Post(
+                                        pfp: (doc.data() as Map<String,
+                                                dynamic>)['profImage'] ??
+                                            '',
+                                        likes: (doc.data() as Map<String,
+                                                dynamic>)['likes'] ??
+                                            '',
+                                        username: (doc.data() as Map<String,
+                                                dynamic>)['username'] ??
+                                            '', // Provide default value if null
+                                        imageUrl: (doc.data() as Map<String,
+                                                dynamic>)['postUrl'] ??
+                                            '', // Provide default value if null
+                                        description: (doc.data() as Map<String,
+                                                dynamic>)['description'] ??
+                                            '', // Provide default value if null
+                                        isLiked: (doc.data() as Map<String,
+                                                dynamic>)['isLiked'] ??
+                                            false, // Provide default value if null
+                                        isSaved: (doc.data() as Map<String,
+                                                dynamic>)['isSaved'] ??
+                                            false, // Provide default value if null
+                                      ),
+                                    ))
+                                .toList(),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
