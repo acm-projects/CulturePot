@@ -68,7 +68,7 @@ class SignSuccess extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 220),
+              const SizedBox(height: 180),
 
               MySuccessButton(
                 onTap: () => userSuccess(context),

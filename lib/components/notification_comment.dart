@@ -1,14 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/comment_page.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/pages/post_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:culture_pot/components/save_button.dart';
 
-class ViewComment extends StatefulWidget {
+class NotifComment extends StatefulWidget {
   final String commentText;
   final String profileImageAsset;
   final String username;
 
-  ViewComment({
+  NotifComment({
     Key? key,
     required this.commentText,
     required this.profileImageAsset,
@@ -16,30 +19,20 @@ class ViewComment extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ViewCommentState createState() => _ViewCommentState();
+  _NotifCommentState createState() => _NotifCommentState();
 }
 
-class _ViewCommentState extends State<ViewComment> {
+class _NotifCommentState extends State<NotifComment> {
   bool isLiked = false;
-  late String uid;
-
-  @override
-  void initState() {
-    super.initState();
-    // Call the function to find the UID when the widget is initialized
-    findUidByUsername();
-  }
+  String uid = "";
 
   Future<void> findUidByUsername() async {
-    // Query Firestore to find the document where the username matches
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection('users')
         .where('username', isEqualTo: widget.username)
         .get();
 
-    // Check if any documents were found
     if (querySnapshot.docs.isNotEmpty) {
-      // Extract the UID from the first document found
       setState(() {
         uid = querySnapshot.docs.first.id;
       });
@@ -67,15 +60,12 @@ class _ViewCommentState extends State<ViewComment> {
                   const SizedBox(width: 8),
                   GestureDetector(
                     onTap: () {
-                      // Check if the UID is available
-                      if (uid.isNotEmpty) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ViewerProfilePage(uid: uid),
-                          ),
-                        );
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ViewerProfilePage(uid: uid),
+                        ),
+                      );
                     },
                     child: Text(
                       '@${widget.username}',

@@ -11,14 +11,14 @@ class MyButton1 extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.all(10),
-          backgroundColor: Color.fromARGB(255, 247, 192, 25),
+          padding: const EdgeInsets.all(10),
+          backgroundColor: const Color.fromARGB(255, 247, 192, 25),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          minimumSize: Size(double.infinity, 30), // Set the minimum size
+          minimumSize: const Size(double.infinity, 30), // Set the minimum size
         ),
-        child: Text(
+        child: const Text(
           "Create Account",
           style: TextStyle(
             fontWeight: FontWeight.w500,

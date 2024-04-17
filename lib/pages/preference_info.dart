@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:culture_pot/components/duolingo_card.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/home.dart';
 
@@ -14,13 +15,11 @@ class PreferenceInfo extends StatefulWidget {
 }
 
 class _PreferenceInfoState extends State<PreferenceInfo> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   _launchURL() async {
     const url = 'https://www.duolingo.com/course/hi/en/Learn-Hindi';
-    // ignore: deprecated_member_use
     if (await canLaunch(url)) {
-      // ignore: deprecated_member_use
       await launch(url, forceSafariVC: false);
     } else {
       throw 'Could not launch $url';
@@ -31,54 +30,71 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:
-            const Size.fromHeight(500), // Set the height of the app bar
+        preferredSize: const Size.fromHeight(500),
         child: Stack(
           children: [
             Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('imagespot/taj.png'),
-                  fit: BoxFit
-                      .cover, // Cover the entire app bar area with the image
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
             AppBar(
-              backgroundColor:
-                  Colors.transparent, // Make the app bar transparent
-              elevation: 0, // Remove the app bar shadow
+              backgroundColor: Colors.transparent,
+              elevation: 0,
               title: const Text('Preferences'),
               actions: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(
-                        context); // Navigate back to the previous screen
-                  },
-                ),
+                // IconButton(
+                //   icon: const Icon(Icons.arrow_back),
+                //   onPressed: () {
+                //     Navigator.pop(context);
+                //   },
+                // ),
               ],
+              bottom: const PreferredSize(
+                preferredSize:
+                    Size.fromHeight(30), // Adjust the height as needed
+                child: Center(
+                  child: Text(
+                    'India',
+                    style: TextStyle(
+                      fontSize: 50,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       ),
-      body: Container(
-        color: Colors.lightBlue[100], // Set background color of the body
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            // You can add additional content here
-            Duolingo(
-              onTap:
-                  _launchURL, // Pass the _launchURL function to Duolingo widget
-            ),
-
-            const Text('      LEARN',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                )),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.lightBlue[100],
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Duolingo(
+                onTap: _launchURL,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18.0),
+                child: Text(
+                  'Embark on a linguistic journey through India\'s rich cultural tapestry by learning its national language. From the lyrical poetry of Hindi to the intricate scripts of Sanskrit, delve into a world where language intertwines with history, tradition, and modernity',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black,
+                    fontSize: 14, // Adjust the font size
+                    letterSpacing: 0.8, // Adjust the letter spacing
+                    height: 1.5, // Adjust the line height
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -114,40 +130,22 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
               });
               switch (index) {
                 case 0:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyHome(),
-                    ),
-                  );
+                  Navigator.of(context).push(PageTransition(
+                      child: MyHome(), type: PageTransitionType.fade));
                   break;
                 case 1:
-                  // Navigate to Cultures page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PreferencesPage(),
-                    ),
-                  );
-                  break;
+                  Navigator.of(context).push(PageTransition(
+                      child: PreferencesPage(), type: PageTransitionType.fade));
                 case 2:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PreferencesPage(),
-                    ),
-                  );
-                  break;
+                  Navigator.of(context).push(PageTransition(
+                      child: MyHome(), type: PageTransitionType.fade));
                 case 3:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const UserProfilePage(),
-                    ),
-                  );
-
-                  break;
-                default:
+                  Navigator.of(context).push(PageTransition(
+                      child: const UserProfilePage(
+                        profileImageAsset: "imagespot/pfpReal.jpeg",
+                        username: '@prefInfoUser',
+                      ),
+                      type: PageTransitionType.fade));
               }
             },
           ),
