@@ -40,7 +40,7 @@ class _MyHomeState extends State<MyHome> {
               GButton(
                   icon: Icons.book_outlined, iconSize: 30, text: 'Cultures'),
               GButton(
-                icon: Icons.location_on_outlined,
+                icon: Icons.search,
                 text: 'Map',
                 iconSize: 30,
               ),
@@ -86,30 +86,19 @@ class _MyHomeState extends State<MyHome> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 233, 230, 230),
         title: Image.asset('imagespot/logo.png', height: 90),
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 9.0),
-          child: IconButton(
-            onPressed: () => Navigator.of(context).push(PageTransition(
-                child: MyNotifScreen(), type: PageTransitionType.fade)),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).push(
+              PageTransition(
+                child: const MyNotifScreen(),
+                type: PageTransitionType.fade,
+              ),
+            ),
             icon: const Icon(
               Icons.favorite_border_rounded,
               size: 35.0,
             ),
           ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MySearchPage()));
-                },
-                icon: const Icon(Icons.search_rounded,
-                    color: Colors.black, size: 35.0)),
-          )
         ],
       ),
       body: SingleChildScrollView(
