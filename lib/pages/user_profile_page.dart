@@ -8,11 +8,19 @@ import 'package:culture_pot/components/post.dart';
 import 'preferences_page.dart'; // Import the PreferencesPage
 import 'package:page_transition/page_transition.dart';
 import 'package:culture_pot/pages/edit_profile_page.dart';
+import 'package:culture_pot/pages/make_post.dart';
+import 'package:culture_pot/pages/friends_list.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'home.dart';
 
 class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({Key? key}) : super(key: key);
+  final String profileImageAsset;
+  final String username;
+  const UserProfilePage({
+    Key? key,
+    required this.profileImageAsset,
+    required this.username,
+  }) : super(key: key);
 
   @override
   _UserProfilePageState createState() => _UserProfilePageState();
@@ -156,13 +164,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     Navigator.of(context).push(PageTransition(
                         child: PreferencesPage(),
                         type: PageTransitionType.fade));
+                    break;
                   case 2:
                     Navigator.of(context).push(PageTransition(
                         child: MyHome(), type: PageTransitionType.fade));
+                    break;
                   case 3:
                     Navigator.of(context).push(PageTransition(
-                        child: UserProfilePage(),
+                        child: const UserProfilePage(
+                          profileImageAsset: "imagespot/pfpReal.jpeg",
+                          username: '@newuser',
+                        ),
                         type: PageTransitionType.fade));
+                    break;
                 }
               });
             },

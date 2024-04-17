@@ -57,7 +57,7 @@ class _PostState extends State<Post> {
     return Card(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(4.5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -108,7 +108,7 @@ class _PostState extends State<Post> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 200), // Adjust the spacing between icons
+                const SizedBox(width: 85),
                 SaveButton(
                   isSaved: widget.isSaved,
                   onTap: () {
@@ -117,7 +117,7 @@ class _PostState extends State<Post> {
                       // You can add your logic here
                     });
                   },
-                ),
+                )
               ],
             ),
             Align(
@@ -138,12 +138,11 @@ class _PostState extends State<Post> {
                   widget.description,
                   style: const TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,13 +155,12 @@ class _PostState extends State<Post> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const CommentPage(),
+                      CustomPageRouteBuilder(
+                        widget: const CommentPage(),
                       ),
                     );
                   },
                 ),
-                const SizedBox(width: 4), // Adjust the spacing between icons
                 IconButton(
                   icon: Icon(
                     widget.isLiked ? Icons.favorite : Icons.favorite_border,
@@ -176,9 +174,8 @@ class _PostState extends State<Post> {
                     });
                   },
                 ),
-                SizedBox(
-                  width: 4,
-                ), // Adjust the spacing between icons and text
+                const SizedBox(
+                    width: 4), // Adjust the spacing between icons and text
                 GestureDetector(
                   onTap: () async {
                     if (uid.isNotEmpty) {

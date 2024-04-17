@@ -32,8 +32,6 @@ dependencies:
     sdk: flutter
   url_launcher: ^6.0.12 
   page_transition: ^2.0.0
-  firebase_core: ^2.29.0
-  firebase_auth: ^4.19.1
 
 
   translator: ^0.1.7
@@ -43,6 +41,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_nav_bar : ^5.0.6
   salomon_bottom_bar: ^3.3.2
+  lottie: ^3.1.0
+  animated_splash_screen: ^1.3.0
 
 
 
@@ -111,6 +111,7 @@ flutter:
     - imagespot/pfpReal.jpeg
     - imagespot/indiaFlag.png
     - imagespot/taj.png
+    - imagespot/Intro.json
     - imagespot/duo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

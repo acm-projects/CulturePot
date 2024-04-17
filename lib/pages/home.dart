@@ -115,11 +115,14 @@ class _MyHomeState extends State<MyHome> {
                     break;
                   case 2:
                     Navigator.of(context).push(PageTransition(
-                        child: MyHome(), type: PageTransitionType.fade));
+                        child: Map(), type: PageTransitionType.fade));
                     break;
                   case 3:
                     Navigator.of(context).push(PageTransition(
-                        child: UserProfilePage(),
+                        child: const UserProfilePage(
+                          profileImageAsset: "imagespot/pfpReal.jpeg",
+                          username: '@user34',
+                        ),
                         type: PageTransitionType.fade));
                     break;
                 }
@@ -136,7 +139,7 @@ class _MyHomeState extends State<MyHome> {
           padding: const EdgeInsets.symmetric(horizontal: 9.0),
           child: IconButton(
             onPressed: () => Navigator.of(context).push(PageTransition(
-                child: MyNotifsEmpty(), type: PageTransitionType.fade)),
+                child: MyNotifScreen(), type: PageTransitionType.fade)),
             icon: const Icon(
               Icons.favorite_border_rounded,
               size: 35.0,
@@ -266,7 +269,7 @@ class _MyHomeState extends State<MyHome> {
           );
         },
         backgroundColor: const Color.fromARGB(255, 247, 192, 25),
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
         shape: const CircleBorder(), // Make the button circular
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,

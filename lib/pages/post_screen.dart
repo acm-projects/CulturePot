@@ -7,9 +7,11 @@ import 'package:culture_pot/pages/comment_page.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
+import 'package:culture_pot/pages/make_post.dart';
 import 'package:culture_pot/components/save_button.dart';
 import 'package:culture_pot/components/comment_view.dart'; // Adjusted import statement
-import 'package:culture_pot/components/comment_post.dart';
+//import 'package:culture_pot/components/comment_post.dart';
+import 'package:culture_pot/components/make_post_text.dart';
 
 class PostScreen extends StatefulWidget {
   final dynamic snap;
@@ -151,7 +153,10 @@ class _PostScreenState extends State<PostScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const UserProfilePage(),
+                        builder: (context) => const UserProfilePage(
+                          profileImageAsset: "imagespot/pfpReal.jpeg",
+                          username: '@userOnPostScreen',
+                        ),
                       ),
                     );
                     break;
@@ -211,7 +216,7 @@ class _PostScreenState extends State<PostScreen> {
                         ),
                       ),
                       const SizedBox(
-                          width: 200), // Adjust the spacing between icons
+                          width: 175), // Adjust the spacing between icons
                       SaveButton(
                         isSaved: isSaved,
                         onTap: () {
@@ -332,10 +337,17 @@ class _PostScreenState extends State<PostScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MakePost(),
+            ),
+          );
+        },
         backgroundColor: const Color.fromARGB(255, 247, 192, 25),
-        child: Icon(Icons.add),
-        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
+        shape: const CircleBorder(), // Make the button circular
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );

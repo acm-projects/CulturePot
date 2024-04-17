@@ -55,7 +55,7 @@ class PostText extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    left: 335,
+                    left: 300,
                     bottom: 0,
                     child: IconButton(
                       icon: const Icon(Icons.send),
@@ -69,6 +69,16 @@ class PostText extends StatelessWidget {
                     bottom: 0,
                     child: IconButton(
                       icon: const Icon(Icons.image),
+                      onPressed: () {
+                        // Sending comment here
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    left: 25,
+                    bottom: 0,
+                    child: IconButton(
+                      icon: const Icon(Icons.camera),
                       onPressed: () {
                         // Sending comment here
                       },

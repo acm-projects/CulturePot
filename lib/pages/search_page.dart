@@ -1,5 +1,5 @@
 import 'package:culture_pot/pages/home.dart';
-//import 'package:culture_pot/pages/preferencesPick_page.dart';
+import 'package:culture_pot/pages/preferencesPick_page.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,11 @@ class _MySearchPageState extends State<MySearchPage> {
                 ),
                 MySearchPrefButton3(
                   onTap: () => Navigator.of(context).push(PageTransition(
-                      child: UserProfilePage(), type: PageTransitionType.fade)),
+                      child: const UserProfilePage(
+                        profileImageAsset: "imagespot/pfpReal.jpeg",
+                        username: '@user344',
+                      ),
+                      type: PageTransitionType.fade)),
                 )
               ],
             ),

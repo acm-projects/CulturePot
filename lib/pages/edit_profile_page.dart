@@ -19,7 +19,11 @@ class MyEditProfile extends StatelessWidget {
         title: const Text('Edit Profile'),
         leading: IconButton(
             onPressed: () => Navigator.of(context).push(PageTransition(
-                child: UserProfilePage(), type: PageTransitionType.fade)),
+                child: const UserProfilePage(
+                  profileImageAsset: "imagespot/pfpReal.jpeg",
+                  username: '@user2',
+                ),
+                type: PageTransitionType.fade)),
             icon: Icon(Icons.arrow_back)),
       ),
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),

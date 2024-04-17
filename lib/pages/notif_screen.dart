@@ -1,20 +1,18 @@
-//import 'package:culture_pot/pages/notifsempty_page.dart';
+import 'package:culture_pot/components/notification_comment.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
-//import 'package:culture_pot/pages/viewer_profile_page.dart';
-import 'package:flutter/material.dart';
-//import 'package:page_transition/page_transition.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/search_page.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
+import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
-class MyNotifsEmpty extends StatefulWidget {
-  const MyNotifsEmpty({Key? key}) : super(key: key);
+class MyNotifScreen extends StatefulWidget {
+  const MyNotifScreen({Key? key}) : super(key: key);
 
   @override
-  State<MyNotifsEmpty> createState() => _MyNotifsEmptyState();
+  State<MyNotifScreen> createState() => _MyNotifScreen();
 }
 
-class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
+class _MyNotifScreen extends State<MyNotifScreen> {
   int _selectedIndex = 0;
 
   @override
@@ -55,19 +53,6 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
           },
         ),
         actions: [
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 9.0),
-          //   child: IconButton(
-          //     onPressed: () => Navigator.of(context).push(
-          //       PageTransition(
-          //           child: MyNotifsEmpty(), type: PageTransitionType.fade),
-          //     ),
-          //     icon: const Icon(
-          //       Icons.favorite_border_rounded,
-          //       size: 35.0,
-          //     ),
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: IconButton(
@@ -84,52 +69,17 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),
-      body: SafeArea(
+      body: const SafeArea(
         child: Center(
           child: Column(
-            children: <Widget>[
-              const SizedBox(
-                height: 200,
+            children: [
+              NotifComment(
+                commentText:
+                    'Amazing pronunciation! Try rolling your R\'s on some of those.',
+                profileImageAsset: "imagespot/pfpKenzo.jpeg",
+                username: 'CelesteLee',
               ),
-              Image.asset(
-                'lib/images/buzz.png',
-                height: 170,
-              ),
-              const Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Text(
-                    "No Buzz!",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 19,
-                      fontFamily: 'Alike',
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 35.0),
-                  child: Text(
-                    "You have no current notifications",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      fontFamily: 'Alike',
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 180),
+              // Other Notification widgets go here
             ],
           ),
         ),
@@ -147,7 +97,6 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
         // No need to navigate to the same page
         break;
       case 1:
-        // Navigate to Cultures page
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -156,17 +105,10 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
         );
         break;
       case 2:
-        // Navigate to Map page
-        // Replace PreferencesPage with your desired page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
+        // Navigate to your desired page
+        // For example, MyMapPage
         break;
       case 3:
-        // Navigate to Profile page
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -179,10 +121,5 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
         break;
       default:
     }
-
-    // Update tab color after navigation
-    setState(() {
-      _selectedIndex = index;
-    });
   }
 }

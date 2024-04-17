@@ -13,7 +13,7 @@ class SaveButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 11,
+      width: 6,
       child: IconButton(
         icon: Icon(
           isSaved ? Icons.bookmark : Icons.bookmark_border,
