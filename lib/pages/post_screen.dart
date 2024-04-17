@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/components/comment_post.dart';
 import 'package:culture_pot/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -318,13 +319,6 @@ class _PostScreenState extends State<PostScreen> {
               ),
               const SizedBox(height: 8),
               const Divider(),
-              Comment(
-                controller: TextEditingController(), // Example controller
-                hintText:
-                    'Interact with @${(widget.snap['username'])}', // tz fix this
-                obscureText: false,
-                focusNode: FocusNode(),
-              ),
               ViewComment(
                 commentText:
                     'This is a comment', // Provide the comment text here

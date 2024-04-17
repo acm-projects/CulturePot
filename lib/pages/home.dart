@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/make_post.dart';
+import 'package:culture_pot/pages/notif_screen.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:culture_pot/pages/post_screen.dart';
 import 'package:culture_pot/pages/search_page.dart';
@@ -114,8 +115,8 @@ class _MyHomeState extends State<MyHome> {
                         type: PageTransitionType.fade));
                     break;
                   case 2:
-                    Navigator.of(context).push(PageTransition(
-                        child: Map(), type: PageTransitionType.fade));
+                    //Navigator.of(context).push(PageTransition(
+                    //child: Map(), type: PageTransitionType.fade));
                     break;
                   case 3:
                     Navigator.of(context).push(PageTransition(

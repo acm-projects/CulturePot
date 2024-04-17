@@ -1,8 +1,36 @@
+import 'package:culture_pot/pages/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:culture_pot/components/save_button.dart';
 import 'package:culture_pot/pages/comment_page.dart'; // Import CommentPage here
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+class CustomPageRouteBuilder<T> extends PageRouteBuilder<T> {
+  final Widget widget;
+  CustomPageRouteBuilder({required this.widget})
+      : super(
+          transitionDuration: const Duration(milliseconds: 250),
+          transitionsBuilder: (BuildContext context,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+              Widget child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(0.0, 1.0), // Slide up from bottom
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOut,
+              )),
+              child: child,
+            );
+          },
+          pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            return widget;
+          },
+        );
+}
 
 class Post extends StatefulWidget {
   final String username;

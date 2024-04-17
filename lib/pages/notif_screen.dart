@@ -69,7 +69,7 @@ class _MyNotifScreen extends State<MyNotifScreen> {
         ],
       ),
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),
-      body: const SafeArea(
+      body: SafeArea(
         child: Center(
           child: Column(
             children: [
