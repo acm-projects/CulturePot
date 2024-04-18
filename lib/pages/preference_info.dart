@@ -7,7 +7,14 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/home.dart';
 
 class PreferenceInfo extends StatefulWidget {
-  const PreferenceInfo({Key? key}) : super(key: key);
+  final String url;
+  final String photoUrl;
+
+  const PreferenceInfo({
+    Key? key,
+    required this.url,
+    required this.photoUrl,
+  }) : super(key: key);
 
   @override
   _PreferenceInfoState createState() => _PreferenceInfoState();
@@ -17,13 +24,11 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
   int _selectedIndex = 0;
 
   _launchURL() async {
-    const url = 'https://www.duolingo.com/course/hi/en/Learn-Hindi';
-    // ignore: deprecated_member_use
-    if (await canLaunch(url)) {
-      // ignore: deprecated_member_use
-      await launch(url, forceSafariVC: false);
+    // Launch the URL provided via widget parameter
+    if (await canLaunch(widget.url)) {
+      await launch(widget.url, forceSafariVC: false);
     } else {
-      throw 'Could not launch $url';
+      throw 'Could not launch ${widget.url}';
     }
   }
 
@@ -31,30 +36,27 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:
-            const Size.fromHeight(500), // Set the height of the app bar
+        preferredSize: const Size.fromHeight(500),
         child: Stack(
           children: [
             Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('imagespot/taj.png'),
-                  fit: BoxFit
-                      .cover, // Cover the entire app bar area with the image
+                  image:
+                      AssetImage(widget.photoUrl), // Use the provided photo URL
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
             AppBar(
-              backgroundColor:
-                  Colors.transparent, // Make the app bar transparent
-              elevation: 0, // Remove the app bar shadow
+              backgroundColor: Colors.transparent,
+              elevation: 0,
               title: const Text('Preferences'),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    Navigator.pop(
-                        context); // Navigate back to the previous screen
+                    Navigator.pop(context);
                   },
                 ),
               ],
@@ -63,21 +65,20 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
         ),
       ),
       body: Container(
-        color: Colors.lightBlue[100], // Set background color of the body
+        color: Colors.lightBlue[100],
         child: Column(
           children: [
             const SizedBox(height: 10),
-            // You can add additional content here
             Duolingo(
-              onTap:
-                  _launchURL, // Pass the _launchURL function to Duolingo widget
+              onTap: _launchURL,
             ),
-
-            const Text('      LEARN',
-                style: TextStyle(
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black,
-                )),
+            const Text(
+              '      LEARN',
+              style: TextStyle(
+                fontWeight: FontWeight.w800,
+                color: Colors.black,
+              ),
+            ),
           ],
         ),
       ),
@@ -97,15 +98,9 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
               GButton(
                   icon: Icons.book_outlined, iconSize: 30, text: 'Cultures'),
               GButton(
-                icon: Icons.location_on_outlined,
-                text: 'Map',
-                iconSize: 30,
-              ),
+                  icon: Icons.location_on_outlined, text: 'Map', iconSize: 30),
               GButton(
-                icon: Icons.person_outline,
-                text: 'Profile',
-                iconSize: 30,
-              ),
+                  icon: Icons.person_outline, text: 'Profile', iconSize: 30),
             ],
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
@@ -122,7 +117,6 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
                   );
                   break;
                 case 1:
-                  // Navigate to Cultures page
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -145,7 +139,6 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
                       builder: (context) => const UserProfilePage(),
                     ),
                   );
-
                   break;
                 default:
               }

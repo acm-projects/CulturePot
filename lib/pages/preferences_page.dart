@@ -44,6 +44,31 @@ class _PreferencesPageState extends State<PreferencesPage> {
     'German': 'imagespot/germanFlag.png',
   };
 
+  Map<String, String> dictionaryUrl = {
+    'Mexican': 'https://www.duolingo.com/course/es/en/Learn-Spanish',
+    'Indian': 'https://www.duolingo.com/course/hi/en/Learn-Hindi',
+    'Eritrean':
+        'https://blog.duolingo.com/words-shared-in-all-languages-exceptions/',
+    'France': 'https://www.duolingo.com/course/fr/en/Learn-French',
+    'Japanese': 'https://www.duolingo.com/course/ja/en/Learn-Japanese',
+    'Nigerian': 'https://www.memrise.com/en/learn-yoruba',
+    'China': 'https://www.duolingo.com/course/zh/en/Learn-Chinese',
+    'Thailand': 'https://duolingo.fandom.com/wiki/Thai',
+    'German': 'https://www.duolingo.com/course/de/en/Learn-German',
+  };
+
+  Map<String, String> dictionaryImageMonument = {
+    'Mexican': 'imagespot/mexicoMonument.jpg',
+    'Indian': 'imagespot/taj.png',
+    'Eritrean': 'imagespot/eritreaMonument.jpg',
+    'France': 'imagespot/franceMonument.jpg',
+    'Japanese': 'imagespot/japanMonument.jpg',
+    'Nigerian': 'imagespot/nigeriaMonument.jpg',
+    'China': 'imagespot/chinaMonument.jpg',
+    'Thailand': 'imagespot/thailandMonument.jpg',
+    'German': 'imagespot/germanyMonument.jpg',
+  };
+
   Future<void> fetchPreferences() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -101,15 +126,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
               GButton(
                   icon: Icons.book_outlined, iconSize: 30, text: 'Cultures'),
               GButton(
-                icon: Icons.location_on_outlined,
-                text: 'Map',
-                iconSize: 30,
-              ),
+                  icon: Icons.location_on_outlined, text: 'Map', iconSize: 30),
               GButton(
-                icon: Icons.person_outline,
-                text: 'Profile',
-                iconSize: 30,
-              ),
+                  icon: Icons.person_outline, text: 'Profile', iconSize: 30),
             ],
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
@@ -147,19 +166,25 @@ class _PreferencesPageState extends State<PreferencesPage> {
           String preference = dictionaryEmoji.keys.elementAt(index);
           String emoji = dictionaryEmoji.values.elementAt(index);
           String imageUrl = dictionaryImage[preference] ?? '';
+          String monumentImageUrl = dictionaryImageMonument[preference] ?? '';
+          String url = dictionaryUrl[preference] ?? '';
 
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PreferenceInfo(),
+                  builder: (context) => PreferenceInfo(
+                    photoUrl: monumentImageUrl,
+                    url: url,
+                  ),
                 ),
               );
             },
             child: Preference(
               photoUrl: imageUrl,
               name: '$preference $emoji',
+              url: url, // Pass the url parameter
             ),
           );
         },

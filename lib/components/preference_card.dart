@@ -4,11 +4,13 @@ import 'package:culture_pot/pages/preference_info.dart';
 class Preference extends StatelessWidget {
   final String photoUrl;
   final String name;
+  final String url; // Add the url parameter
 
   Preference({
     Key? key,
     required this.photoUrl,
     required this.name,
+    required this.url, // Require the url parameter
   }) : super(key: key);
 
   @override
@@ -18,7 +20,10 @@ class Preference extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const PreferenceInfo(),
+            builder: (context) => PreferenceInfo(
+              photoUrl: photoUrl,
+              url: url,
+            ),
           ),
         );
       },

@@ -117,6 +117,14 @@ flutter:
     - imagespot/mexicoFlag.png
     - imagespot/nigeriaFlag.png
     - imagespot/thailandFlag.jpg
+    - imagespot/mexicoMonument.jpg
+    - imagespot/eritreaMonument.jpg
+    - imagespot/franceMonument.jpg
+    - imagespot/japanMonument.jpg
+    - imagespot/nigeriaMonument.jpeg
+    - imagespot/chinaMonument.jpg
+    - imagespot/thailandMonument.jpg
+    - imagespot/germanyMonument.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
