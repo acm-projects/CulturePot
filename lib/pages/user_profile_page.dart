@@ -21,6 +21,19 @@ class UserProfilePage extends StatefulWidget {
 class _UserProfilePageState extends State<UserProfilePage> {
   int _selectedIndex = 3; // Added this line to define _selectedIndex
 
+  Map<String, String> dictionary = {
+    'Mexican': '🇲🇽',
+    'Indian': '🇮🇳',
+    'Eritrean': '🇪🇷',
+    'France': '🇫🇷',
+    'Japanese': '🇯🇵',
+    'Nigerian': '🇳🇬',
+    'China': '🇨🇳',
+    'Thailand': '🇹🇭',
+    'German': '🇩🇪',
+  };
+
+  List<String> preferences = [];
   String photoUrl = "";
   String uid = "";
   String username = "";
@@ -29,6 +42,36 @@ class _UserProfilePageState extends State<UserProfilePage> {
   List friendsUIDs = [];
   int numFriends = 0;
   String numFriendsString = ""; // Define numFriendsString variable as a string
+
+  Map<String, String> filterDictionary(
+      List<String> preferences, Map<String, String> dictionary) {
+    Map<String, String> filteredDictionary = {};
+    for (var preference in preferences) {
+      if (dictionary.containsKey(preference)) {
+        filteredDictionary[preference] = dictionary[preference]!;
+      }
+    }
+    return filteredDictionary;
+  }
+
+  Future<void> fetchPreferences() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
+      if (userSnapshot.exists) {
+        final List<String> userpreferences = List<String>.from(userSnapshot
+                .data()![
+            'preferences']); // Assuming 'friends' is the key for the friends list
+        setState(() {
+          preferences = userpreferences;
+        });
+      }
+    }
+  }
 
   Future<void> fetchFriendsUIDs() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -121,6 +164,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   @override
+  @override
   void initState() {
     super.initState();
     getPhotoUrl();
@@ -129,6 +173,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
     getBio();
     getEmail();
     fetchFriendsUIDs();
+    fetchPreferences().then((_) {
+      dictionary = filterDictionary(preferences, dictionary);
+    });
   }
 
   @override
@@ -310,9 +357,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
                               ),
                             ),
                           ),
-                          const Text(
-                            '🇮🇳🇯🇵🇮🇩',
-                            style: TextStyle(color: Colors.black),
+                          Row(
+                            children: dictionary.values
+                                .map((emoji) => Text(
+                                      emoji,
+                                      style: TextStyle(color: Colors.black),
+                                    ))
+                                .toList(),
                           ),
                         ],
                       ),
