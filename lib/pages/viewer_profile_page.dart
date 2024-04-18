@@ -31,6 +31,43 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
   List friendsUIDs = [];
   int numFriends = 0;
   String numFriendsString = ""; // Define numFriendsString variable as a string
+  List<String> preferences = [];
+
+  Map<String, String> dictionary = {
+    'Mexican': '🇲🇽',
+    'Indian': '🇮🇳',
+    'Eritrean': '🇪🇷',
+    'France': '🇫🇷',
+    'Japanese': '🇯🇵',
+    'Nigerian': '🇳🇬',
+    'China': '🇨🇳',
+    'Thailand': '🇹🇭',
+    'German': '🇩🇪',
+  };
+
+  Map<String, String> filterDictionary(
+      List<String> preferences, Map<String, String> dictionary) {
+    Map<String, String> filteredDictionary = {};
+    for (var preference in preferences) {
+      if (dictionary.containsKey(preference)) {
+        filteredDictionary[preference] = dictionary[preference]!;
+      }
+    }
+    return filteredDictionary;
+  }
+
+  Future<void> fetchPreferences(String uid) async {
+    DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    if (userSnapshot.exists) {
+      final List<String> userPreferences = List<String>.from(userSnapshot
+              .data()![
+          'preferences']); // Assuming 'preferences' is the key for the preferences list
+      setState(() {
+        preferences = userPreferences;
+      });
+    }
+  }
 
   void getBio() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
@@ -109,6 +146,9 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
     fetchFriendsUIDs(widget.uid);
     getPhotoUrl();
     getUsername();
+    fetchPreferences(widget.uid).then((_) {
+      dictionary = filterDictionary(preferences, dictionary);
+    });
   }
 
   @override
@@ -241,9 +281,13 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                               ),
                             ),
                           ),
-                          const Text(
-                            '🇮🇳🇯🇵🇮🇩',
-                            style: TextStyle(color: Colors.black),
+                          Row(
+                            children: dictionary.values
+                                .map((emoji) => Text(
+                                      emoji,
+                                      style: TextStyle(color: Colors.black),
+                                    ))
+                                .toList(),
                           ),
                         ],
                       ),
