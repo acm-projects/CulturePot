@@ -25,6 +25,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   String uid = "";
   String username = "";
   String bio = "";
+  String email = "";
   List friendsUIDs = [];
   int numFriends = 0;
   String numFriendsString = ""; // Define numFriendsString variable as a string
@@ -71,6 +72,21 @@ class _UserProfilePageState extends State<UserProfilePage> {
     });
   }
 
+  void getEmail() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    print("Snapshot data: ${snap.data()}"); // Add this debug print statement
+
+    setState(() {
+      String fullEmail = (snap.data()
+          as Map<String, dynamic>)['email']; // Get the full email address
+      email = fullEmail.split('@').first; // Extract the part before '@'
+    });
+  }
+
   void getPhotoUrl() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance
         .collection('users')
@@ -111,6 +127,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     getUsername();
     getUid();
     getBio();
+    getEmail();
     fetchFriendsUIDs();
   }
 
@@ -249,8 +266,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Your Name',
+                      Text(
+                        username,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -258,7 +275,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "@" + username,
+                        "@" + email,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 18,
