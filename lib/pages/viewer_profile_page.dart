@@ -26,6 +26,7 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
 
   String username = "";
   String bio = "";
+  String email = "";
   String photoUrl = "";
   List friendsUIDs = [];
   int numFriends = 0;
@@ -42,6 +43,21 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
     setState(() {
       bio = (snap.data()
           as Map<String, dynamic>)['bio']; // Assign to the bio variable
+    });
+  }
+
+  void getEmail() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .get();
+
+    print("Snapshot data: ${snap.data()}"); // Add this debug print statement
+
+    setState(() {
+      String fullEmail = (snap.data()
+          as Map<String, dynamic>)['email']; // Get the full email address
+      email = fullEmail.split('@').first; // Extract the part before '@'
     });
   }
 
@@ -181,8 +197,8 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Your Name',
+                      Text(
+                        username,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
@@ -190,7 +206,7 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        username,
+                        '@' + email,
                         style: TextStyle(
                           color: Colors.grey,
                           fontSize: 18,
@@ -199,12 +215,12 @@ class _ViewerProfilePageState extends State<ViewerProfilePage> {
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          const Text(
-                            '48 ',
+                          Text(
+                            numFriendsString,
                             style: TextStyle(fontWeight: FontWeight.w800),
                           ),
                           Text(
-                            numFriendsString,
+                            " Partners",
                             style: TextStyle(color: Colors.black),
                           ),
                           const Text('   '),
