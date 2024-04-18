@@ -5,7 +5,8 @@ import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/pages/home.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-//import 'package:culture_pot/pages/preferences_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PreferencesPage extends StatefulWidget {
   const PreferencesPage({Key? key}) : super(key: key);
@@ -16,6 +17,70 @@ class PreferencesPage extends StatefulWidget {
 
 class _PreferencesPageState extends State<PreferencesPage> {
   int _selectedIndex = 1;
+
+  List<String> preferences = [];
+
+  Map<String, String> dictionaryEmoji = {
+    'Mexican': '🇲🇽',
+    'Indian': '🇮🇳',
+    'Eritrean': '🇪🇷',
+    'France': '🇫🇷',
+    'Japanese': '🇯🇵',
+    'Nigerian': '🇳🇬',
+    'China': '🇨🇳',
+    'Thailand': '🇹🇭',
+    'German': '🇩🇪',
+  };
+
+  Map<String, String> dictionaryImage = {
+    'Mexican': 'imagespot/mexicoFlag.png',
+    'Indian': 'imagespot/indiaFlag.png',
+    'Eritrean': 'imagespot/eritreaFlag.png',
+    'France': 'imagespot/franceFlag.jpg',
+    'Japanese': 'imagespot/japanFlag.jpg',
+    'Nigerian': 'imagespot/nigeriaFlag.png',
+    'China': 'imagespot/chinaFlag.jpg',
+    'Thailand': 'imagespot/thailandFlag.jpg',
+    'German': 'imagespot/germanFlag.png',
+  };
+
+  Future<void> fetchPreferences() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot<Map<String, dynamic>> userSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .get();
+      if (userSnapshot.exists) {
+        final List<String> userpreferences =
+            List<String>.from(userSnapshot.data()!['preferences']);
+        setState(() {
+          preferences = userpreferences;
+        });
+      }
+    }
+  }
+
+  Map<String, String> filterDictionary(
+      List<String> preferences, Map<String, String> dictionary) {
+    Map<String, String> filteredDictionary = {};
+    for (var preference in preferences) {
+      if (dictionary.containsKey(preference)) {
+        filteredDictionary[preference] = dictionary[preference]!;
+      }
+    }
+    return filteredDictionary;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPreferences().then((_) {
+      dictionaryEmoji = filterDictionary(preferences, dictionaryEmoji);
+      dictionaryImage = filterDictionary(preferences, dictionaryImage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +124,15 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 case 1:
                   Navigator.of(context).push(PageTransition(
                       child: PreferencesPage(), type: PageTransitionType.fade));
+                  break;
                 case 2:
                   Navigator.of(context).push(PageTransition(
                       child: MyHome(), type: PageTransitionType.fade));
+                  break;
                 case 3:
                   Navigator.of(context).push(PageTransition(
                       child: UserProfilePage(), type: PageTransitionType.fade));
+                  break;
               }
             },
           ),
@@ -73,64 +141,29 @@ class _PreferencesPageState extends State<PreferencesPage> {
       appBar: AppBar(
         title: const Text('Preferences'),
       ),
-      body: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const PreferenceInfo(),
+      body: ListView.builder(
+        itemCount: dictionaryEmoji.length,
+        itemBuilder: (context, index) {
+          String preference = dictionaryEmoji.keys.elementAt(index);
+          String emoji = dictionaryEmoji.values.elementAt(index);
+          String imageUrl = dictionaryImage[preference] ?? '';
+
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PreferenceInfo(),
+                ),
+              );
+            },
+            child: Preference(
+              photoUrl: imageUrl,
+              name: '$preference $emoji',
             ),
           );
         },
-        child: Preference(), // No need to wrap with GestureDetector
       ),
     );
-  }
-
-  void navigateToPage(int index) {
-    // Update tab color immediately upon tab change
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const MyHome(),
-          ),
-        );
-        break;
-      case 1:
-        // Navigate to Cultures page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
-        break;
-      case 2:
-        // Navigate to Map page
-        // Replace PreferencesPage with your desired page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const PreferencesPage(),
-          ),
-        );
-        break;
-      case 3:
-        // Navigate to Profile page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const UserProfilePage(),
-          ),
-        );
-        break;
-      default:
-    }
   }
 }

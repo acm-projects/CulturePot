@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:culture_pot/pages/preference_info.dart';
 
-// ignore: must_be_immutable
 class Preference extends StatelessWidget {
-  TextEditingController commentController = TextEditingController();
-  Preference({Key? key}) : super(key: key);
+  final String photoUrl;
+  final String name;
+
+  Preference({
+    Key? key,
+    required this.photoUrl,
+    required this.name,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class Preference extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                       10), // Adjust border radius as needed
                   child: Image.asset(
-                    'imagespot/indiaFlag.png',
+                    photoUrl,
                     width: 120, // Adjust width as needed
                     height: 150, // Adjust height as needed
                   ),
@@ -38,10 +43,10 @@ class Preference extends StatelessWidget {
                     width: 16), // Adjust spacing between image and text
 
                 // Text
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'India 🇮🇳',
-                    style: TextStyle(
+                    name,
+                    style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,
                     ), // Adjust text size as needed
