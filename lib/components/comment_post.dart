@@ -5,14 +5,17 @@ class Comment extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final FocusNode focusNode;
+  final String photoUrl;
 
-  const Comment({
-    Key? key,
-    required this.controller,
-    required this.hintText,
-    required this.obscureText,
-    required this.focusNode,
-  }) : super(key: key);
+  const Comment(
+      {Key? key,
+      required this.controller,
+      required this.hintText,
+      required this.obscureText,
+      required this.focusNode,
+      required this.photoUrl,
+      x})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +29,10 @@ class Comment extends StatelessWidget {
           ListTile(
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-            leading: const CircleAvatar(
+            leading: CircleAvatar(
               backgroundColor: Colors.grey,
               radius: 25,
-              backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+              backgroundImage: AssetImage(photoUrl),
             ),
             title: TextField(
               focusNode: focusNode,

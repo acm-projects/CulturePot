@@ -27,6 +27,7 @@ class _PostScreenState extends State<PostScreen> {
   String uid = "";
   String currentUserName = "";
   List comments = [];
+  String photoUrl = "";
 
   int commentLen = 0;
   bool isLikeAnimating = false;
@@ -54,6 +55,15 @@ class _PostScreenState extends State<PostScreen> {
         .get();
 
     uid = (snap.data() as Map<String, dynamic>)['uid'];
+  }
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
   }
 
   Future<void> getComments() async {
@@ -87,6 +97,7 @@ class _PostScreenState extends State<PostScreen> {
     fetchUserName();
     getComments();
     getUid();
+    getPhotoUrl();
   }
 
   void getCommentsLength() async {
@@ -327,10 +338,10 @@ class _PostScreenState extends State<PostScreen> {
               const Divider(),
               Comment(
                 controller: TextEditingController(), // Example controller
-                hintText:
-                    'Interact with @${(widget.snap['username'])}', // tz fix this
+                hintText: 'Interact with @${(widget.snap['username'])}',
                 obscureText: false,
                 focusNode: FocusNode(),
+                photoUrl: photoUrl,
               ),
               ListView.builder(
                 itemCount: comments.length,

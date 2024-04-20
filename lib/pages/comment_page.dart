@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/comment_view.dart';
 import 'package:culture_pot/components/comment_post.dart';
@@ -32,6 +34,22 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheetState extends State<CommentSheet> {
+  String photoUrl = "";
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
+  }
+
+  void initState() {
+    super.initState();
+    getPhotoUrl();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +67,7 @@ class _CommentSheetState extends State<CommentSheet> {
                 hintText: 'Interact with @username',
                 obscureText: false,
                 focusNode: FocusNode(),
+                photoUrl: photoUrl,
               ),
 
               ViewComment(
