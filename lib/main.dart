@@ -58,8 +58,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-/*
 
+/* 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -109,39 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
   String username = "";
   bool _isLoading = false;
 
-  void postImage(
-    String uid,
-    String username,
-    String profImage,
-    String culture,
-  ) async {
-    setState(() {
-      _isLoading = true;
-    });
-
-      // Printing values from text fields
-  print('Text field value: ${textController.text}');
-  print('Culture value: ${cultureController.text}');
-
-
-    try {
-      String res = await FirestoreService().addPost(
-          textController.text, _file!, uid, username, profImage, culture);
-
-      if (res == "success") {
-        showSnackBar('Posted!', context);
-        setState(() {
-          _isLoading = false;
-        });
-        clearImage();
-      } else {
-        showSnackBar(res, context);
-        _isLoading = false;
-      }
-    } catch (e) {
-      showSnackBar(e.toString(), context);
-    }
-  }
 
   void getPhotoUrl() async {
     DocumentSnapshot snap = await FirebaseFirestore.instance

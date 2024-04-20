@@ -62,6 +62,7 @@ class _CommentSheetState extends State<CommentSheet> {
             children: [
               const SizedBox(height: 20), // Adding space above comments
 
+              /*
               Comment(
                 controller: TextEditingController(), // Example controller
                 hintText: 'Interact with @username',
@@ -69,6 +70,7 @@ class _CommentSheetState extends State<CommentSheet> {
                 focusNode: FocusNode(),
                 photoUrl: photoUrl,
               ),
+              */
 
               ViewComment(
                 commentText: "Another comment.",

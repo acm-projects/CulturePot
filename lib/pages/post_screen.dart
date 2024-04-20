@@ -342,6 +342,9 @@ class _PostScreenState extends State<PostScreen> {
                 obscureText: false,
                 focusNode: FocusNode(),
                 photoUrl: photoUrl,
+                uid: uid,
+                username: currentUserName,
+                postID: widget.snap['postId'],
               ),
               ListView.builder(
                 itemCount: comments.length,
