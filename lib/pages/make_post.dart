@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/feed_screen.dart';
 import 'package:culture_pot/services/firestore.dart';
 import 'package:culture_pot/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +28,46 @@ class _MakePostState extends State<MakePost> {
   Uint8List? _file;
 
   final FirebaseAuth auth = FirebaseAuth.instance;
+
+  void initState() {
+    super.initState();
+    getPhotoUrl();
+    getUid();
+    getUsername();
+  }
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
+    });
+  }
+
+  void getUid() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      uid = (snap.data() as Map<String, dynamic>)['uid'];
+    });
+  }
+
+  void getUsername() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      username = (snap.data() as Map<String, dynamic>)['username'];
+    });
+  }
 
   void _onFileUploaded(Uint8List? file) {
     setState(() {
@@ -88,7 +129,7 @@ class _MakePostState extends State<MakePost> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MyEditProfile(),
+                  builder: (context) => FeedScreen(),
                 ),
               );
             },

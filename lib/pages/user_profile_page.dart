@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/login_page.dart';
+import 'package:culture_pot/pages/make_post.dart';
 import 'package:culture_pot/pages/post_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -566,6 +567,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
               // Add your logic to navigate to the screen where users can add a post
               // For example:
               // Navigator.push(context, MaterialPageRoute(builder: (context) => AddPostScreen()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const MakePost(),
+                ),
+              );
             },
             backgroundColor: const Color.fromARGB(255, 247, 192, 25),
             child: const Icon(Icons.add),
