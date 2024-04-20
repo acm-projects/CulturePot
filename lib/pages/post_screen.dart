@@ -56,25 +56,37 @@ class _PostScreenState extends State<PostScreen> {
     uid = (snap.data() as Map<String, dynamic>)['uid'];
   }
 
+  Future<void> getComments() async {
+    try {
+      QuerySnapshot snapshot = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .orderBy('datePublished', descending: true)
+          .get();
+
+      // Clear existing comments before fetching new ones
+      var fetchedComments = snapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
+
+      setState(() {
+        comments =
+            fetchedComments; // Update the comments list with fetched data
+      });
+    } catch (e) {
+      print('Error fetching comments: $e');
+      // Optionally handle errors, such as displaying a message to the user
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     getCommentsLength();
     fetchUserName();
-  }
-
-  void getComments() async {
-    try {
-      QuerySnapshot snap = await FirebaseFirestore.instance
-          .collection('posts')
-          .doc(widget.snap['postId'])
-          .collection('comments')
-          .get();
-      commentLen = snap.docs.length;
-    } catch (e) {
-      showSnackBar(e.toString(), context);
-    }
-    setState(() {});
+    getComments();
+    getUid();
   }
 
   void getCommentsLength() async {
@@ -320,12 +332,26 @@ class _PostScreenState extends State<PostScreen> {
                 obscureText: false,
                 focusNode: FocusNode(),
               ),
-              ViewComment(
-                commentText:
-                    'This is a comment', // Provide the comment text here
-                profileImageAsset:
-                    'imagespot/pfpReal.jpeg', // Provide the path to the profile image asset
-                username: currentUserName, // Provide the username here
+              ListView.builder(
+                itemCount: comments.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> comment = comments[index];
+                  // Check if necessary fields are not null before rendering
+                  if (comment['text'] != null &&
+                      comment['profilePic'] != null &&
+                      comment['name'] != null) {
+                    return ViewComment(
+                      commentText: comment['text'],
+                      profileImageAsset: comment['profilePic'],
+                      username: comment['name'],
+                    );
+                  } else {
+                    // Optionally, return an alternative widget or an empty Container
+                    return Container(); // This line can be adjusted based on your needs
+                  }
+                },
               ),
             ],
           ),
