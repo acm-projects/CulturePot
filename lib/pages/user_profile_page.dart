@@ -1,11 +1,16 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/login_page.dart';
 import 'package:culture_pot/pages/make_post.dart';
 import 'package:culture_pot/pages/post_screen.dart';
+import 'package:culture_pot/services/firestore.dart';
+import 'package:culture_pot/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/post.dart';
+import 'package:image_picker/image_picker.dart';
 import 'preferences_page.dart'; // Import the PreferencesPage
 import 'package:page_transition/page_transition.dart';
 import 'package:culture_pot/pages/edit_profile_page.dart';
@@ -21,6 +26,19 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   int _selectedIndex = 3; // Added this line to define _selectedIndex
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Uint8List? _image;
+
+  final formKey = GlobalKey<FormState>();
+
+  final FirestoreService firestoreService = FirestoreService();
+
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
 
   Map<String, String> dictionary = {
     'Mexican': '🇲🇽',
