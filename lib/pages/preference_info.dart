@@ -3,8 +3,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:culture_pot/components/duolingo_card.dart';
 import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/pages/preferences_page.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/home.dart';
+import 'package:culture_pot/pages/culture_phrasebook.dart';
 
 class PreferenceInfo extends StatefulWidget {
   final String url;
@@ -21,29 +23,29 @@ class PreferenceInfo extends StatefulWidget {
 }
 
 class _PreferenceInfoState extends State<PreferenceInfo> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   _launchURL() async {
-    // Launch the URL provided via widget parameter
-    if (await canLaunch(widget.url)) {
-      await launch(widget.url, forceSafariVC: false);
+    String url = widget.url;
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: false);
     } else {
-      throw 'Could not launch ${widget.url}';
+      throw 'Could not launch $url';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 233, 230, 230),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(500),
+        preferredSize: const Size.fromHeight(275),
         child: Stack(
           children: [
             Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image:
-                      AssetImage(widget.photoUrl), // Use the provided photo URL
+                  image: AssetImage(widget.photoUrl),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -52,34 +54,114 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: const Text('Preferences'),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
+              actions: [],
             ),
           ],
         ),
       ),
-      body: Container(
-        color: Colors.lightBlue[100],
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Duolingo(
-              onTap: _launchURL,
-            ),
-            const Text(
-              '      LEARN',
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                color: Colors.black,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              Duolingo(
+                onTap: _launchURL,
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18.0),
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                    border: Border.all(
+                      color: Colors.grey, // Choose border color
+                      width: 1, // Choose border width
+                    ),
+                  ),
+                  child: const Text(
+                    'Embark on a linguistic journey through India\'s rich cultural tapestry by learning its national language. From the lyrical poetry of Hindi to the intricate scripts of Sanskrit, delve into a world where language intertwines with history, tradition, and modernity',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14, // Adjust the font size
+                      letterSpacing: 0.8, // Adjust the letter spacing
+                      height: 1.5, // Adjust the line height
+                    ),
+                  ),
+                ),
+              ),
+              const Divider(),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CulturePhrasebookForm(),
+                        ),
+                      );
+                    },
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CulturePhrasebookForm(),
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.orange[300],
+                      ),
+                      child: const Text(
+                        '                                Phrasebook                               ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Row(
+                children: [
+                  SizedBox(width: 20),
+                  Text(
+                    'CulturePot users who share this interest',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Row(
+                children: [
+                  SizedBox(width: 35),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+                    radius: 40,
+                  ),
+                  SizedBox(width: 35),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('imagespot/pfp.webp'),
+                    radius: 40,
+                  ),
+                  SizedBox(width: 35),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('imagespot/postEx.png'),
+                    radius: 40,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -98,9 +180,15 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
               GButton(
                   icon: Icons.book_outlined, iconSize: 30, text: 'Cultures'),
               GButton(
-                  icon: Icons.location_on_outlined, text: 'Map', iconSize: 30),
+                icon: Icons.location_on_outlined,
+                text: 'Map',
+                iconSize: 30,
+              ),
               GButton(
-                  icon: Icons.person_outline, text: 'Profile', iconSize: 30),
+                icon: Icons.person_outline,
+                text: 'Profile',
+                iconSize: 30,
+              ),
             ],
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
@@ -109,38 +197,22 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
               });
               switch (index) {
                 case 0:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyHome(),
-                    ),
-                  );
+                  Navigator.of(context).push(PageTransition(
+                      child: MyHome(), type: PageTransitionType.fade));
                   break;
                 case 1:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PreferencesPage(),
-                    ),
-                  );
+                  Navigator.of(context).push(PageTransition(
+                      child: PreferencesPage(), type: PageTransitionType.fade));
                   break;
                 case 2:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const PreferencesPage(),
-                    ),
-                  );
+                  Navigator.of(context).push(PageTransition(
+                      child: MyHome(), type: PageTransitionType.fade));
                   break;
                 case 3:
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const UserProfilePage(),
-                    ),
-                  );
+                  Navigator.of(context).push(PageTransition(
+                      child: const UserProfilePage(),
+                      type: PageTransitionType.fade));
                   break;
-                default:
               }
             },
           ),

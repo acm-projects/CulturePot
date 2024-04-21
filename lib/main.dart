@@ -1,11 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:culture_pot/blank_page.dart';
-import 'package:culture_pot/culture_page.dart';
-import 'package:culture_pot/culture_phrasebook.dart';
-import 'package:culture_pot/culture_phraseboook_entry.dart';
-import 'package:culture_pot/feed_screen.dart';
 import 'package:culture_pot/firebase_options.dart';
 import 'package:culture_pot/pages/edit_profile_page.dart';
 import 'package:culture_pot/pages/empty_preferences.dart';
@@ -14,22 +8,8 @@ import 'package:culture_pot/pages/login_page.dart';
 import 'package:culture_pot/pages/notifsempty_page.dart';
 import 'package:culture_pot/pages/preferencesPick_page.dart';
 import 'package:culture_pot/pages/success_page.dart';
-import 'package:culture_pot/services/culture_entry.dart';
-import 'package:culture_pot/user_list';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'dart:io';
-import 'package:email_validator/email_validator.dart';
-import 'package:image_picker/image_picker.dart';
-import './utils.dart';
-import '../services/firestore.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
-import 'forgetPassword.dart';
-import 'signupPage.dart';
-import 'package:culture_pot/pages/login_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

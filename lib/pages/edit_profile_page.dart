@@ -91,14 +91,9 @@ class _MyEditProfileState extends State<MyEditProfile> {
                     radius: 92,
                     backgroundColor: Colors.grey.shade600,
                     child: CircleAvatar(
-                      radius: 90,
-                      backgroundColor: Colors.grey.shade800, // Fallback color
-                     backgroundImage: _image != null
-    ? MemoryImage(_image!)
-    : (photoUrl.isNotEmpty
-        ? NetworkImage(photoUrl)
-        : AssetImage('assets/placeholder_image.jpg')), /
-                    ),
+                        radius: 90,
+                        backgroundColor: Colors.grey.shade800, // Fallback color
+                        backgroundImage: MemoryImage(_image!)),
                   ),
                   IconButton(
                     onPressed: selectImage,
