@@ -6,9 +6,12 @@ import 'package:culture_pot/pages/preferences_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:culture_pot/pages/home.dart';
+import 'package:culture_pot/pages/culture_phrasebook.dart';
 
 class PreferenceInfo extends StatefulWidget {
-  const PreferenceInfo({Key? key}) : super(key: key);
+  const PreferenceInfo(
+      {Key? key, required String photoUrl, required String url})
+      : super(key: key);
 
   @override
   _PreferenceInfoState createState() => _PreferenceInfoState();
@@ -29,8 +32,9 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 233, 230, 230),
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(500),
+        preferredSize: const Size.fromHeight(275),
         child: Stack(
           children: [
             Container(
@@ -45,53 +49,111 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               title: const Text('Preferences'),
-              actions: [
-                // IconButton(
-                //   icon: const Icon(Icons.arrow_back),
-                //   onPressed: () {
-                //     Navigator.pop(context);
-                //   },
-                // ),
-              ],
-              bottom: const PreferredSize(
-                preferredSize:
-                    Size.fromHeight(30), // Adjust the height as needed
-                child: Center(
-                  child: Text(
-                    'India',
-                    style: TextStyle(
-                      fontSize: 50,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+              actions: [],
             ),
           ],
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.lightBlue[100],
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
               Duolingo(
                 onTap: _launchURL,
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18.0),
-                child: Text(
-                  'Embark on a linguistic journey through India\'s rich cultural tapestry by learning its national language. From the lyrical poetry of Hindi to the intricate scripts of Sanskrit, delve into a world where language intertwines with history, tradition, and modernity',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    fontSize: 14, // Adjust the font size
-                    letterSpacing: 0.8, // Adjust the letter spacing
-                    height: 1.5, // Adjust the line height
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                    border: Border.all(
+                      color: Colors.grey, // Choose border color
+                      width: 1, // Choose border width
+                    ),
+                  ),
+                  child: const Text(
+                    'Embark on a linguistic journey through India\'s rich cultural tapestry by learning its national language. From the lyrical poetry of Hindi to the intricate scripts of Sanskrit, delve into a world where language intertwines with history, tradition, and modernity',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 14, // Adjust the font size
+                      letterSpacing: 0.8, // Adjust the letter spacing
+                      height: 1.5, // Adjust the line height
+                    ),
                   ),
                 ),
+              ),
+              const Divider(),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CulturePhrasebookForm(),
+                        ),
+                      );
+                    },
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CulturePhrasebookForm(),
+                          ),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.orange[300],
+                      ),
+                      child: const Text(
+                        '                                Phrasebook                               ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Row(
+                children: [
+                  SizedBox(width: 20),
+                  Text(
+                    'CulturePot users who share this interest',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Row(
+                children: [
+                  SizedBox(width: 35),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('imagespot/pfpReal.jpeg'),
+                    radius: 40,
+                  ),
+                  SizedBox(width: 35),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('imagespot/pfp.webp'),
+                    radius: 40,
+                  ),
+                  SizedBox(width: 35),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('imagespot/postEx.png'),
+                    radius: 40,
+                  ),
+                ],
               ),
             ],
           ),
@@ -136,16 +198,16 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
                 case 1:
                   Navigator.of(context).push(PageTransition(
                       child: PreferencesPage(), type: PageTransitionType.fade));
+                  break;
                 case 2:
                   Navigator.of(context).push(PageTransition(
                       child: MyHome(), type: PageTransitionType.fade));
+                  break;
                 case 3:
                   Navigator.of(context).push(PageTransition(
-                      child: const UserProfilePage(
-                        profileImageAsset: "imagespot/pfpReal.jpeg",
-                        username: '@prefInfoUser',
-                      ),
+                      child: const UserProfilePage(),
                       type: PageTransitionType.fade));
+                  break;
               }
             },
           ),

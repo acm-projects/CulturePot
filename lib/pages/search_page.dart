@@ -54,9 +54,9 @@ class _MySearchPageState extends State<MySearchPage> {
                 MySearchPrefButton3(
                   onTap: () => Navigator.of(context).push(PageTransition(
                       child: const UserProfilePage(
-                        profileImageAsset: "imagespot/pfpReal.jpeg",
-                        username: '@user344',
-                      ),
+                          // profileImageAsset: "imagespot/pfpReal.jpeg",
+                          // username: '@user344',
+                          ),
                       type: PageTransitionType.fade)),
                 )
               ],

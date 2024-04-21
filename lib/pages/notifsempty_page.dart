@@ -170,10 +170,7 @@ class _MyNotifsEmptyState extends State<MyNotifsEmpty> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const UserProfilePage(
-              profileImageAsset: "imagespot/pfpReal.jpeg",
-              username: '@newuser',
-            ),
+            builder: (context) => const UserProfilePage(),
           ),
         );
         break;

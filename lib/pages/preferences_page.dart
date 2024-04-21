@@ -65,9 +65,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 case 3:
                   Navigator.of(context).push(PageTransition(
                       child: const UserProfilePage(
-                        profileImageAsset: "imagespot/pfpReal.jpeg",
-                        username: '@nethiswuser',
-                      ),
+                          // profileImageAsset: "imagespot/pfpReal.jpeg",
+                          // username: '@nethiswuser',
+                          ),
                       type: PageTransitionType.fade));
               }
             },
@@ -82,7 +82,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const PreferenceInfo(),
+              builder: (context) => const PreferenceInfo(
+                photoUrl: 'imagespot/duo.png',
+                url: 'hi',
+              ),
             ),
           );
         },
@@ -131,9 +134,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
           context,
           MaterialPageRoute(
             builder: (context) => const UserProfilePage(
-              profileImageAsset: "imagespot/pfpReal.jpeg",
-              username: '@newuser',
-            ),
+                // profileImageAsset: "imagespot/pfpReal.jpeg",
+                // username: '@newuser',
+                ),
           ),
         );
         break;

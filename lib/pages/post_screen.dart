@@ -154,10 +154,7 @@ class _PostScreenState extends State<PostScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const UserProfilePage(
-                          profileImageAsset: "imagespot/pfpReal.jpeg",
-                          username: '@userOnPostScreen',
-                        ),
+                        builder: (context) => const UserProfilePage(),
                       ),
                     );
                     break;

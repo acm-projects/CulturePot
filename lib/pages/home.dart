@@ -120,10 +120,7 @@ class _MyHomeState extends State<MyHome> {
                     break;
                   case 3:
                     Navigator.of(context).push(PageTransition(
-                        child: const UserProfilePage(
-                          profileImageAsset: "imagespot/pfpReal.jpeg",
-                          username: '@user34',
-                        ),
+                        child: const UserProfilePage(),
                         type: PageTransitionType.fade));
                     break;
                 }
