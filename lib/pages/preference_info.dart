@@ -9,14 +9,9 @@ import 'package:culture_pot/pages/home.dart';
 import 'package:culture_pot/pages/culture_phrasebook.dart';
 
 class PreferenceInfo extends StatefulWidget {
-  final String url;
-  final String photoUrl;
-
-  const PreferenceInfo({
-    Key? key,
-    required this.url,
-    required this.photoUrl,
-  }) : super(key: key);
+  const PreferenceInfo(
+      {Key? key, required String photoUrl, required String url})
+      : super(key: key);
 
   @override
   _PreferenceInfoState createState() => _PreferenceInfoState();
@@ -26,7 +21,7 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
   int _selectedIndex = 1;
 
   _launchURL() async {
-    String url = widget.url;
+    const url = 'https://www.duolingo.com/course/hi/en/Learn-Hindi';
     if (await canLaunch(url)) {
       await launch(url, forceSafariVC: false);
     } else {
@@ -43,9 +38,9 @@ class _PreferenceInfoState extends State<PreferenceInfo> {
         child: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(widget.photoUrl),
+                  image: AssetImage('imagespot/taj.png'),
                   fit: BoxFit.cover,
                 ),
               ),
