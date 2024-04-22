@@ -1,4 +1,4 @@
-import 'package:culture_pot/culture_phrasebook.dart';
+import 'package:culture_pot/pages/culture_phrasebook.dart';
 import 'package:culture_pot/search_phrase.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,8 @@ class CulturePhrasebookEntryPage extends StatelessWidget {
                 // Navigate to the page for entering a new phrase
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CulturePhrasebookForm()),
+                  MaterialPageRoute(
+                      builder: (context) => CulturePhrasebookForm()),
                 );
               },
               child: Text('Enter a New Phrase'),
@@ -55,8 +56,6 @@ class CulturePhrasebookEntryPage extends StatelessWidget {
     );
   }
 }
-
-
 
 class SearchPhrasePage extends StatelessWidget {
   @override

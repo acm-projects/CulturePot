@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/blank_page.dart';
 import 'package:culture_pot/culture_page.dart';
-import 'package:culture_pot/culture_phrasebook.dart';
+import 'package:culture_pot/pages/culture_phrasebook.dart';
 import 'package:culture_pot/culture_phraseboook_entry.dart';
 import 'package:culture_pot/feed_screen.dart';
 import 'package:culture_pot/firebase_options.dart';
