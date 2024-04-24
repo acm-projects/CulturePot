@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/feed_screen.dart';
+import 'package:culture_pot/pages/user_profile_page.dart';
 import 'package:culture_pot/services/firestore.dart';
 import 'package:culture_pot/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,22 @@ class _MakePostState extends State<MakePost> {
   String uid = "";
   String username = "";
   Uint8List? _file;
+
+  String _currentText = "";
+
+  void _updateText(String newText) {
+    setState(() {
+      _currentText = newText;
+    });
+  }
+
+  String currentCulture = 'Nigerian';
+
+  void updateCulture(String newCulture) {
+    setState(() {
+      currentCulture = newCulture; // Update the state when culture changes
+    });
+  }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -86,8 +103,9 @@ class _MakePostState extends State<MakePost> {
     print('Culture value: ${cultureController.text}');
 
     try {
-      String res = await FirestoreService().addPost(
-          textController.text, _file!, uid, username, profImage, culture);
+      int numLikes = 0;
+      String res = await FirestoreService().addPost(_currentText,
+          _file ?? Uint8List(0), uid, username, profImage, culture, numLikes);
 
       if (res == "success") {
         showSnackBar('Posted!', context);
@@ -125,11 +143,11 @@ class _MakePostState extends State<MakePost> {
         actions: [
           TextButton(
             onPressed: () {
-              postImage(uid, username, photoUrl, cultureController.text);
+              postImage(uid, username, photoUrl, currentCulture);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => FeedScreen(),
+                  builder: (context) => UserProfilePage(),
                 ),
               );
             },
@@ -156,12 +174,15 @@ class _MakePostState extends State<MakePost> {
               const SizedBox(height: 20), // Adding space above comments
 
               PostText(
-                controller: TextEditingController(), // Example controller
+                controller: textController, // Use the initialized controller
                 onFileUploaded: _onFileUploaded,
                 hintText: 'Share something!',
                 obscureText: false,
                 focusNode: FocusNode(),
-                photoUrl: photoUrl,
+                onTextChanged: _updateText,
+                onCultureSelected: updateCulture, // Pass the update function
+
+                // photoUrl: photoUrl,
               ),
 
               const SizedBox(height: 20), // Adding space below comments

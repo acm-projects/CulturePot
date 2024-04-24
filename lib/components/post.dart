@@ -3,6 +3,7 @@ import 'package:culture_pot/pages/viewer_profile_page.dart';
 import 'package:culture_pot/components/save_button.dart';
 import 'package:culture_pot/pages/comment_page.dart'; // Import CommentPage here
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 
 class Post extends StatefulWidget {
   final String username;
@@ -108,7 +109,7 @@ class _PostState extends State<Post> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 200), // Adjust the spacing between icons
+                const SizedBox(width: 158), // Adjust the spacing between icons
                 SaveButton(
                   isSaved: widget.isSaved,
                   onTap: () {
@@ -162,7 +163,6 @@ class _PostState extends State<Post> {
                     );
                   },
                 ),
-                const SizedBox(width: 4), // Adjust the spacing between icons
                 IconButton(
                   icon: Icon(
                     widget.isLiked ? Icons.favorite : Icons.favorite_border,
@@ -176,9 +176,7 @@ class _PostState extends State<Post> {
                     });
                   },
                 ),
-                SizedBox(
-                  width: 4,
-                ), // Adjust the spacing between icons and text
+               // Adjust the spacing between icons and text
                 GestureDetector(
                   onTap: () async {
                     if (uid.isNotEmpty) {
@@ -200,11 +198,15 @@ class _PostState extends State<Post> {
                 SizedBox(
                   width: 4,
                 ), // Adjust the spacing between text and "and"
-                Text(
-                  'and ${widget.numLikes} other Partners',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
+                Expanded(
+                  
+                  child: Text(
+                    'and ${widget.numLikes} other Partners',
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ],

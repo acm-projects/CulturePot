@@ -22,7 +22,7 @@ class _MyPrefButtonState extends State<MyPrefButton> {
     return Center(
       child: Container(
         height: 50,
-        width: 132,
+        width: 120,
         child: FilterChip.elevated(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),

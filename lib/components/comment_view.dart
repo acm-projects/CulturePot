@@ -62,7 +62,7 @@ class _ViewCommentState extends State<ViewComment> {
                   CircleAvatar(
                     backgroundColor: Colors.grey,
                     radius: 16,
-                    backgroundImage: AssetImage(widget.profileImageAsset),
+                    backgroundImage: AssetImage('imagespot/leila.jpg'),
                   ),
                   const SizedBox(width: 8),
                   GestureDetector(

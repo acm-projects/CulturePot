@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
 import 'dart:typed_data';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:culture_pot/components/dropdownCultures.dart';
 import 'package:culture_pot/utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -11,20 +13,22 @@ class PostText extends StatefulWidget {
   final String hintText;
   final bool obscureText;
   final FocusNode focusNode;
-  final String photoUrl;
   final Function(Uint8List?) onFileUploaded; // Callback function
-  Uint8List? _file;
+  final Function(String) onCultureSelected; // Callback for culture selection
+  final Function(String) onTextChanged; // New callback for text changes
 
+  Uint8List? _file;
   PostText({
     Key? key,
     required this.controller,
     required this.hintText,
     required this.obscureText,
     required this.focusNode,
-    required this.photoUrl,
     required this.onFileUploaded,
+    required this.onCultureSelected,
+    required this.onTextChanged, // Passing the callback as a parameter
+    // Require the callback as a parameter
   }) : super(key: key);
-
   Uint8List? getFile() {
     if (_file != null) {
       return _file;
@@ -37,6 +41,48 @@ class PostText extends StatefulWidget {
 }
 
 class _PostTextState extends State<PostText> {
+  String photoUrl = "";
+
+  String selectedCulture = 'Nigeria'; // State to hold selected value
+
+  void handleDropdownChange(String value) {
+    setState(() {
+      selectedCulture = value; // Update the state with new value
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller
+        .addListener(_handleTextChange); // Add listener to controller
+
+    getPhotoUrl();
+  }
+
+  void _handleTextChange() {
+    widget.onTextChanged(
+        widget.controller.text); // Invoke the callback on text change
+  }
+
+  void getPhotoUrl() async {
+    DocumentSnapshot snap = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+
+    setState(() {
+      photoUrl = (snap.data() as Map<String, dynamic>)['photoUrl'];
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller
+        .removeListener(_handleTextChange); // Clean up the listener
+    super.dispose();
+  }
+
   _selectImage(BuildContext context) async {
     return showDialog(
         context: context,
@@ -93,7 +139,7 @@ class _PostTextState extends State<PostText> {
                     child: CircleAvatar(
                       backgroundColor: Colors.grey,
                       radius: 20,
-                      backgroundImage: AssetImage(widget.photoUrl),
+                      backgroundImage: AssetImage('imagespot/leila.jpg'),
                     ),
                   ),
                   Padding(
@@ -113,16 +159,12 @@ class _PostTextState extends State<PostText> {
                       ),
                     ),
                   ),
-                  // right icon
+                  //right icon
                   Positioned(
-                    left: 335,
+                    left: 50,
                     bottom: 0,
-                    child: IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {
-                        // Sending comment here
-                      },
-                    ),
+                    child: MyDropdownButton(
+                        onSelected: handleDropdownChange), // Pass the callback
                   ),
                   //left icon
                   Positioned(

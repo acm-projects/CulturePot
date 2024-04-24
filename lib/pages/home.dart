@@ -89,8 +89,8 @@ class _MyHomeState extends State<MyHome> {
               GButton(
                   icon: Icons.book_outlined, iconSize: 30, text: 'Cultures'),
               GButton(
-                icon: Icons.location_on_outlined,
-                text: 'Map',
+                icon: Icons.search_rounded,
+                text: 'Search',
                 iconSize: 30,
               ),
               GButton(
@@ -115,7 +115,7 @@ class _MyHomeState extends State<MyHome> {
                     break;
                   case 2:
                     Navigator.of(context).push(PageTransition(
-                        child: MyHome(), type: PageTransitionType.fade));
+                        child:MySearchPage(), type: PageTransitionType.fade));
                     break;
                   case 3:
                     Navigator.of(context).push(PageTransition(
@@ -130,30 +130,19 @@ class _MyHomeState extends State<MyHome> {
       ),
       backgroundColor: const Color.fromARGB(255, 233, 230, 230),
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color.fromARGB(255, 233, 230, 230),
         title: Image.asset('imagespot/logo.png', height: 90),
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 9.0),
-          child: IconButton(
-            onPressed: () => Navigator.of(context).push(PageTransition(
-                child: MyNotifsEmpty(), type: PageTransitionType.fade)),
-            icon: const Icon(
-              Icons.favorite_border_rounded,
-              size: 35.0,
-            ),
-          ),
-        ),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MySearchPage()));
+                    Navigator.of(context).push(PageTransition(
+                        child: MyNotifsEmpty(),
+                        type: PageTransitionType.fade));
                 },
-                icon: const Icon(Icons.search_rounded,
+                icon: const Icon(Icons.favorite_border_rounded,
                     color: Colors.black, size: 35.0)),
           )
         ],

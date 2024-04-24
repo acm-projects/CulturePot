@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:culture_pot/pages/login_page.dart';
 import 'package:culture_pot/pages/make_post.dart';
 import 'package:culture_pot/pages/post_screen.dart';
+import 'package:culture_pot/pages/search_page.dart';
 import 'package:culture_pot/services/firestore.dart';
 import 'package:culture_pot/utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -215,8 +216,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
               GButton(
                   icon: Icons.book_outlined, iconSize: 30, text: 'Cultures'),
               GButton(
-                icon: Icons.location_on_outlined,
-                text: 'Map',
+                icon: Icons.search_rounded,
+                text: 'Search',
                 iconSize: 30,
               ),
               GButton(
@@ -240,7 +241,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         type: PageTransitionType.fade));
                   case 2:
                     Navigator.of(context).push(PageTransition(
-                        child: MyHome(), type: PageTransitionType.fade));
+                        child: MySearchPage(), type: PageTransitionType.fade));
                   case 3:
                     Navigator.of(context).push(PageTransition(
                         child: UserProfilePage(),
@@ -254,6 +255,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 130.0,
             floating: false,
             pinned: true,

@@ -41,7 +41,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
     'Nigerian': 'imagespot/nigeriaFlag.png',
     'China': 'imagespot/chinaFlag.jpg',
     'Thailand': 'imagespot/thailandFlag.jpg',
-    'German': 'imagespot/germanFlag.png',
+    'German': 'imagespot/germanyFlag.png',
   };
 
   Map<String, String> dictionaryUrl = {

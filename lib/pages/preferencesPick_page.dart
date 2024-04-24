@@ -54,10 +54,10 @@ class _MyPreferencesState extends State<MyPreferences> {
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  "  Cultural preferences 🌍",
+                  "   Cultural preferences 🌍",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 35,
+                    fontSize: 29,
                     letterSpacing: -0.5,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Inter-Regular',
@@ -74,7 +74,7 @@ class _MyPreferencesState extends State<MyPreferences> {
                     style: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.w600,
-                      fontSize: 17,
+                      fontSize: 15,
                       fontFamily: 'Alike',
                     ),
                   ),
@@ -88,7 +88,7 @@ class _MyPreferencesState extends State<MyPreferences> {
                     Row(
                       children: [
                         MyPrefButton(
-                          text: 'Mexican 🇲🇽',
+                          text: 'Mexico 🇲🇽',
                           onPressed: () {
                             setState(() {
                               selectedPreferences.add('Mexican');
@@ -127,48 +127,14 @@ class _MyPreferencesState extends State<MyPreferences> {
                         ),
                         const SizedBox(width: 2),
                         MyPrefButton(
-                          text: 'Japanese 🇯🇵',
+                          text: 'Japan 🇯🇵',
                           onPressed: () {
                             setState(() {
                               selectedPreferences.add('Japanese');
                             });
                           },
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        MyPrefButton(
-                          text: 'Nigerian 🇳🇬',
-                          onPressed: () {
-                            setState(() {
-                              selectedPreferences.add('Nigerian');
-                            });
-                          },
-                        ),
-                        MyPrefButton(
-                          text: 'China 🇨🇳',
-                          onPressed: () {
-                            setState(() {
-                              selectedPreferences.add('China');
-                            });
-                          },
-                        ),
-                        MyPrefButton(
-                          text: 'Thailand 🇹🇭',
-                          onPressed: () {
-                            setState(() {
-                              selectedPreferences.add('Thailand');
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        MyPrefButton(
+                         MyPrefButton(
                           text: 'German 🇩🇪',
                           onPressed: () {
                             setState(() {
@@ -182,7 +148,39 @@ class _MyPreferencesState extends State<MyPreferences> {
                     Row(
                       children: [
                         MyPrefButton(
-                          text: 'Others...',
+                          text: 'Nigeria 🇳🇬',
+                          onPressed: () {
+                            setState(() {
+                              selectedPreferences.add('Nigerian');
+                            });
+                          },
+                        ),
+                       const SizedBox(width: 3,),
+                        MyPrefButton(
+                          text: 'Thailand 🇹🇭',
+                          onPressed: () {
+                            setState(() {
+                              selectedPreferences.add('Thailand');
+                            });
+                          },
+                        ),
+                        const SizedBox(width: 3,),
+                          MyPrefButton(
+                          text: 'China 🇨🇳',
+                          onPressed: () {
+                            setState(() {
+                              selectedPreferences.add('China');
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  
+                    const SizedBox(height: 15),
+                    Row(
+                      children: [
+                        MyPrefButton(
+                          text: 'Others...  ',
                           onPressed: () {
                             // Implement logic for 'Others...' button
                           },

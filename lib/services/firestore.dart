@@ -34,7 +34,7 @@ class FirestoreService {
     String uid,
     String username,
     String profImage,
-    String culture,
+    String culture, int numLikes,
   ) async {
     String res = "success";
     try {

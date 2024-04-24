@@ -6,15 +6,15 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		QJETILOPBwjioLrmTLs9PY5FL+s=
+		h5OB7aKzS5WR9SemvZAyN6FEkJs=
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		SuBSkF9CMjnTcPlx+5LVAYUnd2M=
+		8mV+riCJOxKws2B+pqyd8EfeZU0=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		T9rxyQA1gG1iejv7A22RUU+AMAY=
+		m7ySFW4GVFj1vjg0IBij+ASerYM=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -36,17 +36,77 @@
 		<data>
 		uut0NHZmQTC8ptHQ6dxBnEtWrLg=
 		</data>
+		<key>flutter_assets/imagespot/chinaFlag.jpg</key>
+		<data>
+		eT97YfvtJAsh+5r7pK8juUF9pas=
+		</data>
+		<key>flutter_assets/imagespot/chinaMonument.jpg</key>
+		<data>
+		XQsWKxAA03ST441cScrD5JDR3sk=
+		</data>
 		<key>flutter_assets/imagespot/duo.png</key>
 		<data>
 		TT8Xt3IIy7WEb7D9p/LAGhNa+vs=
+		</data>
+		<key>flutter_assets/imagespot/eritreaFlag.png</key>
+		<data>
+		4hhbvaXenSpVKnarPq60Ozl6YJc=
+		</data>
+		<key>flutter_assets/imagespot/eritreaMonument.jpg</key>
+		<data>
+		XcgT93ktmJEVR/tyPbfKLVBfHKA=
+		</data>
+		<key>flutter_assets/imagespot/franceFlag.jpg</key>
+		<data>
+		mIe+3SxowZpIuBykdNaQDP8E4SA=
+		</data>
+		<key>flutter_assets/imagespot/franceMonument.jpg</key>
+		<data>
+		SSGydPSE29Icl37B8wuxK22/ML8=
+		</data>
+		<key>flutter_assets/imagespot/germanyFlag.png</key>
+		<data>
+		v8mhDXAL26HkelgECLGpVsMJNQE=
+		</data>
+		<key>flutter_assets/imagespot/germanyMonument.jpg</key>
+		<data>
+		cCx81fP+KkGJkRAbeRYdu7ICIfI=
 		</data>
 		<key>flutter_assets/imagespot/indiaFlag.png</key>
 		<data>
 		dr0Nyh2zXYGRTH7LXPT+NZURF/g=
 		</data>
+		<key>flutter_assets/imagespot/japanFlag.jpg</key>
+		<data>
+		o5kxc/PE+BwFlr2+j/irRIzfSDc=
+		</data>
+		<key>flutter_assets/imagespot/japanMonument.jpg</key>
+		<data>
+		IrNT4kQLJZdelgM0nV4nJaAvV3c=
+		</data>
+		<key>flutter_assets/imagespot/leila.jpg</key>
+		<data>
+		j/n95oviOYTzzx26Jo7NJMPS5J4=
+		</data>
 		<key>flutter_assets/imagespot/logo.png</key>
 		<data>
 		mNy2o1bAUt9hj7SV1ny5T8Gt/A0=
+		</data>
+		<key>flutter_assets/imagespot/mexicoFlag.png</key>
+		<data>
+		voHKresVrHQjhVDTo5sUAbExkag=
+		</data>
+		<key>flutter_assets/imagespot/mexicoMonument.jpg</key>
+		<data>
+		8xbCE7jOVnRLOSS+OBCyguHxCCk=
+		</data>
+		<key>flutter_assets/imagespot/nigeriaFlag.png</key>
+		<data>
+		6dmbS21hYl1oyN757jz4Ql+/6oM=
+		</data>
+		<key>flutter_assets/imagespot/nigeriaMonument.jpeg</key>
+		<data>
+		h3G61CNYs+3XQBGly1DcgHKuUn0=
 		</data>
 		<key>flutter_assets/imagespot/pfp.webp</key>
 		<data>
@@ -68,13 +128,21 @@
 		<data>
 		4LEzLmuoxLofkV6maRkWTftVva0=
 		</data>
+		<key>flutter_assets/imagespot/thailandFlag.jpg</key>
+		<data>
+		6CBw2PK7bEIePyqHVHLkm85E+O8=
+		</data>
+		<key>flutter_assets/imagespot/thailandMonument.jpg</key>
+		<data>
+		o1sBdBbr1/g7I8BSxPSF0re7mwE=
+		</data>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<data>
-		l3qciQyTsdPvKgsoTGD9Xkp5TZ8=
+		SIm4/1Paq4sWKgTicGS1/n3+2I0=
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		GA2P1ew0RASNKEDsvVcLPl+/a24=
+		FDBcMoM9yae8aQwT46bV4AFM6eI=
 		</data>
 		<key>flutter_assets/lib/images/SignIn.png</key>
 		<data>
@@ -123,14 +191,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			qdTUjolS0RhXt7/L+RwTYivQVH/KHenXIhTzqLAHJ0s=
+			Mxw4E3T8p7NEfHx+CthEN8GnRViK47NlBoaSZcYZ4Co=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BisECQwnYmEb3oe0ReJAcN8nsADxPYFUiBy7w6myr2w=
+			YCtRitJnmVxYnYhKLdl1OhPrNrgpK0ucjflnqmNoWGM=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -168,11 +236,67 @@
 			aqg3yg6WNsPhhbkShTg6xV62DkrsChnVkZfEtFIq+Zg=
 			</data>
 		</dict>
+		<key>flutter_assets/imagespot/chinaFlag.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			LKFH8ChL59JpUWiaOVDYrPMNi+rUBFDhjsQN6p0t0Us=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/chinaMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			My7v6xjv60CXvpmAZpzNbqq0ndjVbb73UWc6sKAnVCU=
+			</data>
+		</dict>
 		<key>flutter_assets/imagespot/duo.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			KKcXTr/5r5G++efIZEyisZItmKmkRfDlYw8SkGLyUWM=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/eritreaFlag.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			XObtwYPagCl0xysNy+BnDuGDjjopqG9Ngx6/dix2El8=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/eritreaMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			F8zXXZswYTUU2eA6J0WIk0sJyl1nCSqBqxOlwkhfC0s=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/franceFlag.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			c9cu+fpjS76LMCY2LmgXl51m2gXPVWIezeqkBxAoOTQ=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/franceMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			BP04yBXSmyEmuI6IpjXIz1H0SO+cHPzzfs0efJSdWt8=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/germanyFlag.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			KUJr/9RH5h4EH8GR3sdAwhK4ClqUKhA+D2Na5Jtwsro=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/germanyMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			xjLzbRrNKqPXUWGomDYe5BDB63SgZaFNN2UHOsiT4ts=
 			</data>
 		</dict>
 		<key>flutter_assets/imagespot/indiaFlag.png</key>
@@ -182,11 +306,60 @@
 			tkL4oIq12v5cxLX2Vq5+jIeAijI9UpEjfGM+TRJ2z6k=
 			</data>
 		</dict>
+		<key>flutter_assets/imagespot/japanFlag.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QXgXje1OjsyCkw4d+JQRkblv0oMl3kIlfboTrUVK8fc=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/japanMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ucD1jLWpbTm9aXiBZurpzY99HwMLl1Y+VB4FcsHtBcs=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/leila.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			/yFcJPxz+XUzTew6GYPAW2VN1FzV1P/bOK6+aTdohiE=
+			</data>
+		</dict>
 		<key>flutter_assets/imagespot/logo.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			dQewNG914BYSl922B698SS4L/8s2Y6QE0+n1AZlDIog=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/mexicoFlag.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			p/8HnIw7pw6u7fE09SuTJUXtn0Wv0oYAJTGxmAvujxw=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/mexicoMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			aFEK0yJ5ZWJOcLPNJ4lOYgm0Cjt8n3Ku0lh4nxFNnZc=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/nigeriaFlag.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			JwaiIGL+jzMtQdd52UVIkI4vXj+DxJuUXo3KDoKUhdk=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/nigeriaMonument.jpeg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			GSpxav6shw+f5BZp3axDQ0yFpz82Wj136m3KkUhZEUI=
 			</data>
 		</dict>
 		<key>flutter_assets/imagespot/pfp.webp</key>
@@ -224,18 +397,32 @@
 			asL+T5zMW/XCKgQ7BUQhjg/2UpMlFbzoiLaleOtK7d0=
 			</data>
 		</dict>
+		<key>flutter_assets/imagespot/thailandFlag.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			N+Ywei5la8uPYKcLASnsYtmHfOcSNapkY/1eMkq/OhU=
+			</data>
+		</dict>
+		<key>flutter_assets/imagespot/thailandMonument.jpg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			X59RAWgIQ0qSrjuSlYdJIGUkR1Jo1C3anT0D8GjEsRI=
+			</data>
+		</dict>
 		<key>flutter_assets/isolate_snapshot_data</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			C5xXzJtape5NW8h1/IlD5EIVL769VCrktLtMlJ+XjA0=
+			anOb2f9bedJ1njfLAJCJBLpvzqbr//Igm8Bh1zQ9Yk4=
 			</data>
 		</dict>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Yii0U4HgifMsyUKJCzre0ei4Atj28/Yk4g5QiBQVjwY=
+			pANrbXJh4OeqpS86x1K99OpuSeLBhP0hzsotq1tvlvU=
 			</data>
 		</dict>
 		<key>flutter_assets/lib/images/SignIn.png</key>

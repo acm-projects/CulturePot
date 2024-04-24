@@ -1,26 +1,59 @@
+import 'dart:typed_data';
+
 import 'package:culture_pot/components/my_button2.dart';
 import 'package:culture_pot/components/my_textfield.dart';
+import 'package:culture_pot/components/profilepic_button.dart';
+import 'package:culture_pot/pages/home.dart';
 import 'package:culture_pot/pages/preferencesPick_page.dart';
 import 'package:culture_pot/services/auth_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:culture_pot/components/my_button1.dart';
 import 'package:culture_pot/pages/login_page.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   SignUp({Key? key}) : super(key: key);
 
+  @override
+  _SignUpState createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final birthdayController = TextEditingController();
 
-  void signUserUp(BuildContext context) {
+  Uint8List _image = Uint8List(0);
+
+  void signUserUp(BuildContext context) async {
+    await AuthMethods().signUpUser(
+      username: nameController.text,
+      bio: birthdayController.text,
+      email: emailController.text,
+      password: passwordController.text,
+      file: _image,
+    );
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const MyPreferences(),
+        builder: (context) => MyPreferences(),
       ),
     );
+  }
+
+  void selectImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      Uint8List imageData =
+          await image.readAsBytes(); // Perform async operation
+      setState(() {
+        _image = imageData; // Update the state with new data
+      });
+    }
   }
 
   @override
@@ -38,29 +71,40 @@ class SignUp extends StatelessWidget {
                   height: 230,
                 ),
                 const SizedBox(height: 5),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "   Sign Up!",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 31,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Inter-Regular',
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "   Sign Up!",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 31,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Inter-Regular',
+                          ),
+                        ),
+                        const Text(
+                          "      Create your CulturePot account",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                            fontFamily: 'Inter-Regular',
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "      Create your CulturePot account",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 15,
-                      fontFamily: 'Inter-Regular',
+                    const SizedBox(
+                      width: 15,
                     ),
-                  ),
+                    MyProfileButton(
+                      image: _image,
+                      onTap: selectImage,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 17),
                 MyTextField(
@@ -72,8 +116,8 @@ class SignUp extends StatelessWidget {
                 const SizedBox(height: 20),
                 MyTextField(
                   controller: birthdayController,
-                  labelText: 'Date of Birth',
-                  hintText: 'MM/DD/YYYY',
+                  labelText: 'Bio',
+                  hintText: 'Create your short bio...',
                   obscureText: false,
                 ),
                 const SizedBox(height: 20),
@@ -92,29 +136,10 @@ class SignUp extends StatelessWidget {
                 ),
                 const SizedBox(height: 25),
                 MyButton1(
-  onTap: () async {
-    // Create the account in Firebase
-    String res = await AuthMethods().signUpUser(
-      username: nameController.text,
-      bio: birthdayController.text,
-      email: emailController.text,
-      password: passwordController.text,
-    );
-
-    // Check if the account creation was successful
-    if (res == "success") {
-      // If successful, redirect the user to sign up
-      signUserUp(context);
-    } else {
-      // If not successful, display an error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(res),
-        ),
-      );
-    }
-  },
-),
+                  onTap: () async {
+                    signUserUp(context);
+                  },
+                ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
