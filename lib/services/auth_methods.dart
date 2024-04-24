@@ -44,52 +44,66 @@ class AuthMethods {
 
   // sign up user
   Future<String> signUpUser({
-     required String username,
-    required String bio,
     required String email,
     required String password,
+    required String username,
+    required String bio,
+    required Uint8List file,
   }) async {
-    String res = "Some error occured";
+    String res = "Some error occurred"; // Default error message
     try {
-      if (email.isNotEmpty ||
-          password.isNotEmpty ||
-          username.isNotEmpty ||
-          bio.isNotEmpty
-         ) {
-        // register user
+      // Check if all fields are filled
+      if (email.isNotEmpty &&
+          password.isNotEmpty &&
+          username.isNotEmpty &&
+          bio.isNotEmpty &&
+          file != null) {
+        // Check if file is not null, though it's unnecessary due to non-null requirement
+
+        // Register user with Firebase Auth
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        // String photoUrl = await StorageMethods()
-        //     .uploadImageToStorage('profilePics', file, false);
+        // Upload user profile picture and get URL
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
 
-        // add user to our database
-
+        // Create user model
         model.User user = model.User(
           username: username,
           uid: cred.user!.uid,
           email: email,
           bio: bio,
-         photoUrl: "dummy_url",
+          photoUrl: photoUrl,
           friends: [],
           preferences: [],
         );
 
+        // Save user data to Firestore
         await _firestore.collection('users').doc(cred.user!.uid).set(
               user.toJson(),
             );
-        res = "success";
+
+        res = "success"; // Update result on success
+      } else {
+        res =
+            "Please fill in all fields"; // Error message if any field is empty
       }
     } on FirebaseAuthException catch (err) {
+      // Handle specific Firebase Auth errors
       if (err.code == 'invalid-email') {
         res = 'The email is badly formatted.';
       } else if (err.code == 'weak-password') {
         res = 'Password should be at least 6 characters';
+      } else {
+        res = err.message ??
+            "An unknown error occurred"; // Generic error message for other FirebaseAuth errors
       }
     } catch (err) {
+      // Handle unexpected errors
       res = err.toString();
     }
-    return res;
+    return res; // Return the result
   }
 
   Future<String> loginUser({

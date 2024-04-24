@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:culture_pot/components/my_button2.dart';
 import 'package:culture_pot/components/my_textfield.dart';
 import 'package:culture_pot/components/profilepic_button.dart';
-import 'package:culture_pot/pages/home.dart';
 import 'package:culture_pot/pages/preferencesPick_page.dart';
 import 'package:culture_pot/services/auth_methods.dart';
 import 'package:flutter/material.dart';
@@ -28,30 +27,37 @@ class _SignUpState extends State<SignUp> {
   Uint8List _image = Uint8List(0);
 
   void signUserUp(BuildContext context) async {
-    await AuthMethods().signUpUser(
+    String res = await AuthMethods().signUpUser(
       username: nameController.text,
       bio: birthdayController.text,
       email: emailController.text,
       password: passwordController.text,
-      file: _image,
+      file: _image!,
     );
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => MyPreferences(),
-      ),
-    );
+    if (res == "success") {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MyPreferences(),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(res)),
+      );
+    }
   }
 
   void selectImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      Uint8List imageData =
-          await image.readAsBytes(); // Perform async operation
       setState(() {
-        _image = imageData; // Update the state with new data
+        _image = Uint8List(0); // Resetting to avoid build errors temporarily
+      });
+      setState(() async {
+        _image = await image.readAsBytes();
       });
     }
   }
@@ -137,7 +143,26 @@ class _SignUpState extends State<SignUp> {
                 const SizedBox(height: 25),
                 MyButton1(
                   onTap: () async {
-                    signUserUp(context);
+                    // Create the account in Firebase
+                    String res = await AuthMethods().signUpUser(
+                      username: nameController.text,
+                      bio: birthdayController.text,
+                      email: emailController.text,
+                      password: passwordController.text,
+                      file: _image,
+                    );
+                    // Check if the account creation was successful
+                    if (res == "success") {
+                      // If successful, redirect the user to sign up
+                      signUserUp(context);
+                    } else {
+                      // If not successful, display an error message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(res),
+                        ),
+                      );
+                    }
                   },
                 ),
                 const SizedBox(height: 20),

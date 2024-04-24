@@ -44,6 +44,8 @@ class _CommentState extends State<Comment> {
             widget.controller
                 .clear(); // Clear the text field on successful post
           });
+
+          Navigator.of(context).pop(); // Adjust this line as needed
         }
       } else {
         if (mounted) {
